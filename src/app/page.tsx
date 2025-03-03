@@ -86,7 +86,7 @@ export default function Home() {
 
       <footer className="bg-gray-800 text-white py-8 mt-auto">
         <div className="max-w-6xl mx-auto px-4 text-center">
-          <p>© 2025 YourName. All rights reserved.</p>
+          <p>© 2025 ErickHerreraCabrera. All rights reserved.</p>
         </div>
       </footer>
     </div>
