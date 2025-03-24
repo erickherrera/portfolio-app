@@ -75,15 +75,6 @@ export default function Home() {
           </div>
         </div>
       </section>
-      {/* Placeholder for Projects Section */}
-      <section id="projects" className="py-16 bg-gray-50">
-        <div className="max-w-4xl mx-auto px-4 text-center">
-          <h2 className="text-gray-700 text-2xl font-bold mb-4">My Projects</h2>
-          <div className="w-16 h-1 bg-blue-600 mx-auto mb-6"></div>
-          <p className="text-gray-600">Project content will go here</p>
-        </div>
-      </section>
-
       <footer className="bg-gray-800 text-white py-8 mt-auto">
         <div className="max-w-6xl mx-auto px-4 text-center">
           <p>© 2025 ErickHerreraCabrera. All rights reserved.</p>

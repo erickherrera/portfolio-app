@@ -1,23 +1,35 @@
 "use client";
 
-import { useState } from "react";
+import { JSX, useState } from "react";
 import Image from "next/image";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
-export default function NavBar() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+// Define types for our nav links
+interface NavLink {
+  name: string;
+  path: string;
+  isHash: boolean;
+}
+
+export default function NavBar(): JSX.Element {
+  const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
   const pathname = usePathname();
+  const router = useRouter();
 
-  // Navigation links - updated to use section IDs instead of routes
-  const navLinks = [
-    { name: "Home", path: "#home" },
-    { name: "About", path: "#about" },
-    { name: "Projects", path: "#projects" },
-    { name: "Contact", path: "#contact" },
+  const navLinks: NavLink[] = [
+    { name: "Home", path: "/homepage", isHash: false },
+    { name: "About", path: "#about", isHash: true },
+    { name: "Projects", path: "/projectspage", isHash: false },
+    { name: "Contact", path: "#contact", isHash: true },
   ];
 
-  // Function to determine if a link is active - simplified for hash links
-  const isActive = (path) => {
+  // Function to determine if a link is active
+  const isActive = (path: string, isHash: boolean): boolean => {
+    if (!isHash) {
+      // For non-hash links (like Projects), check the pathname
+      return pathname === path;
+    }
+    
     if (pathname === "/" && path === "#home") return true;
     if (path === "#home") return false; // Only highlight home when exactly at /
     
@@ -26,13 +38,21 @@ export default function NavBar() {
     return currentHash === path;
   };
 
-  // Function to handle smooth scrolling
-  const scrollToSection = (e, sectionId) => {
+  // Function to handle navigation
+  const handleNavigation = (e: React.MouseEvent<HTMLAnchorElement>, path: string, isHash: boolean): void => {
     e.preventDefault();
-    const element = document.querySelector(sectionId);
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
+    
+    if (isHash) {
+      // For hash links, scroll to the section
+      const element = document.querySelector(path);
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth" });
+      }
+    } else {
+      // For non-hash links (like Projects), use the router
+      router.push(path);
     }
+    
     if (isMenuOpen) {
       setIsMenuOpen(false);
     }
@@ -45,7 +65,7 @@ export default function NavBar() {
         <a 
           href="#home"
           className="flex items-center gap-2"
-          onClick={(e) => scrollToSection(e, "#home")}
+          onClick={(e) => handleNavigation(e, "#home", true)}
         >
           <Image
             src="/next.svg"
@@ -65,9 +85,9 @@ export default function NavBar() {
           <a
             key={link.path}
             href={link.path}
-            onClick={(e) => scrollToSection(e, link.path)}
+            onClick={(e) => handleNavigation(e, link.path, link.isHash)}
             className={`transition-colors duration-300 hover:text-blue-600 ${
-              isActive(link.path)
+              isActive(link.path, link.isHash)
                 ? "font-medium text-blue-600 underline underline-offset-4"
                 : ""
             }`}
@@ -119,9 +139,9 @@ export default function NavBar() {
                 key={link.path}
                 href={link.path}
                 className={`py-3 border-b border-gray-100 dark:border-gray-800 ${
-                  isActive(link.path) ? "font-medium text-blue-600" : ""
+                  isActive(link.path, link.isHash) ? "font-medium text-blue-600" : ""
                 }`}
-                onClick={(e) => scrollToSection(e, link.path)}
+                onClick={(e) => handleNavigation(e, link.path, link.isHash)}
               >
                 {link.name}
               </a>
