@@ -22,7 +22,7 @@ export default function Home() {
             
             <div className="flex space-x-4 mt-2">
               <a 
-                href="https://github.com/yourusername" 
+                href="https://github.com/erickherrera" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="text-blue-600 hover:text-blue-800 transition-colors"
