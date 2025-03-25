@@ -1,10 +1,12 @@
 "use client"
 
+import Image from "next/image";
+
 export default function ProjectPage() {
   // Sample project data - replace with your actual projects
   const projects = [
-    { id: 1, title: "Project One", description: "Description for project one" },
-    { id: 2, title: "Project Two", description: "Description for project two" },
+    { id: 1, title: "SaSS for HVAC", description: "SaSS application for an HVAC company to manage their business." },
+    { id: 2, title: "Personal Portfolio", description: "Personal portfolio using NextJS" },
     { id: 3, title: "Project Three", description: "Description for project three" },
     { id: 4, title: "Project Four", description: "Description for project four" },
     { id: 5, title: "Project Five", description: "Description for project five" },
@@ -19,14 +21,14 @@ export default function ProjectPage() {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Large styled header with readable background */}
-      <header className="w-full bg-gradient-to-r from-blue-600 to-purple-600 py-16 mb-12">
+      <header className="w-full bg-gradient-to-r from-blue-600 to-green-600 py-16 mb-12">
         <div className="max-w-6xl mx-auto px-4">
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white text-center">
-            My Project Portfolio
+            My Projects
           </h1>
           <div className="w-24 h-1 bg-white mx-auto mt-6"></div>
           <p className="text-white text-center mt-4 text-lg max-w-2xl mx-auto">
-            A collection of my latest work and ongoing projects
+            A collection of my latest work and ongoing projects.
           </p>
         </div>
       </header>
