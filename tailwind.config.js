@@ -5,56 +5,42 @@ module.exports = {
     './components/**/*.{js,ts,jsx,tsx,mdx}',
     './app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
-  darkMode: 'class', // Use class strategy for dark mode
+  darkMode: 'class', // or 'media' if you want to use system preference
   theme: {
     extend: {
-      // Define custom colors that map to CSS variables
       colors: {
+        // Add your custom theme colors here
         primary: {
-          DEFAULT: 'var(--primary)',
-          hover: 'var(--primary-hover)',
-          foreground: 'var(--primary-foreground)'
+          light: '#3B82F6', // blue-500
+          dark: '#60A5FA', // blue-400
         },
         secondary: {
-          DEFAULT: 'var(--secondary)',
-          foreground: 'var(--secondary-foreground)'
+          light: '#1F2937', // gray-800
+          dark: '#374151', // gray-700
+        },
+        background: {
+          light: '#FFFFFF', // white
+          dark: '#1F2937', // gray-800
+        },
+        hero: {
+          light: '#E5E7EB', // gray-200
+          dark: '#1F2937', // gray-800
         },
         accent: {
-          DEFAULT: 'var(--accent)',
-          foreground: 'var(--accent-foreground)'
+          light: '#3B82F6', // blue-500
+          dark: '#60A5FA', // blue-400
         },
-        background: 'var(--background)',
-        foreground: 'var(--foreground)',
-        card: {
-          bg: 'var(--card-bg)',
-          border: 'var(--card-border)'
+        // Add foreground (text) colors
+        foreground: {
+          light: '#171717', // near black for light mode
+          dark: '#ededed', // near white for dark mode
         },
-        muted: {
-          DEFAULT: 'var(--muted)',
-          foreground: 'var(--muted-foreground)'
+        // Add secondary text colors for paragraphs
+        text: {
+          light: '#374151', // gray-700 for light mode
+          dark: '#D1D5DB', // gray-300 for dark mode
         }
       },
-      // Add font family variables
-      fontFamily: {
-        sans: ['var(--font-geist-sans)', 'ui-sans-serif', 'system-ui', 'sans-serif'],
-        mono: ['var(--font-geist-mono)', 'ui-monospace', 'monospace']
-      },
-      // Add border colors
-      borderColor: {
-        DEFAULT: 'var(--card-border)'
-      },
-      // Add background colors
-      backgroundColor: {
-        DEFAULT: 'var(--background)'
-      },
-      // Add transition utilities
-      transitionProperty: {
-        'theme': 'color, background-color, border-color'
-      },
-      // Add gradient support if needed
-      gradientColorStops: {
-        // Add custom gradient colors if needed
-      }
     },
   },
   plugins: [],

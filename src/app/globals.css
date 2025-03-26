@@ -9,20 +9,22 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --text: #374151;
+  --primary: #3B82F6;
+  --secondary: #1F2937;
+  --hero: #E5E7EB;
+  --accent: #3B82F6;
 }
 
 /* Dark theme when .dark class is present (for manual toggle) */
 .dark {
-  --background: #0a0a0a;
+  --background: #1F2937;
   --foreground: #ededed;
-}
-
-/* For system preference - this will be overridden by .dark class when manually set */
-@media (prefers-color-scheme: dark) {
-  :root:not(.light) {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --text: #D1D5DB;
+  --primary: #60A5FA;
+  --secondary: #374151;
+  --hero: #1F2937;
+  --accent: #60A5FA;
 }
 
 body {

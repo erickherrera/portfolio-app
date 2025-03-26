@@ -2,112 +2,126 @@
 
 import { createContext, useContext, useEffect, useState } from 'react';
 
-// Define available themes
-export const THEMES = Object.freeze({
+// Theme constants
+export const THEMES = {
   LIGHT: 'light',
   DARK: 'dark',
-  SYSTEM: 'system'
-});
+  SYSTEM: 'system',
+};
 
-// Create context with default values
+// Theme colors mapping
+export const COLORS = {
+  [THEMES.LIGHT]: {
+    primary: '#3B82F6',    // blue-500
+    secondary: '#1F2937',  // gray-800
+    background: '#FFFFFF', // white
+    hero: '#E5E7EB',       // gray-200
+    accent: '#3B82F6',     // blue-500
+  },
+  [THEMES.DARK]: {
+    primary: '#60A5FA',    // blue-400
+    secondary: '#374151',  // gray-700
+    background: '#1F2937', // gray-800
+    hero: '#1F2937',       // gray-800
+    accent: '#60A5FA',     // blue-400
+  },
+};
+
+// Create Theme Context
 const ThemeContext = createContext({
-  theme: THEMES.LIGHT,
-  toggleTheme: () => {},
-  setTheme: () => {}
+  theme: THEMES.SYSTEM,
+  resolvedTheme: THEMES.LIGHT,
+  setTheme: () => null,
+  colors: COLORS[THEMES.LIGHT],
 });
 
-export function ThemeProvider({ children, defaultTheme = THEMES.SYSTEM }) {
-  const [theme, setTheme] = useState(defaultTheme);
+export function ThemeProvider({ children }) {
+  const [theme, setThemeState] = useState(THEMES.SYSTEM);
   const [resolvedTheme, setResolvedTheme] = useState(THEMES.LIGHT);
-  
-  // Function to determine the actual theme based on system preference
-  const resolveTheme = (themeValue) => {
-    if (themeValue !== THEMES.SYSTEM) return themeValue;
-    
-    return typeof window !== 'undefined' && 
-      window.matchMedia('(prefers-color-scheme: dark)').matches 
-      ? THEMES.DARK 
-      : THEMES.LIGHT;
+  const [colors, setColors] = useState(COLORS[THEMES.LIGHT]);
+
+  // Function to update theme
+  const setTheme = (newTheme) => {
+    if (!Object.values(THEMES).includes(newTheme)) {
+      console.error(`Invalid theme: ${newTheme}`);
+      return;
+    }
+    localStorage.setItem('theme', newTheme);
+    setThemeState(newTheme);
   };
 
-  // Initialize theme from localStorage
+  // Effect to handle theme change and system preference
   useEffect(() => {
-    if (typeof window === 'undefined') return;
-    
-    const savedTheme = localStorage.getItem('theme') || defaultTheme;
-    setTheme(savedTheme);
-    
-    // Set up system preference change listener
+    // Get stored theme or default to system
+    const storedTheme = localStorage.getItem('theme') || THEMES.SYSTEM;
+    setThemeState(storedTheme);
+
+    // Setup system preference change listener
     const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
     
-    const handleChange = () => {
-      if (theme === THEMES.SYSTEM) {
-        const newResolvedTheme = mediaQuery.matches ? THEMES.DARK : THEMES.LIGHT;
-        setResolvedTheme(newResolvedTheme);
-        updateDocumentClass(newResolvedTheme);
+    // Function to handle theme resolution
+    const resolveTheme = () => {
+      const currentTheme = localStorage.getItem('theme') || THEMES.SYSTEM;
+      const isDarkMode = mediaQuery.matches;
+      const resolved = currentTheme === THEMES.SYSTEM 
+        ? (isDarkMode ? THEMES.DARK : THEMES.LIGHT)
+        : currentTheme;
+      
+      setResolvedTheme(resolved);
+      setColors(COLORS[resolved]);
+      
+      // Apply or remove dark class on document
+      if (resolved === THEMES.DARK) {
+        document.documentElement.classList.add('dark');
+      } else {
+        document.documentElement.classList.remove('dark');
       }
     };
-    
+
+    // Initial resolution
+    resolveTheme();
+
+    // Add listener for system preference changes
+    const handleChange = () => resolveTheme();
     mediaQuery.addEventListener('change', handleChange);
+
+    // Cleanup
     return () => mediaQuery.removeEventListener('change', handleChange);
-  }, [defaultTheme]);
+  }, []);
 
-  // Function to update document class
-  const updateDocumentClass = (themeValue) => {
-    if (themeValue === THEMES.DARK) {
-      document.documentElement.classList.add('dark');
-      document.documentElement.classList.remove('light');
-    } else if (themeValue === THEMES.LIGHT) {
-      document.documentElement.classList.add('light');
-      document.documentElement.classList.remove('dark');
-    }
-  };
-
-  // Handle theme changes
+  // Effect to handle theme changes
   useEffect(() => {
-    if (typeof window === 'undefined') return;
-    
-    const newResolvedTheme = resolveTheme(theme);
-    setResolvedTheme(newResolvedTheme);
-    
-    // Update document class
-    updateDocumentClass(newResolvedTheme);
-    
-    // Save theme to localStorage
-    localStorage.setItem('theme', theme);
+    const resolveAndApplyTheme = () => {
+      const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const resolved = theme === THEMES.SYSTEM 
+        ? (isDarkMode ? THEMES.DARK : THEMES.LIGHT)
+        : theme;
+      
+      setResolvedTheme(resolved);
+      setColors(COLORS[resolved]);
+      
+      if (resolved === THEMES.DARK) {
+        document.documentElement.classList.add('dark');
+      } else {
+        document.documentElement.classList.remove('dark');
+      }
+    };
+
+    resolveAndApplyTheme();
   }, [theme]);
 
-  // Toggle between light and dark (skipping system)
-  const toggleTheme = () => {
-    setTheme(prevTheme => {
-      if (prevTheme === THEMES.SYSTEM) {
-        return resolvedTheme === THEMES.LIGHT ? THEMES.DARK : THEMES.LIGHT;
-      }
-      return prevTheme === THEMES.LIGHT ? THEMES.DARK : THEMES.LIGHT;
-    });
-  };
-
   return (
-    <ThemeContext.Provider 
-      value={{ 
-        theme, 
-        resolvedTheme,
-        toggleTheme,
-        setTheme,
-        isLight: resolvedTheme === THEMES.LIGHT,
-        isDark: resolvedTheme === THEMES.DARK,
-      }}
-    >
+    <ThemeContext.Provider value={{ theme, resolvedTheme, setTheme, colors }}>
       {children}
     </ThemeContext.Provider>
   );
 }
 
-// Custom hook to use the theme context
-export function useTheme() {
+// Custom hook to use theme
+export const useTheme = () => {
   const context = useContext(ThemeContext);
   if (context === undefined) {
     throw new Error('useTheme must be used within a ThemeProvider');
   }
   return context;
-}
+};
