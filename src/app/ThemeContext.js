@@ -30,46 +30,56 @@ export function ThemeProvider({ children, defaultTheme = THEMES.SYSTEM }) {
       : THEMES.LIGHT;
   };
 
-  // Initialize theme from localStorage or system preference
+  // Initialize theme from localStorage
   useEffect(() => {
     if (typeof window === 'undefined') return;
     
     const savedTheme = localStorage.getItem('theme') || defaultTheme;
     setTheme(savedTheme);
-    setResolvedTheme(resolveTheme(savedTheme));
     
-    // Watch for system preference changes
+    // Set up system preference change listener
     const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+    
     const handleChange = () => {
       if (theme === THEMES.SYSTEM) {
-        setResolvedTheme(mediaQuery.matches ? THEMES.DARK : THEMES.LIGHT);
+        const newResolvedTheme = mediaQuery.matches ? THEMES.DARK : THEMES.LIGHT;
+        setResolvedTheme(newResolvedTheme);
+        updateDocumentClass(newResolvedTheme);
       }
     };
     
     mediaQuery.addEventListener('change', handleChange);
     return () => mediaQuery.removeEventListener('change', handleChange);
-  }, [defaultTheme, theme]);
+  }, [defaultTheme]);
 
-  // Apply the theme class to the document
+  // Function to update document class
+  const updateDocumentClass = (themeValue) => {
+    if (themeValue === THEMES.DARK) {
+      document.documentElement.classList.add('dark');
+      document.documentElement.classList.remove('light');
+    } else if (themeValue === THEMES.LIGHT) {
+      document.documentElement.classList.add('light');
+      document.documentElement.classList.remove('dark');
+    }
+  };
+
+  // Handle theme changes
   useEffect(() => {
     if (typeof window === 'undefined') return;
     
     const newResolvedTheme = resolveTheme(theme);
     setResolvedTheme(newResolvedTheme);
     
-    if (newResolvedTheme === THEMES.DARK) {
-      document.documentElement.classList.add('dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-    }
+    // Update document class
+    updateDocumentClass(newResolvedTheme);
     
+    // Save theme to localStorage
     localStorage.setItem('theme', theme);
   }, [theme]);
 
   // Toggle between light and dark (skipping system)
   const toggleTheme = () => {
     setTheme(prevTheme => {
-      // If the current theme is system, choose based on the resolved theme
       if (prevTheme === THEMES.SYSTEM) {
         return resolvedTheme === THEMES.LIGHT ? THEMES.DARK : THEMES.LIGHT;
       }
@@ -101,4 +111,3 @@ export function useTheme() {
   }
   return context;
 }
-
