@@ -3,6 +3,7 @@
 import { JSX, useState } from "react";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
+import { useTheme } from "../app/ThemeContext";
 
 // Define types for our nav links
 interface NavLink {
@@ -15,6 +16,10 @@ export default function NavBar(): JSX.Element {
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
   const pathname = usePathname();
   const router = useRouter();
+  const { colors, theme, resolvedTheme } = useTheme();
+  
+  // Determine if we're in dark mode based on theme or resolvedTheme
+  const isDark = theme === 'dark' || resolvedTheme === 'dark';
 
   const navLinks: NavLink[] = [
     { name: "Home", path: "/homepage", isHash: false },
@@ -59,13 +64,20 @@ export default function NavBar(): JSX.Element {
   };
 
   return (
-    <nav className="w-full py-4 px-6 sm:px-10 flex justify-between items-center shadow-sm bg-white dark:bg-black sticky top-0 z-10">
+    <nav 
+      className="w-full py-4 px-6 sm:px-10 flex justify-between items-center shadow-sm sticky top-0 z-10 transition-colors duration-200"
+      style={{ 
+        backgroundColor: colors.background,
+        color: colors.foreground
+      }}
+    >
       {/* Logo/Brand Section */}
       <div className="flex items-center">
         <a 
           href="#home"
           className="flex items-center gap-2"
           onClick={(e) => handleNavigation(e, "#home", true)}
+          style={{ color: colors.foreground }}
         >
           <Image
             src="/next.svg"
@@ -73,7 +85,7 @@ export default function NavBar(): JSX.Element {
             width={90}
             height={20}
             priority
-            className="dark:invert"
+            className={isDark ? "invert" : ""}
           />
           <span className="font-semibold text-xl ml-2 hidden sm:inline">Erick Herrera Cabrera</span>
         </a>
@@ -86,11 +98,13 @@ export default function NavBar(): JSX.Element {
             key={link.path}
             href={link.path}
             onClick={(e) => handleNavigation(e, link.path, link.isHash)}
-            className={`transition-colors duration-300 hover:text-blue-600 ${
-              isActive(link.path, link.isHash)
-                ? "font-medium text-blue-600 underline underline-offset-4"
-                : ""
-            }`}
+            className="transition-colors duration-300"
+            style={{ 
+              color: isActive(link.path, link.isHash) ? colors.accent : colors.foreground,
+              fontWeight: isActive(link.path, link.isHash) ? 'medium' : 'normal',
+              textDecoration: isActive(link.path, link.isHash) ? 'underline' : 'none',
+              textUnderlineOffset: '4px'
+            }}
           >
             {link.name}
           </a>
@@ -101,7 +115,11 @@ export default function NavBar(): JSX.Element {
       <div className="md:hidden">
         <button
           onClick={() => setIsMenuOpen(!isMenuOpen)}
-          className="p-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors duration-200"
+          className="p-2 rounded-md transition-colors duration-200"
+          style={{ 
+            color: colors.foreground,
+            backgroundColor: 'transparent',
+          }}
           aria-label={isMenuOpen ? "Close menu" : "Open menu"}
         >
           <svg
@@ -132,15 +150,21 @@ export default function NavBar(): JSX.Element {
 
       {/* Mobile Menu Dropdown */}
       {isMenuOpen && (
-        <div className="absolute top-16 right-0 left-0 bg-white dark:bg-black shadow-md z-50 md:hidden">
+        <div 
+          className="absolute top-16 right-0 left-0 shadow-md z-50 md:hidden"
+          style={{ backgroundColor: colors.background }}
+        >
           <div className="flex flex-col px-4 py-2">
             {navLinks.map((link) => (
               <a
                 key={link.path}
                 href={link.path}
-                className={`py-3 border-b border-gray-100 dark:border-gray-800 ${
-                  isActive(link.path, link.isHash) ? "font-medium text-blue-600" : ""
-                }`}
+                className="py-3 border-b transition-colors duration-200"
+                style={{ 
+                  color: isActive(link.path, link.isHash) ? colors.accent : colors.foreground,
+                  fontWeight: isActive(link.path, link.isHash) ? 'medium' : 'normal',
+                  borderColor: isDark ? '#374151' : '#f3f4f6'
+                }}
                 onClick={(e) => handleNavigation(e, link.path, link.isHash)}
               >
                 {link.name}

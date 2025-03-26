@@ -17,6 +17,7 @@ export const COLORS = {
     background: '#FFFFFF', // white
     hero: '#E5E7EB',       // gray-200
     accent: '#3B82F6',     // blue-500
+    foreground: '#171717', // near black for light mode
   },
   [THEMES.DARK]: {
     primary: '#60A5FA',    // blue-400
@@ -24,6 +25,7 @@ export const COLORS = {
     background: '#1F2937', // gray-800
     hero: '#1F2937',       // gray-800
     accent: '#60A5FA',     // blue-400
+    foreground: '#ededed', // near white for dark mode
   },
 };
 

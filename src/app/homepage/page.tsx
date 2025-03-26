@@ -27,13 +27,13 @@ export default function Home() {
           <div className="flex flex-col items-center text-center">
             <h1 
               className="mb-4 mt-10 text-4xl sm:text-5xl font-extrabold tracking-tight"
-              style={{ color: colors.background }}
+              style={{ color: colors.foreground }}
             >
               Welcome to my portfolio.
             </h1>
             <h2 
               className="mb-6 text-lg sm:text-xl font-semibold"
-              style={{ color: colors.background === '#171717' ? '#4B5563' : '#D1D5DB' }}
+              style={{ color: colors.foreground === '#171717' ? '#4B5563' : '#D1D5DB' }}
             >
               Here you will get to know more about my software engineering journey.
             </h2>
@@ -83,7 +83,7 @@ export default function Home() {
           <div className="text-center mb-12">
             <h2 
               className="text-3xl font-extrabold mb-4"
-              style={{ color: colors.background }}
+              style={{ color: colors.foreground }}
             >
               About Me
             </h2>
@@ -113,13 +113,13 @@ export default function Home() {
             <div className="flex-1 mt-6 md:mt-0">
               <p 
                 className="text-lg font-medium leading-relaxed mb-6"
-                style={{ color: colors.background === '#171717' ? '#374151' : '#D1D5DB' }}
+                style={{ color: colors.foreground === '#171717' ? '#374151' : '#D1D5DB' }}
               >
                 <span style={{ color: colors.accent, fontWeight: 'bold' }}>Hello!</span> I'm a passionate software engineer with expertise in building modern web applications. My journey in tech began with a deep curiosity about how digital products are created and has evolved into a career focused on crafting elegant solutions to complex problems.
               </p>
               <p 
                 className="text-lg font-medium leading-relaxed"
-                style={{ color: colors.background === '#171717' ? '#374151' : '#D1D5DB' }}
+                style={{ color: colors.foreground === '#171717' ? '#374151' : '#D1D5DB' }}
               >
                 I specialize in <span className="font-bold">JavaScript</span> and <span className="font-bold">TypeScript</span> development, with particular focus on <span className="font-bold">React</span>, <span className="font-bold">Next.js</span>, and <span className="font-bold">Node.js</span>. When I'm not coding, you can find me exploring new technologies, contributing to open-source projects, or sharing what I've learned through technical writing and mentorship.
               </p>
