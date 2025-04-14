@@ -36,6 +36,13 @@ export default function RootLayout({
           <main className="flex-grow">
             {children}
           </main>
+          <footer className="py-6 px-4 border-t border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-950 transition-colors duration-200">
+            <div className="container mx-auto text-center">
+              <div className="text-sm text-gray-600 dark:text-gray-400">
+                © {new Date().getFullYear()} Erick Herrera. All rights reserved.
+              </div>
+            </div>
+          </footer>
         </ThemeProvider>
       </body>
     </html>

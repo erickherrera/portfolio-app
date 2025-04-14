@@ -7,10 +7,6 @@ export default function ProjectPage() {
   const projects = [
     { id: 1, title: "SaSS for HVAC", description: "SaSS application for an HVAC company to manage their business." },
     { id: 2, title: "Personal Portfolio", description: "Personal portfolio using NextJS" },
-    { id: 3, title: "Project Three", description: "Description for project three" },
-    { id: 4, title: "Project Four", description: "Description for project four" },
-    { id: 5, title: "Project Five", description: "Description for project five" },
-    { id: 6, title: "Project Six", description: "Description for project six" },
   ];
 
   const handleProjectClick = (id: number) => {

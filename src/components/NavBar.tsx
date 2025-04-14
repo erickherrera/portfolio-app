@@ -9,7 +9,6 @@ import { useTheme } from "../app/ThemeContext";
 interface NavLink {
   name: string;
   path: string;
-  isHash: boolean;
 }
 
 export default function NavBar(): JSX.Element {
@@ -22,42 +21,31 @@ export default function NavBar(): JSX.Element {
   const isDark = theme === 'dark' || resolvedTheme === 'dark';
 
   const navLinks: NavLink[] = [
-    { name: "Home", path: "/homepage", isHash: false },
-    { name: "About", path: "#about", isHash: true },
-    { name: "Projects", path: "/projectspage", isHash: false },
-    { name: "Contact", path: "#contact", isHash: true },
+    { name: "Home", path: "/homepage"},
+    { name: "About", path: "/aboutmepage"},
+    { name: "Projects", path: "/projectspage"},
+    { name: "Contact", path: "/contactpage"},
   ];
 
   // Function to determine if a link is active
-  const isActive = (path: string, isHash: boolean): boolean => {
-    if (!isHash) {
-      // For non-hash links (like Projects), check the pathname
-      return pathname === path;
-    }
+  const isActive = (path: string): boolean => {
+    // Check if the current pathname matches the link path
+    if (pathname === path) return true;
     
-    if (pathname === "/" && path === "#home") return true;
-    if (path === "#home") return false; // Only highlight home when exactly at /
+    // Special case for homepage
+    if (pathname === "/" && path === "/homepage") return true;
     
-    // For other sections, check if the URL has the hash
-    const currentHash = typeof window !== "undefined" ? window.location.hash : "";
-    return currentHash === path;
+    return false;
   };
 
   // Function to handle navigation
-  const handleNavigation = (e: React.MouseEvent<HTMLAnchorElement>, path: string, isHash: boolean): void => {
+  const handleNavigation = (e: React.MouseEvent<HTMLAnchorElement>, path: string): void => {
     e.preventDefault();
     
-    if (isHash) {
-      // For hash links, scroll to the section
-      const element = document.querySelector(path);
-      if (element) {
-        element.scrollIntoView({ behavior: "smooth" });
-      }
-    } else {
-      // For non-hash links (like Projects), use the router
-      router.push(path);
-    }
+    // Navigate to the page using the Next.js router
+    router.push(path);
     
+    // Close the mobile menu if it's open
     if (isMenuOpen) {
       setIsMenuOpen(false);
     }
@@ -74,9 +62,9 @@ export default function NavBar(): JSX.Element {
       {/* Logo/Brand Section */}
       <div className="flex items-center">
         <a 
-          href="#home"
+          href="/homepage"
           className="flex items-center gap-2"
-          onClick={(e) => handleNavigation(e, "#home", true)}
+          onClick={(e) => handleNavigation(e, "/homepage")}
           style={{ color: colors.foreground }}
         >
           <Image
@@ -97,12 +85,12 @@ export default function NavBar(): JSX.Element {
           <a
             key={link.path}
             href={link.path}
-            onClick={(e) => handleNavigation(e, link.path, link.isHash)}
+            onClick={(e) => handleNavigation(e, link.path)}
             className="transition-colors duration-300"
             style={{ 
-              color: isActive(link.path, link.isHash) ? colors.accent : colors.foreground,
-              fontWeight: isActive(link.path, link.isHash) ? 'medium' : 'normal',
-              textDecoration: isActive(link.path, link.isHash) ? 'underline' : 'none',
+              color: isActive(link.path) ? colors.accent : colors.foreground,
+              fontWeight: isActive(link.path) ? 'medium' : 'normal',
+              textDecoration: isActive(link.path) ? 'underline' : 'none',
               textUnderlineOffset: '4px'
             }}
           >
@@ -161,11 +149,11 @@ export default function NavBar(): JSX.Element {
                 href={link.path}
                 className="py-3 border-b transition-colors duration-200"
                 style={{ 
-                  color: isActive(link.path, link.isHash) ? colors.accent : colors.foreground,
-                  fontWeight: isActive(link.path, link.isHash) ? 'medium' : 'normal',
+                  color: isActive(link.path) ? colors.accent : colors.foreground,
+                  fontWeight: isActive(link.path) ? 'medium' : 'normal',
                   borderColor: isDark ? '#374151' : '#f3f4f6'
                 }}
-                onClick={(e) => handleNavigation(e, link.path, link.isHash)}
+                onClick={(e) => handleNavigation(e, link.path)}
               >
                 {link.name}
               </a>
