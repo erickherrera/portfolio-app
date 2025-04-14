@@ -9,23 +9,25 @@ export const THEMES = {
   SYSTEM: 'system',
 };
 
-// Theme colors mapping
+// Theme colors mapping with new modern color palette
 export const COLORS = {
   [THEMES.LIGHT]: {
-    primary: '#3B82F6',    // blue-500
-    secondary: '#1F2937',  // gray-800
-    background: '#FFFFFF', // white
-    hero: '#E5E7EB',       // gray-200
-    accent: '#3B82F6',     // blue-500
-    foreground: '#171717', // near black for light mode
+    primary: '#8b5cf6',    // Modern purple
+    secondary: '#475569',  // Space black (600)
+    background: '#ffffff', // Pearl white
+    hero: '#f5f5f5',       // Pearl white (200)
+    accent: '#0284c7',     // Airforce blue
+    foreground: '#0f172a', // Space black (900)
+    text: '#334155',       // Space black (700)
   },
   [THEMES.DARK]: {
-    primary: '#60A5FA',    // blue-400
-    secondary: '#374151',  // gray-700
-    background: '#1F2937', // gray-800
-    hero: '#1F2937',       // gray-800
-    accent: '#60A5FA',     // blue-400
-    foreground: '#ededed', // near white for dark mode
+    primary: '#a78bfa',    // Purple (400) - lighter for dark mode
+    secondary: '#64748b',  // Space black (500) - lighter for dark mode
+    background: '#0f172a', // Space black (900)
+    hero: '#1e293b',       // Space black (800)
+    accent: '#38bdf8',     // Airforce blue (400) - lighter for dark mode
+    foreground: '#f5f5f5', // Pearl white (200)
+    text: '#cbd5e1',       // Space black (300) - light text for dark mode
   },
 };
 
@@ -52,6 +54,18 @@ export function ThemeProvider({ children }) {
     setThemeState(newTheme);
   };
 
+  // Apply CSS variables for theme colors
+  const applyThemeColors = (theme) => {
+    const root = document.documentElement;
+    const themeColors = COLORS[theme];
+    
+    // Set CSS variables
+    Object.entries(themeColors).forEach(([key, value]) => {
+      root.style.setProperty(`--color-${key}`, value);
+      root.style.setProperty(`--color-${key}-${theme}`, value);
+    });
+  };
+
   // Effect to handle theme change and system preference
   useEffect(() => {
     // Get stored theme or default to system
@@ -71,6 +85,7 @@ export function ThemeProvider({ children }) {
       
       setResolvedTheme(resolved);
       setColors(COLORS[resolved]);
+      applyThemeColors(resolved);
       
       // Apply or remove dark class on document
       if (resolved === THEMES.DARK) {
@@ -101,6 +116,7 @@ export function ThemeProvider({ children }) {
       
       setResolvedTheme(resolved);
       setColors(COLORS[resolved]);
+      applyThemeColors(resolved);
       
       if (resolved === THEMES.DARK) {
         document.documentElement.classList.add('dark');

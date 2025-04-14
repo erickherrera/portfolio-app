@@ -5,30 +5,164 @@
   --font-mono: var(--font-geist-mono);
 }
 
-/* Default light theme variables */
+/* Base theme variables */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-  --text: #374151;
-  --primary: #3B82F6;
-  --secondary: #1F2937;
-  --hero: #E5E7EB;
-  --accent: #3B82F6;
+  /* Default light theme variables */
+  --color-primary: #8b5cf6;
+  --color-primary-light: #8b5cf6;
+  --color-primary-dark: #a78bfa;
+  
+  --color-secondary: #475569;
+  --color-secondary-light: #475569;
+  --color-secondary-dark: #64748b;
+  
+  --color-background: #ffffff;
+  --color-background-light: #ffffff;
+  --color-background-dark: #0f172a;
+  
+  --color-hero: #f5f5f5;
+  --color-hero-light: #f5f5f5;
+  --color-hero-dark: #1e293b;
+  
+  --color-accent: #0284c7;
+  --color-accent-light: #0284c7;
+  --color-accent-dark: #38bdf8;
+  
+  --color-foreground: #0f172a;
+  --color-foreground-light: #0f172a;
+  --color-foreground-dark: #f5f5f5;
+  
+  --color-text: #334155;
+  --color-text-light: #334155;
+  --color-text-dark: #cbd5e1;
+
+  /* Animation durations */
+  --transition-fast: 150ms;
+  --transition-normal: 250ms;
+  --transition-slow: 350ms;
+  
+  /* Border radius */
+  --radius-sm: 0.125rem;
+  --radius-md: 0.25rem;
+  --radius-lg: 0.5rem;
+  --radius-xl: 0.75rem;
+  --radius-2xl: 1rem;
+  
+  /* Spacing */
+  --spacing-1: 0.25rem;
+  --spacing-2: 0.5rem;
+  --spacing-3: 0.75rem;
+  --spacing-4: 1rem;
+  --spacing-6: 1.5rem;
+  --spacing-8: 2rem;
+  --spacing-12: 3rem;
+  --spacing-16: 4rem;
 }
 
-/* Dark theme when .dark class is present (for manual toggle) */
+/* Apply dark theme variables when dark class is applied to html tag */
 .dark {
-  --background: #1F2937;
-  --foreground: #ededed;
-  --text: #D1D5DB;
-  --primary: #60A5FA;
-  --secondary: #374151;
-  --hero: #1F2937;
-  --accent: #60A5FA;
+  --color-primary: var(--color-primary-dark);
+  --color-secondary: var(--color-secondary-dark);
+  --color-background: var(--color-background-dark);
+  --color-hero: var(--color-hero-dark);
+  --color-accent: var(--color-accent-dark);
+  --color-foreground: var(--color-foreground-dark);
+  --color-text: var(--color-text-dark);
 }
 
+/* Global styles */
 body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--color-background);
+  color: var(--color-text);
+  transition: background-color var(--transition-normal) ease, 
+              color var(--transition-normal) ease;
+}
+
+/* Common element styles using our theme */
+a {
+  color: var(--color-primary);
+  transition: color var(--transition-fast) ease;
+}
+
+a:hover {
+  color: var(--color-accent);
+}
+
+button, 
+.btn {
+  border-radius: var(--radius-md);
+  transition: all var(--transition-fast) ease;
+}
+
+/* Primary button */
+.btn-primary {
+  background-color: var(--color-primary);
+  color: white;
+}
+
+.btn-primary:hover {
+  filter: brightness(110%);
+}
+
+/* Secondary button */
+.btn-secondary {
+  background-color: var(--color-secondary);
+  color: white;
+}
+
+.btn-secondary:hover {
+  filter: brightness(110%);
+}
+
+/* Outlined button */
+.btn-outline {
+  background-color: transparent;
+  border: 1px solid var(--color-primary);
+  color: var(--color-primary);
+}
+
+.btn-outline:hover {
+  background-color: var(--color-primary);
+  color: white;
+}
+
+/* Ghost button */
+.btn-ghost {
+  background-color: transparent;
+  color: var(--color-text);
+}
+
+.btn-ghost:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+  color: var(--color-primary);
+}
+
+.dark .btn-ghost:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Card component */
+.card {
+  background-color: var(--color-background);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  transition: transform var(--transition-normal) ease, 
+              box-shadow var(--transition-normal) ease;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+}
+
+/* Card in light mode */
+.card {
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 
+              0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+/* Card in dark mode */
+.dark .card {
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2), 
+              0 2px 4px -1px rgba(0, 0, 0, 0.15);
+  background-color: var(--color-secondary);
 }
