@@ -9,23 +9,29 @@ export const THEMES = {
   SYSTEM: 'system',
 };
 
-// Theme colors mapping
+// Theme colors mapping using your custom palette
 export const COLORS = {
   [THEMES.LIGHT]: {
-    primary: '#3B82F6',    // blue-500
-    secondary: '#1F2937',  // gray-800
-    background: '#FFFFFF', // white
-    hero: '#E5E7EB',       // gray-200
-    accent: '#3B82F6',     // blue-500
-    foreground: '#171717', // near black for light mode
+    primary: '#3b5264',      // Dark blue from your palette
+    secondary: '#51273c',    // Dark burgundy from your palette
+    background: '#FFFFFF',   // White as requested
+    hero: '#F8F9FA',        // Very light gray for hero sections
+    accent: '#ad94df',      // Dark red-brown from your palette
+    foreground: '#171717',  // Near black for text
+    muted: '#949494',       // Gray from your palette
+    card: '#FFFFFF',        // White for cards
+    border: '#E5E7EB',      // Light gray for borders
   },
   [THEMES.DARK]: {
-    primary: '#60A5FA',    // blue-400
-    secondary: '#374151',  // gray-700
-    background: '#1F2937', // gray-800
-    hero: '#1F2937',       // gray-800
-    accent: '#60A5FA',     // blue-400
-    foreground: '#ededed', // near white for dark mode
+    primary: '#949494',      // Gray from your palette as primary in dark mode
+    secondary: '#4e524b',    // Olive-gray from your palette
+    background: '#1a1a1a',   // Very dark background
+    hero: '#2a2a2a',        // Slightly lighter for hero sections
+    accent: '#ad94df',      // purple accent
+    foreground: '#ededed',  // Near white for text
+    muted: '#6B7280',       // Muted text color
+    card: '#2a2a2a',        // Dark cards
+    border: '#374151',      // Dark border
   },
 };
 
