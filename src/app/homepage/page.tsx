@@ -115,32 +115,18 @@ export default function Home() {
                 className="text-lg font-medium leading-relaxed mb-6"
                 style={{ color: colors.foreground === '#171717' ? '#374151' : '#D1D5DB' }}
               >
-                <span style={{ color: colors.accent, fontWeight: 'bold' }}>Hello!</span> I'm a passionate software engineer with expertise in building modern web applications. My journey in tech began with a deep curiosity about how digital products are created and has evolved into a career focused on crafting elegant solutions to complex problems.
+                <span style={{ color: colors.accent, fontWeight: 'bold' }}>Hello!</span> I&apos;m a passionate software engineer with expertise in building modern web applications. My journey in tech began with a deep curiosity about how digital products are created and has evolved into a career focused on crafting elegant solutions to complex problems.
               </p>
               <p 
                 className="text-lg font-medium leading-relaxed"
                 style={{ color: colors.foreground === '#171717' ? '#374151' : '#D1D5DB' }}
               >
-                I specialize in <span className="font-bold">JavaScript</span> and <span className="font-bold">TypeScript</span> development, with particular focus on <span className="font-bold">React</span>, <span className="font-bold">Next.js</span>, and <span className="font-bold">Node.js</span>. When I'm not coding, you can find me exploring new technologies, contributing to open-source projects, or sharing what I've learned through technical writing and mentorship.
+                I specialize in <span className="font-bold">JavaScript</span> and <span className="font-bold">TypeScript</span> development, with particular focus on <span className="font-bold">React</span>, <span className="font-bold">Next.js</span>, and <span className="font-bold">Node.js</span>. When I&apos;m not coding, you can find me exploring new technologies, contributing to open-source projects, or sharing what I&apos;ve learned through technical writing and mentorship.
               </p>
             </div>
           </div>
         </div>
       </section>
-      
-      {/* Footer with theme colors */}
-      <footer 
-        className="py-6 mt-auto border-t-4 transition-colors duration-200"
-        style={{
-          backgroundColor: colors.secondary,
-          borderColor: colors.accent,
-          color: 'white'  // Footer text is white in both themes
-        }}
-      >
-        <div className="max-w-6xl mx-auto px-4 text-center">
-          <p className="font-semibold">© {new Date().getFullYear()} ErickHerreraCabrera. All rights reserved.</p>
-        </div>
-      </footer>
     </div>
   );
 }

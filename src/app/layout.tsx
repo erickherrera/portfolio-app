@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import NavBar from "@components/components/NavBar";
 import { ThemeProvider } from "./ThemeContext";
+import ThemedFooter from "@components/components/ThemedFooter";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -36,11 +37,7 @@ export default function RootLayout({
           <main className="flex-grow">
             {children}
           </main>
-          <footer className="mt-auto py-4 border-t border-gray-200 dark:border-gray-800">
-            <div className="container mx-auto text-center text-sm text-gray-600 dark:text-gray-400">
-              © {new Date().getFullYear()} Erick Herrera
-            </div>
-          </footer>
+          <ThemedFooter />
         </ThemeProvider>
       </body>
     </html>

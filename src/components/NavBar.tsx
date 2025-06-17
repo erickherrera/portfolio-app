@@ -1,7 +1,6 @@
 "use client";
 
 import { JSX, useState } from "react";
-import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import { useTheme } from "../app/ThemeContext";
 
@@ -71,25 +70,6 @@ export default function NavBar(): JSX.Element {
         color: colors.foreground
       }}
     >
-      {/* Logo/Brand Section */}
-      <div className="flex items-center">
-        <a 
-          href="#home"
-          className="flex items-center gap-2"
-          onClick={(e) => handleNavigation(e, "#home", true)}
-          style={{ color: colors.foreground }}
-        >
-          <Image
-            src="/next.svg"
-            alt="Erick Herrera logo"
-            width={90}
-            height={20}
-            priority
-            className={isDark ? "invert" : ""}
-          />
-          <span className="font-semibold text-xl ml-2 hidden sm:inline">Erick Herrera Cabrera</span>
-        </a>
-      </div>
 
       {/* Desktop Navigation Links */}
       <div className="hidden md:flex space-x-8">
