@@ -1,13 +1,70 @@
+// Updated Homepage with ProjectsGrid Integration
 "use client";
 
 import Image from "next/image";
 import ThemeToggle from "../ThemeToggle";
 import { useTheme } from "../ThemeContext";
+import ProjectsGrid from "../../components/ProjectsSection"; // Adjust path as needed
 
 export default function Home() {
-  // Now we DO need to use the theme hook to access colors
   const { colors } = useTheme();
-  
+  // Define the Project interface in your page file
+  interface Project {
+    id: number;
+    title: string;
+    description: string;
+    image?: string;
+  }
+
+  const projects: Project[] = [
+    { 
+      id: 1, 
+      title: "SaSS for HVAC", 
+      description: "SaSS application for an HVAC company to manage their business." 
+    },
+    { 
+      id: 2, 
+      title: "Personal Portfolio", 
+      description: "Personal portfolio using NextJS with modern design patterns" 
+    },
+    { 
+      id: 3, 
+      title: "E-commerce Platform", 
+      description: "Full-stack e-commerce solution with React and Node.js" 
+    },
+    { 
+      id: 4, 
+      title: "Task Management App", 
+      description: "Collaborative task management tool with real-time updates" 
+    },
+    { 
+      id: 5, 
+      title: "Weather Dashboard", 
+      description: "Interactive weather dashboard with data visualization" 
+    },
+    { 
+      id: 6, 
+      title: "API Documentation Tool", 
+      description: "Automated API documentation generator with live examples" 
+    },
+  ];
+
+  const handleProjectClick = (project: Project) => {
+    console.log(`Clicked on project: ${project.title}`);
+    // Add navigation logic here, e.g.:
+    // router.push(`/projects/${project.id}`);
+  };
+
+  // Add this helper function inside your Home component, before the return statement
+  const createHoverHandlers = () => ({
+    onMouseEnter: (e: React.MouseEvent<HTMLAnchorElement>) => {
+      e.currentTarget.style.backgroundColor = colors.primary;
+    },
+    onMouseLeave: (e: React.MouseEvent<HTMLAnchorElement>) => {
+      e.currentTarget.style.backgroundColor = colors.secondary;
+    }
+  });
+
   return (
     <div className="flex flex-col min-h-screen">
       {/* Theme Toggle - Positioned fixed on screen */}
@@ -43,11 +100,12 @@ export default function Home() {
                 href="https://github.com/erickherrera" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="px-4 py-2 font-bold rounded-md transition-colors shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2"
+                className="px-4 py-2 font-bold rounded-md transition-colors duration-300 shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2"
                 style={{
-                  backgroundColor: colors.primary,
-                  color: 'white'
+                  backgroundColor: colors.secondary,
+                  color: 'white',
                 }}
+                {...createHoverHandlers()}
                 aria-label="GitHub Profile"
               >
                 GitHub
@@ -56,11 +114,12 @@ export default function Home() {
                 href="https://www.linkedin.com/in/erick-herrera-cabrera-b2268b1b4/" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="px-4 py-2 font-bold rounded-md transition-colors shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2"
+                className="px-4 py-2 font-bold rounded-md transition-colors duration-300 shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2"
                 style={{
                   backgroundColor: colors.secondary,
                   color: 'white'
                 }}
+                {...createHoverHandlers()}
                 aria-label="LinkedIn Profile"
               >
                 LinkedIn
@@ -126,6 +185,26 @@ export default function Home() {
             </div>
           </div>
         </div>
+      </section>
+
+      {/* Projects Section - Integrated with your theme */}
+      <section 
+        id="projects" 
+        className="py-20 border-t-4 transition-colors duration-200"
+        style={{
+          backgroundColor: colors.hero,  // or colors.background if you prefer
+          borderColor: colors.accent
+        }}
+      >
+        <ProjectsGrid 
+          projects={projects}
+          title="My Projects"
+          subtitle="Here are some of the projects I've worked on recently"
+          colors={colors}
+          onProjectClick={handleProjectClick}
+          showHeader={true}
+          className=""
+        />
       </section>
     </div>
   );

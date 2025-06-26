@@ -22,8 +22,6 @@ export default function NavBar(): JSX.Element {
 
   const navLinks: NavLink[] = [
     { name: "Home", path: "/homepage", isHash: false },
-    { name: "About", path: "#about", isHash: true },
-    { name: "Projects", path: "/projectspage", isHash: false },
     { name: "Contact", path: "#contact", isHash: true },
   ];
 
