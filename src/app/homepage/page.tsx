@@ -1,13 +1,18 @@
-// Updated Homepage with ProjectsGrid Integration
+// Updated Homepage with Navigation Integration
 "use client";
 
 import Image from "next/image";
 import ThemeToggle from "../ThemeToggle";
 import { useTheme } from "../ThemeContext";
 import ProjectsGrid from "../../components/ProjectsSection"; // Adjust path as needed
+import { useState, useEffect, useRef } from "react";
 
 export default function Home() {
   const { colors } = useTheme();
+  const [activeSection, setActiveSection] = useState("");
+  const [showAnimation, setShowAnimation] = useState(false);
+  const animationTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  
   // Define the Project interface in your page file
   interface Project {
     id: number;
@@ -65,17 +70,147 @@ export default function Home() {
     }
   });
 
+  // Navigation sections
+  const sections = [
+    { id: "home", name: "Home" },
+    { id: "about", name: "About" },
+    { id: "projects", name: "Projects" },
+    { id: "contact", name: "Contact" }
+  ];
+
+  // Scroll to section function
+  const scrollToSection = (sectionId: string) => {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" });
+      // Clear any existing timeout
+      if (animationTimeoutRef.current) {
+        clearTimeout(animationTimeoutRef.current);
+      }
+      // Show animation when manually navigating
+      setShowAnimation(true);
+      // Hide animation after 1 second
+      animationTimeoutRef.current = setTimeout(() => {
+        setShowAnimation(false);
+      }, 1000);
+    }
+  };
+
+  // Set up intersection observer for section detection
+  useEffect(() => {
+    const observerOptions = {
+      root: null,
+      rootMargin: "-50% 0px -50% 0px",
+      threshold: 0
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          setActiveSection(entry.target.id);
+          // Clear any existing timeout
+          if (animationTimeoutRef.current) {
+            clearTimeout(animationTimeoutRef.current);
+          }
+          // Show animation when section changes
+          setShowAnimation(true);
+          // Hide animation after 1 second
+          animationTimeoutRef.current = setTimeout(() => {
+            setShowAnimation(false);
+          }, 1000);
+        }
+      });
+    }, observerOptions);
+
+    // Observe all sections
+    sections.forEach(section => {
+      const element = document.getElementById(section.id);
+      if (element) {
+        observer.observe(element);
+      }
+    });
+
+    // Cleanup function
+    return () => {
+      sections.forEach(section => {
+        const element = document.getElementById(section.id);
+        if (element) {
+          observer.unobserve(element);
+        }
+      });
+      // Clear timeout on unmount
+      if (animationTimeoutRef.current) {
+        clearTimeout(animationTimeoutRef.current);
+      }
+    };
+  }, []);
+
   return (
     <div className="flex flex-col min-h-screen">
+      {/* Navigation Indicator */}
+      <div className="fixed right-6 top-1/2 transform -translate-y-1/2 z-40 hidden md:flex flex-col gap-6">
+        {sections.map((section) => (
+          <div key={section.id} className="relative group">
+            {/* Tooltip */}
+            <div 
+              className="absolute right-8 top-1/2 transform -translate-y-1/2 px-3 py-1 rounded-lg text-sm font-medium whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none"
+              style={{
+                backgroundColor: colors.foreground === '#171717' ? 'rgba(0, 0, 0, 0.9)' : 'rgba(255, 255, 255, 0.9)',
+                color: colors.foreground === '#171717' ? '#FFFFFF' : '#000000'
+              }}
+            >
+              {section.name}
+            </div>
+            
+            {/* Navigation Dot */}
+            <button
+              onClick={() => scrollToSection(section.id)}
+              className={`w-3 h-3 rounded-full border-2 transition-all duration-300 hover:scale-125 focus:outline-none focus:ring-2 focus:ring-offset-2 ${
+                activeSection === section.id ? 'scale-110' : ''
+              }`}
+              style={{
+                borderColor: activeSection === section.id ? colors.primary : colors.foreground === '#171717' ? '#D1D5DB' : '#4B5563',
+                backgroundColor: activeSection === section.id ? colors.primary : 'transparent',
+                boxShadow: activeSection === section.id ? `0 0 20px ${colors.primary}40` : 'none',
+                animation: activeSection === section.id ? 'pulse 2s infinite' : 'none'
+              }}
+              onFocus={(e) => {
+                e.currentTarget.style.outlineColor = colors.primary;
+              }}
+              aria-label={`Navigate to ${section.name}`}
+            />
+          </div>
+        ))}
+      </div>
+
+      {/* Mobile Navigation Indicator - Bottom of screen */}
+      <div className="fixed bottom-20 left-1/2 transform -translate-x-1/2 z-40 flex md:hidden gap-4">
+        {sections.map((section) => (
+          <button
+            key={section.id}
+            onClick={() => scrollToSection(section.id)}
+            className={`w-2.5 h-2.5 rounded-full border-2 transition-all duration-300 ${
+              activeSection === section.id ? 'scale-110 w-8' : ''
+            }`}
+            style={{
+              borderColor: activeSection === section.id ? colors.primary : colors.foreground === '#171717' ? '#D1D5DB' : '#4B5563',
+              backgroundColor: activeSection === section.id ? colors.primary : 'transparent',
+              boxShadow: activeSection === section.id && showAnimation ? `0 0 15px ${colors.primary}40` : 'none'
+            }}
+            aria-label={`Navigate to ${section.name}`}
+          />
+        ))}
+      </div>
+
       {/* Theme Toggle - Positioned fixed on screen */}
       <div className="fixed bottom-5 right-5 z-50">
         <ThemeToggle />
       </div>
       
-      {/* Header/Welcome Section with Theme Colors */}
+      {/* Header/Welcome Section - Home Section */}
       <section 
         id="home" 
-        className="py-16 md:py-24 transition-colors duration-200"
+        className="pt-24 pb-16 md:pt-32 md:pb-24 transition-colors duration-200"
         style={{
           background: `linear-gradient(to bottom, ${colors.background}, ${colors.background})` 
         }}
@@ -83,7 +218,7 @@ export default function Home() {
         <div className="max-w-4xl mx-auto px-4 sm:px-6">
           <div className="flex flex-col items-center text-center">
             <h1 
-              className="mb-4 mt-10 text-4xl sm:text-5xl font-extrabold tracking-tight"
+              className="mb-4 text-4xl sm:text-5xl font-extrabold tracking-tight"
               style={{ color: colors.foreground }}
             >
               Welcome to my portfolio.
@@ -129,10 +264,10 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Hero/About Section with Theme Colors */}
+      {/* About Me Section */}
       <section 
         id="about" 
-        className="py-20 border-t-4 transition-colors duration-200"
+        className="pt-20 pb-20 border-t-4 transition-colors duration-200 scroll-mt-20"
         style={{
           backgroundColor: colors.hero,
           borderColor: colors.accent
@@ -187,12 +322,12 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Projects Section - Integrated with your theme */}
+      {/* My Projects Section */}
       <section 
         id="projects" 
-        className="py-20 border-t-4 transition-colors duration-200"
+        className="pt-20 pb-20 border-t-4 transition-colors duration-200 scroll-mt-20"
         style={{
-          backgroundColor: colors.hero,  // or colors.background if you prefer
+          backgroundColor: colors.hero,
           borderColor: colors.accent
         }}
       >
@@ -206,6 +341,31 @@ export default function Home() {
           className=""
         />
       </section>
+      <section 
+        id="contact" 
+        className="pt-20 pb-20 border-t-4 transition-colors duration-200 scroll-mt-20"
+        style={{
+          backgroundColor: colors.hero,
+          borderColor: colors.accent
+        }}
+      >
+        <div className="max-w-4xl mx-auto px-4 sm:px-6"></div>
+      </section>
+
+      {/* Add pulse animation to global styles */}
+      <style jsx global>{`
+        @keyframes pulse {
+          0% {
+            box-shadow: 0 0 0 0 ${colors.primary}40;
+          }
+          50% {
+            box-shadow: 0 0 0 15px ${colors.primary}20;
+          }
+          100% {
+            box-shadow: 0 0 0 0 ${colors.primary}00;
+          }
+        }
+      `}</style>
     </div>
   );
 }

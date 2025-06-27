@@ -1,6 +1,6 @@
 "use client";
 
-import { JSX, useState } from "react";
+import { JSX, useState, useEffect } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { useTheme } from "../app/ThemeContext";
 
@@ -13,7 +13,7 @@ interface NavLink {
 
 export default function NavBar(): JSX.Element {
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
-  const pathname = usePathname();
+  const [activeSection, setActiveSection] = useState<string>("#home");
   const router = useRouter();
   const { colors, theme, resolvedTheme } = useTheme();
   
@@ -21,23 +21,56 @@ export default function NavBar(): JSX.Element {
   const isDark = theme === 'dark' || resolvedTheme === 'dark';
 
   const navLinks: NavLink[] = [
-    { name: "Home", path: "/homepage", isHash: false },
+    { name: "Home", path: "#home", isHash: true },
+    { name: "About", path: "#about", isHash: true },
+    { name: "My Projects", path: "#projects", isHash: true },
     { name: "Contact", path: "#contact", isHash: true },
   ];
 
+  // Set up intersection observer for section detection
+  useEffect(() => {
+    const observerOptions = {
+      root: null,
+      rootMargin: "-20% 0px -70% 0px",
+      threshold: 0
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          setActiveSection(`#${entry.target.id}`);
+          // Update URL hash without scrolling
+          window.history.replaceState(null, '', `#${entry.target.id}`);
+        }
+      });
+    }, observerOptions);
+
+    // Observe all sections
+    const sections = ['home', 'about', 'projects', 'contact'];
+    sections.forEach(sectionId => {
+      const element = document.getElementById(sectionId);
+      if (element) {
+        observer.observe(element);
+      }
+    });
+
+    // Check initial hash
+    const currentHash = window.location.hash || '#home';
+    setActiveSection(currentHash);
+
+    return () => {
+      sections.forEach(sectionId => {
+        const element = document.getElementById(sectionId);
+        if (element) {
+          observer.unobserve(element);
+        }
+      });
+    };
+  }, []);
+
   // Function to determine if a link is active
-  const isActive = (path: string, isHash: boolean): boolean => {
-    if (!isHash) {
-      // For non-hash links (like Projects), check the pathname
-      return pathname === path;
-    }
-    
-    if (pathname === "/" && path === "#home") return true;
-    if (path === "#home") return false; // Only highlight home when exactly at /
-    
-    // For other sections, check if the URL has the hash
-    const currentHash = typeof window !== "undefined" ? window.location.hash : "";
-    return currentHash === path;
+  const isActive = (path: string): boolean => {
+    return activeSection === path;
   };
 
   // Function to handle navigation
@@ -46,9 +79,11 @@ export default function NavBar(): JSX.Element {
     
     if (isHash) {
       // For hash links, scroll to the section
-      const element = document.querySelector(path);
+      const elementId = path.substring(1); // Remove the #
+      const element = document.getElementById(elementId);
       if (element) {
         element.scrollIntoView({ behavior: "smooth" });
+        setActiveSection(path);
       }
     } else {
       // For non-hash links (like Projects), use the router
@@ -70,27 +105,33 @@ export default function NavBar(): JSX.Element {
     >
 
       {/* Desktop Navigation Links */}
-      <div className="hidden md:flex space-x-8">
+      <div className="hidden md:flex space-x-8 ml-auto items-center">
         {navLinks.map((link) => (
           <a
             key={link.path}
             href={link.path}
             onClick={(e) => handleNavigation(e, link.path, link.isHash)}
-            className="transition-colors duration-300"
+            className="relative py-2 transition-all duration-300 hover:opacity-80"
             style={{ 
-              color: isActive(link.path, link.isHash) ? colors.accent : colors.foreground,
-              fontWeight: isActive(link.path, link.isHash) ? 'medium' : 'normal',
-              textDecoration: isActive(link.path, link.isHash) ? 'underline' : 'none',
-              textUnderlineOffset: '4px'
+              color: isActive(link.path) ? colors.accent : colors.foreground,
+              fontWeight: isActive(link.path) ? '600' : '400',
             }}
           >
             {link.name}
+            {/* Animated underline */}
+            <span 
+              className="absolute bottom-0 left-0 w-full h-0.5 transform origin-left transition-transform duration-300"
+              style={{
+                backgroundColor: colors.accent,
+                transform: isActive(link.path) ? 'scaleX(1)' : 'scaleX(0)',
+              }}
+            />
           </a>
         ))}
       </div>
 
       {/* Mobile Menu Button */}
-      <div className="md:hidden">
+      <div className="md:hidden ml-auto">
         <button
           onClick={() => setIsMenuOpen(!isMenuOpen)}
           className="p-2 rounded-md transition-colors duration-200"
@@ -137,11 +178,12 @@ export default function NavBar(): JSX.Element {
               <a
                 key={link.path}
                 href={link.path}
-                className="py-3 border-b transition-colors duration-200"
+                className="py-3 px-4 my-1 rounded transition-all duration-200"
                 style={{ 
-                  color: isActive(link.path, link.isHash) ? colors.accent : colors.foreground,
-                  fontWeight: isActive(link.path, link.isHash) ? 'medium' : 'normal',
-                  borderColor: isDark ? '#374151' : '#f3f4f6'
+                  color: isActive(link.path) ? colors.accent : colors.foreground,
+                  fontWeight: isActive(link.path) ? '600' : '400',
+                  backgroundColor: isActive(link.path) ? `${colors.accent}15` : 'transparent',
+                  borderLeft: isActive(link.path) ? `3px solid ${colors.accent}` : '3px solid transparent',
                 }}
                 onClick={(e) => handleNavigation(e, link.path, link.isHash)}
               >
