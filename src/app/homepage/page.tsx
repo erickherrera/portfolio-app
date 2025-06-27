@@ -4,7 +4,7 @@
 import Image from "next/image";
 import ThemeToggle from "../ThemeToggle";
 import { useTheme } from "../ThemeContext";
-import ProjectsGrid from "../../components/ProjectsSection"; // Adjust path as needed
+import ProjectsGrid from "./components/ProjectsSection"; // Adjust path as needed
 import { useState, useEffect, useRef } from "react";
 
 export default function Home() {
