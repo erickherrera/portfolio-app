@@ -4,7 +4,9 @@
 import Image from "next/image";
 import ThemeToggle from "../ThemeToggle";
 import { useTheme } from "../ThemeContext";
-import ProjectsGrid from "./components/ProjectsSection"; // Adjust path as needed
+import ProjectsGrid from "./components/ProjectsSection"; 
+import TechStackSection from "./components/techsection";
+import ContactMe from "./components/contactmesection";
 import { useState, useEffect, useRef } from "react";
 
 export default function Home() {
@@ -60,6 +62,44 @@ export default function Home() {
     // router.push(`/projects/${project.id}`);
   };
 
+  // Handle contact form submission
+  const handleContactSubmit = async (formData: any) => {
+    // Here you would typically send the form data to your email service
+    console.log('Contact form submitted:', formData);
+    
+    // Log the form data so you can see what's being submitted
+    console.log('Name:', formData.name);
+    console.log('Email:', formData.email);
+    console.log('Company:', formData.company);
+    console.log('Message:', formData.message);
+    
+    // TODO: Replace this with actual email sending logic
+    // Options:
+    // 1. EmailJS - Client-side email service
+    // 2. Create Next.js API route with Nodemailer
+    // 3. Use Formspree or similar form services
+    // 4. Send to your backend API
+    
+    // Example of what you might do later:
+    // try {
+    //   const response = await fetch('/api/contact', {
+    //     method: 'POST',
+    //     headers: { 'Content-Type': 'application/json' },
+    //     body: JSON.stringify(formData)
+    //   });
+    //   
+    //   if (!response.ok) throw new Error('Failed to send email');
+    //   return await response.json();
+    // } catch (error) {
+    //   console.error('Error sending email:', error);
+    //   throw error;
+    // }
+    
+    // For now, just simulate a successful submission
+    // This makes the form show "success" after 1 second
+    return new Promise((resolve) => setTimeout(resolve, 1000));
+  };
+
   // Add this helper function inside your Home component, before the return statement
   const createHoverHandlers = () => ({
     onMouseEnter: (e: React.MouseEvent<HTMLAnchorElement>) => {
@@ -74,6 +114,7 @@ export default function Home() {
   const sections = [
     { id: "home", name: "Home" },
     { id: "about", name: "About" },
+    { id: "tech", name: "Tech" },
     { id: "projects", name: "Projects" },
     { id: "contact", name: "Contact" }
   ];
@@ -146,7 +187,7 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-screen ">
       {/* Navigation Indicator */}
       <div className="fixed right-6 top-1/2 transform -translate-y-1/2 z-40 hidden md:flex flex-col gap-6">
         {sections.map((section) => (
@@ -267,7 +308,7 @@ export default function Home() {
       {/* About Me Section */}
       <section 
         id="about" 
-        className="pt-20 pb-20 border-t-4 transition-colors duration-200 scroll-mt-20"
+        className="pt-20 pb-20 border-t-6 transition-colors duration-200 scroll-mt-20"
         style={{
           backgroundColor: colors.hero,
           borderColor: colors.accent
@@ -322,10 +363,25 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Tech Stack section */}
+      <section 
+        id="tech"
+        className="pt-20 pb-20 border-t-6 transition-colors duration-200 scroll-mt-20"
+        style={{
+          backgroundColor: colors.hero,
+          borderColor: colors.accent
+        }}
+      >
+        <TechStackSection 
+          colors={colors}
+          showFeatures={true}
+        />
+      </section>
+
       {/* My Projects Section */}
       <section 
         id="projects" 
-        className="pt-20 pb-20 border-t-4 transition-colors duration-200 scroll-mt-20"
+        className="pt-20 pb-20 border-t-6 transition-colors duration-200 scroll-mt-20"
         style={{
           backgroundColor: colors.hero,
           borderColor: colors.accent
@@ -343,15 +399,17 @@ export default function Home() {
       </section>
       <section 
         id="contact" 
-        className="pt-20 pb-20 border-t-4 transition-colors duration-200 scroll-mt-20"
+        className="pt-20 pb-20 border-t-6 transition-colors duration-200 scroll-mt-20"
         style={{
           backgroundColor: colors.hero,
           borderColor: colors.accent
         }}
       >
-        <div className="max-w-4xl mx-auto px-4 sm:px-6"></div>
+        <ContactMe 
+          colors={colors}
+          onSubmit={handleContactSubmit}
+        />
       </section>
-
       {/* Add pulse animation to global styles */}
       <style jsx global>{`
         @keyframes pulse {
