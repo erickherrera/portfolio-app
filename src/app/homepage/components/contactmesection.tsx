@@ -376,11 +376,11 @@ const ContactMe: React.FC<ContactMeProps> = ({
         >
           Prefer to reach out directly? Email me at{' '}
           <a 
-            href="mailto:your.email@example.com" 
+            href="mailto:erickmherrera@outlook.com" 
             className="font-medium hover:underline transition-colors duration-200"
             style={{ color: colors.primary }}
           >
-            your.email@example.com
+            erickmherrera@outlook.com
           </a>
         </p>
       </div>
