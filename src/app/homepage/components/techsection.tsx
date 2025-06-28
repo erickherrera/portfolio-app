@@ -10,6 +10,7 @@ import { SiNodedotjs, SiExpress, SiPython } from 'react-icons/si';
 import { SiMysql, SiMongodb, SiSqlite } from 'react-icons/si';
 // DevOps icons
 import { SiDocker } from 'react-icons/si';
+import { COLORS } from '@components/app/ThemeContext';
 
 interface Tech {
   name: string;
@@ -83,7 +84,7 @@ const TechStackSection: React.FC<TechStackSectionProps> = ({
         <div className="w-20 h-2 mx-auto rounded-full" style={{ backgroundColor: colors.accent }}></div>
         <p 
           className="mt-6 text-lg"
-          style={{ color: colors.foreground === '#171717' ? '#6B7280' : '#9CA3AF' }}
+          style={{ color: colors.primary}}
         >
           {subtitle}
         </p>
@@ -95,7 +96,7 @@ const TechStackSection: React.FC<TechStackSectionProps> = ({
           <div key={category} className="space-y-4">
             <h3 
               className="text-xl font-bold mb-4"
-              style={{ color: colors.primary }}
+              style={{ color: colors.foreground }}
             >
               {category}
             </h3>
@@ -105,8 +106,8 @@ const TechStackSection: React.FC<TechStackSectionProps> = ({
                   key={tech.name}
                   className="group relative overflow-hidden rounded-lg p-4 transition-all duration-300 hover:scale-105 hover:shadow-lg cursor-pointer tech-card-hover"
                   style={{
-                    backgroundColor: colors.foreground === '#171717' ? '#F9FAFB' : '#1F2937',
-                    border: `1px solid ${colors.foreground === '#171717' ? '#E5E7EB' : '#374151'}`
+                    backgroundColor: colors.background,
+                    border: `1px solid ${colors.primary}`
                   }}
                   onMouseEnter={(e) => {
                     e.currentTarget.style.borderColor = colors.primary;

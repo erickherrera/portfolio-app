@@ -16,7 +16,7 @@ export const COLORS = {
     secondary: '#51273c',    // Dark burgundy from your palette
     background: '#FFFFFF',   // White as requested
     hero: '#F8F9FA',        // Very light gray for hero sections
-    accent: '#ad94df',      // Dark red-brown from your palette
+    accent: '#51273c',      // Purple accent
     foreground: '#171717',  // Near black for text
     muted: '#949494',       // Gray from your palette
     card: '#FFFFFF',        // White for cards
@@ -24,10 +24,10 @@ export const COLORS = {
   },
   [THEMES.DARK]: {
     primary: '#949494',      // Gray from your palette as primary in dark mode
-    secondary: '#4e524b',    // Olive-gray from your palette
+    secondary: '#a64d79',    // Olive-gray from your palette
     background: '#1a1a1a',   // Very dark background
     hero: '#2a2a2a',        // Slightly lighter for hero sections
-    accent: '#ad94df',      // purple accent
+    accent: '#a64d79',      // purple accent
     foreground: '#ededed',  // Near white for text
     muted: '#6B7280',       // Muted text color
     card: '#2a2a2a',        // Dark cards
