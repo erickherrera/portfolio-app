@@ -1,9 +1,9 @@
 // Updated Homepage with Navigation Integration
 "use client";
 
-import Image from "next/image";
 import ThemeToggle from "../ThemeToggle";
 import { useTheme } from "../ThemeContext";
+import ProfileCard from "./components/ProfileCard";
 import ProjectsGrid from "./components/ProjectsSection"; 
 import TechStackSection from "./components/techsection";
 import ContactMe from "./components/contactmesection";
@@ -327,22 +327,8 @@ export default function Home() {
           
           <div className="flex flex-col md:flex-row items-center gap-8 md:gap-10">
             {/* Profile image with theme styling */}
-            <div 
-              className="w-48 h-48 md:w-56 md:h-56 rounded-full overflow-hidden flex-shrink-0 shadow-lg border-4 transition-colors duration-200"
-              style={{ 
-                backgroundColor: colors.background === '#FFFFFF' ? '#E5E7EB' : '#374151',
-                borderColor: colors.accent
-              }}
-            >
-              <Image
-                src="/me.jpg"
-                alt="Profile photo"
-                width={224}
-                height={224}
-                className="object-cover w-full h-full"
-                priority
-              />
-            </div>
+            
+              <ProfileCard/>
             
             {/* About text with theme support */}
             <div className="flex-1 mt-6 md:mt-0">
