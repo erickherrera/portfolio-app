@@ -34,7 +34,7 @@ export default function Home() {
       title: "Personal Portfolio", 
       description: "Personal portfolio using NextJS with modern design patterns" 
     },
-    { 
+  /*{ 
       id: 3, 
       title: "E-commerce Platform", 
       description: "Full-stack e-commerce solution with React and Node.js" 
@@ -54,6 +54,7 @@ export default function Home() {
       title: "API Documentation Tool", 
       description: "Automated API documentation generator with live examples" 
     },
+  */
   ];
 
   const handleProjectClick = (project: Project) => {
