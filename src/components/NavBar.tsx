@@ -2,6 +2,7 @@
 
 import { JSX, useState, useEffect } from "react";
 import { usePathname, useRouter } from "next/navigation";
+import Image from "next/image";
 import { useTheme } from "../app/ThemeContext";
 
 // Define types for our nav links
@@ -104,9 +105,44 @@ export default function NavBar(): JSX.Element {
         color: colors.foreground
       }}
     >
+      {/* Logo and Name - Left side */}
+      <div className="flex items-center space-x-3">
+        <div className="relative w-12 h-12">
+          <Image
+            src="/LOGO3.webp"
+            alt="Logo"
+            fill
+            className="object-contain"
+            priority
+          />
+          {/* Gradient overlay to match theme */}
+          <div 
+            className="absolute inset-0 rounded mix-blend-overlay"
+            style={{
+              background: `linear-gradient(135deg, ${colors.background}30, ${colors.primary}20, ${colors.accent}15)`
+            }}
+          />
+        </div>
+        
+        {/* Name and Title */}
+        <div className="hidden sm:block">
+          <div 
+            className="font-bold text-lg leading-tight"
+            style={{ color: colors.foreground }}
+          >
+            Erick Herrera
+          </div>
+          <div 
+            className="text-sm font-medium"
+            style={{ color: colors.accent }}
+          >
+            Software Engineer
+          </div>
+        </div>
+      </div>
 
       {/* Desktop Navigation Links */}
-      <div className="hidden md:flex space-x-8 ml-auto items-center">
+      <div className="hidden md:flex space-x-8 items-center">
         {navLinks.map((link) => (
           <a
             key={link.path}
@@ -132,7 +168,7 @@ export default function NavBar(): JSX.Element {
       </div>
 
       {/* Mobile Menu Button */}
-      <div className="md:hidden ml-auto">
+      <div className="md:hidden">
         <button
           onClick={() => setIsMenuOpen(!isMenuOpen)}
           className="p-2 rounded-md transition-colors duration-200"

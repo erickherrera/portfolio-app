@@ -256,7 +256,7 @@ export default function Home() {
           background: `linear-gradient(to bottom, ${colors.background}, ${colors.background})` 
         }}
       >
-        <div className="max-w-4xl mx-auto px-4 sm:px-6">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 my-20">
           <div className="flex flex-col items-center text-center">
             <h1 
               className="mb-4 text-4xl sm:text-5xl font-extrabold tracking-tight"
@@ -322,16 +322,17 @@ export default function Home() {
             >
               About Me
             </h2>
-            <div className="w-20 h-2 mx-auto rounded-full" style={{ backgroundColor: colors.accent }}></div>
+            <div className="w-20 h-2 mx-auto rounded-full mb-15" style={{ backgroundColor: colors.accent }}></div>
           </div>
           
-          <div className="flex flex-col md:flex-row items-center gap-8 md:gap-10">
-            {/* Profile image with theme styling */}
-            
+          <div className="flex flex-col md:flex-row items-start gap-8 md:gap-10">
+            {/* Profile Card */}
+            <div className="flex-shrink-0">
               <ProfileCard/>
+            </div>
             
-            {/* About text with theme support */}
-            <div className="flex-1 mt-6 md:mt-0">
+            {/* About text */}
+            <div className="flex-1">
               <p 
                 className="text-lg font-medium leading-relaxed mb-6"
                 style={{ color: colors.foreground === '#171717' ? '#374151' : '#D1D5DB' }}

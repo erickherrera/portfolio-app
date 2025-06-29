@@ -21,20 +21,31 @@ const ProfileCard = ({ className = "" }: ProfileCardProps) => {
 
   return (
     <div 
-      className={`relative w-80 h-96 rounded-2xl shadow-xl overflow-hidden transition-all duration-300 hover:shadow-2xl ${className}`}
+      className={`relative w-80 h-100 rounded-2xl shadow-xl overflow-hidden transition-all duration-300 hover:shadow-2xl ${className}`}
       style={{
         backgroundColor: colors.card,
-        borderColor: colors.accent,
-        border: `2px solid ${colors.accent}`
+        borderColor: colors.border,
+        border: `2px solid ${colors.border}`
       }}
     >
+      {/* Name Section */}
+      <div className="px-6 py-4 text-center border-b" style={{ borderColor: colors.border }}>
+        <h3 
+          className="text-lg font-bold tracking-wide"
+          style={{ color: colors.foreground }}
+        >
+          Erick Herrera Cabrera
+        </h3>
+      </div>
+
       {/* Profile Image Section */}
-      <div className="relative h-48 w-full overflow-hidden">
+      <div className="relative h-36 w-full overflow-hidden">
         <Image
           src="/me.jpg"
           alt="Profile photo"
           fill
           className="object-cover"
+          style={{ objectPosition: 'center 65%' }}
           priority
         />
         <div 
