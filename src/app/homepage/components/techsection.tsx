@@ -10,11 +10,9 @@ import { SiNodedotjs, SiExpress, SiPython } from 'react-icons/si';
 import { SiMysql, SiMongodb, SiSqlite } from 'react-icons/si';
 // DevOps icons
 import { SiDocker } from 'react-icons/si';
-import { COLORS } from '@components/app/ThemeContext';
 
 interface Tech {
   name: string;
-  category: string;
   icon?: string | IconType;
 }
 
@@ -35,42 +33,29 @@ interface TechStackSectionProps {
 }
 
 const defaultTechStack: Tech[] = [
-  // Frontend
-  { name: "JavaScript", category: "Frontend", icon: SiJavascript },
-  { name: "TypeScript", category: "Frontend", icon: SiTypescript },
-  { name: "React", category: "Frontend", icon: SiReact },
-  { name: "React Native", category: "Frontend", icon: FaMobileAlt },
-  { name: "Next.js", category: "Frontend", icon: SiNextdotjs },
-  { name: "Tailwind CSS", category: "Frontend", icon: SiTailwindcss },
-  // Backend
-  { name: "Node.js", category: "Backend", icon: SiNodedotjs },
-  { name: "Express.js", category: "Backend", icon: SiExpress },
-  { name: "Python", category: "Backend", icon: SiPython },
-  // Database
-  { name: "MySQL", category: "Database", icon: SiMysql },
-  { name: "MongoDB", category: "Database", icon: SiMongodb },
-  { name: "SQLite", category: "Database", icon: SiSqlite },
-  // DevOps & Tools
-  { name: "Docker", category: "DevOps & Tools", icon: SiDocker },
+  { name: "JavaScript", icon: SiJavascript },
+  { name: "TypeScript", icon: SiTypescript },
+  { name: "React", icon: SiReact },
+  //{ name: "React Native", icon: FaMobileAlt },
+  { name: "Next.js", icon: SiNextdotjs },
+  { name: "Tailwind CSS", icon: SiTailwindcss },
+  { name: "Node.js", icon: SiNodedotjs },
+  { name: "Express.js", icon: SiExpress },
+  { name: "Python", icon: SiPython },
+  { name: "MySQL", icon: SiMysql },
+  { name: "MongoDB", icon: SiMongodb },
+  { name: "SQLite", icon: SiSqlite },
+  { name: "Docker", icon: SiDocker },
 ];
 
 const TechStackSection: React.FC<TechStackSectionProps> = ({
   title = "Tech Stack",
-  subtitle = "Technologies I work with to build amazing digital experiences",
+  subtitle = "Technologies I work with to build amazing digital experiences. ",
   colors,
   techStack = defaultTechStack,
   showFeatures = true,
   className = ""
 }) => {
-  // Group tech by category
-  const techByCategory = techStack.reduce((acc, tech) => {
-    if (!acc[tech.category]) {
-      acc[tech.category] = [];
-    }
-    acc[tech.category].push(tech);
-    return acc;
-  }, {} as Record<string, Tech[]>);
-
   return (
     <div className={`max-w-6xl mx-auto px-4 sm:px-6 ${className}`}>
       {/* Header */}
@@ -90,163 +75,233 @@ const TechStackSection: React.FC<TechStackSectionProps> = ({
         </p>
       </div>
 
-      {/* Tech Stack Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-        {Object.entries(techByCategory).map(([category, techs]) => (
-          <div key={category} className="space-y-4">
-            <h3 
-              className="text-xl font-bold mb-4"
-              style={{ color: colors.foreground }}
+      {/* Achievement Grid */}
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-8 mb-16">
+        {techStack.map((tech, index) => (
+          <div
+            key={tech.name}
+            className="group relative flex flex-col items-center"
+            style={{ animationDelay: `${index * 0.1}s` }}
+          >
+            {/* Achievement Badge */}
+            <div 
+              className="achievement-badge relative w-20 h-20 rounded-full flex items-center justify-center mb-3 cursor-pointer transition-all duration-300"
+              style={{
+                background: `linear-gradient(135deg, ${colors.accent}15 0%, ${colors.primary}25 50%, ${colors.secondary}15 100%)`,
+                border: `3px solid ${colors.accent}`,
+                boxShadow: `0 0 20px ${colors.accent}40, inset 0 0 20px ${colors.accent}20`
+              }}
             >
-              {category}
-            </h3>
-            <div className="space-y-3">
-              {techs.map((tech) => (
-                <div
-                  key={tech.name}
-                  className="group relative overflow-hidden rounded-lg p-4 transition-all duration-300 hover:scale-105 hover:shadow-lg cursor-pointer tech-card-hover"
-                  style={{
-                    backgroundColor: colors.background,
-                    border: `1px solid ${colors.primary}`
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.borderColor = colors.primary;
-                    e.currentTarget.style.boxShadow = `0 0 20px ${colors.primary}20`;
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.borderColor = colors.foreground === '#171717' ? '#E5E7EB' : '#374151';
-                    e.currentTarget.style.boxShadow = '';
-                  }}
-                >
-                  <div className="flex items-center space-x-3">
-                    {typeof tech.icon === 'string' ? (
-                      <span className="text-2xl">{tech.icon}</span>
-                    ) : (
-                      tech.icon && React.createElement(tech.icon as IconType, {
-                        className: "text-2xl",
-                        style: { color: colors.secondary }
-                      })
-                    )}
-                    <span 
-                      className="font-medium"
-                      style={{ color: colors.foreground }}
-                    >
-                      {tech.name}
-                    </span>
-                  </div>
-                  
-                  {/* Animated background gradient on hover */}
-                  <div 
-                    className="absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity duration-300"
-                    style={{
-                      background: `linear-gradient(135deg, ${colors.primary} 0%, ${colors.secondary} 100%)`
-                    }}
-                  />
-                </div>
-              ))}
+              {/* Glowing ring effect */}
+              <div 
+                className="absolute inset-0 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 animate-pulse"
+                style={{
+                  background: `conic-gradient(from 0deg, ${colors.accent}, ${colors.primary}, ${colors.secondary}, ${colors.accent})`,
+                  padding: '2px'
+                }}
+              >
+                <div 
+                  className="w-full h-full rounded-full"
+                  style={{ backgroundColor: colors.background }}
+                />
+              </div>
+              
+              {/* Icon */}
+              <div className="relative z-10 floating-icon spinning-icon">
+                {typeof tech.icon === 'string' ? (
+                  <span className="text-3xl">{tech.icon}</span>
+                ) : (
+                  tech.icon && React.createElement(tech.icon as IconType, {
+                    className: "text-3xl spinning-icon",
+                    style: { color: colors.secondary }
+                  })
+                )}
+              </div>
+            </div>
+            
+            {/* Achievement Label */}
+            <div 
+              className="text-center achievement-label"
+              style={{
+                background: `linear-gradient(135deg, ${colors.background}90 0%, ${colors.hero}90 100%)`,
+                borderRadius: '8px',
+                padding: '4px 8px',
+                border: `1px solid ${colors.accent}50`,
+                backdropFilter: 'blur(10px)'
+              }}
+            >
+              <span 
+                className="text-sm font-bold"
+                style={{ color: colors.foreground }}
+              >
+                {tech.name}
+              </span>
             </div>
           </div>
         ))}
       </div>
 
-      {/* Additional Tech Stack Features */}
+      {/* Additional Features Section */}
       {showFeatures && (
         <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8">
           <div 
-            className="text-center p-6 rounded-lg transition-transform duration-300 hover:scale-105"
+            className="text-center p-6 rounded-lg transition-transform duration-300 hover:scale-105 achievement-feature"
             style={{
-              backgroundColor: colors.foreground === '#171717' ? '#F3F4F6' : '#1F2937',
-              border: `2px solid ${colors.accent}`
+              background: `linear-gradient(135deg, ${colors.hero} 0%, ${colors.background} 100%)`,
+              border: `2px solid ${colors.accent}`,
+              boxShadow: `0 0 15px ${colors.accent}30`
             }}
           >
             <div 
-              className="text-3xl mb-3"
+              className="text-4xl mb-3"
+              style={{ color: colors.primary }}
+            >
+              🏆
+            </div>
+            <h4 
+              className="font-bold mb-2 text-lg"
+              style={{ color: colors.foreground }}
+            >
+              Fullstack Developer
+            </h4>
+            <p 
+              className="text-sm"
+              style={{ color: colors.foreground === '#171717' ? '#6B7280' : '#9CA3AF' }}
+            >
+              Full-stack achievement unlocked
+            </p>
+          </div>
+
+          <div 
+            className="text-center p-6 rounded-lg transition-transform duration-300 hover:scale-105 achievement-feature"
+            style={{
+              background: `linear-gradient(135deg, ${colors.hero} 0%, ${colors.background} 100%)`,
+              border: `2px solid ${colors.accent}`,
+              boxShadow: `0 0 15px ${colors.accent}30`
+            }}
+          >
+            <div 
+              className="text-4xl mb-3"
+              style={{ color: colors.primary }}
+            >
+              ⚡
+            </div>
+            <h4 
+              className="font-bold mb-2 text-lg"
+              style={{ color: colors.foreground }}
+            >
+              Speed Runner
+            </h4>
+            <p 
+              className="text-sm"
+              style={{ color: colors.foreground === '#171717' ? '#6B7280' : '#9CA3AF' }}
+            >
+              Rapid development with modern frameworks
+            </p>
+          </div>
+
+          <div 
+            className="text-center p-6 rounded-lg transition-transform duration-300 hover:scale-105 achievement-feature"
+            style={{
+              background: `linear-gradient(135deg, ${colors.hero} 0%, ${colors.background} 100%)`,
+              border: `2px solid ${colors.accent}`,
+              boxShadow: `0 0 15px ${colors.accent}30`
+            }}
+          >
+            <div 
+              className="text-4xl mb-3 "
               style={{ color: colors.primary }}
             >
               🚀
             </div>
             <h4 
-              className="font-bold mb-2"
+              className="font-bold mb-2 text-lg"
               style={{ color: colors.foreground }}
             >
-              Full-Stack Development
+              Scale Engineering
             </h4>
             <p 
               className="text-sm"
               style={{ color: colors.foreground === '#171717' ? '#6B7280' : '#9CA3AF' }}
             >
-              End-to-end application development from database to deployment
-            </p>
-          </div>
-
-          <div 
-            className="text-center p-6 rounded-lg transition-transform duration-300 hover:scale-105"
-            style={{
-              backgroundColor: colors.foreground === '#171717' ? '#F3F4F6' : '#1F2937',
-              border: `2px solid ${colors.accent}`
-            }}
-          >
-            <div 
-              className="text-3xl mb-3"
-              style={{ color: colors.primary }}
-            >
-              💡
-            </div>
-            <h4 
-              className="font-bold mb-2"
-              style={{ color: colors.foreground }}
-            >
-              Modern Frameworks
-            </h4>
-            <p 
-              className="text-sm"
-              style={{ color: colors.foreground === '#171717' ? '#6B7280' : '#9CA3AF' }}
-            >
-              Leveraging cutting-edge tools for optimal performance
-            </p>
-          </div>
-
-          <div 
-            className="text-center p-6 rounded-lg transition-transform duration-300 hover:scale-105"
-            style={{
-              backgroundColor: colors.foreground === '#171717' ? '#F3F4F6' : '#1F2937',
-              border: `2px solid ${colors.accent}`
-            }}
-          >
-            <div 
-              className="text-3xl mb-3"
-              style={{ color: colors.primary }}
-            >
-              📈
-            </div>
-            <h4 
-              className="font-bold mb-2"
-              style={{ color: colors.foreground }}
-            >
-              Scalable Solutions
-            </h4>
-            <p 
-              className="text-sm"
-              style={{ color: colors.foreground === '#171717' ? '#6B7280' : '#9CA3AF' }}
-            >
-              Building applications that grow with your business needs
+              Building applications that scale infinitely
             </p>
           </div>
         </div>
       )}
 
       <style jsx>{`
+        /* Floating animation for achievement badges */
         @keyframes float {
           0%, 100% {
             transform: translateY(0px);
           }
           50% {
-            transform: translateY(-10px);
+            transform: translateY(-8px);
           }
         }
         
-        .tech-card-hover:hover {
+        /* Spinning animation for icons */
+        @keyframes spin {
+          0% {
+            transform: rotateY(0deg);
+          }
+          100% {
+            transform: rotateY(360deg);
+          }
+        }
+        
+        /* Pulse glow animation */
+        @keyframes pulseGlow {
+          0%, 100% {
+            box-shadow: 0 0 20px var(--accent-color, #51273c)40, inset 0 0 20px var(--accent-color, #51273c)20;
+          }
+          50% {
+            box-shadow: 0 0 30px var(--accent-color, #51273c)60, inset 0 0 30px var(--accent-color, #51273c)30;
+          }
+        }
+        
+        /* Icon spinning on hover only */
+        .spinning-icon {
+          transition: transform 0.3s ease;
+        }
+        
+        .achievement-badge:hover .spinning-icon {
+          animation: spin 1s linear infinite;
+        }
+        
+        /* Floating icon */
+        .floating-icon {
           animation: float 3s ease-in-out infinite;
+        }
+        
+        /* Achievement badge hover effect */
+        .achievement-badge:hover {
+          animation: pulseGlow 2s ease-in-out infinite;
+          transform: scale(1.1);
+        }
+        
+        /* Achievement label animation */
+        .achievement-label {
+          opacity: 0.9;
+          transition: all 0.3s ease;
+        }
+        
+        /* Feature cards enhancement */
+        .achievement-feature:hover {
+          animation: float 3s ease-in-out infinite;
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 640px) {
+          .achievement-badge {
+            width: 60px;
+            height: 60px;
+          }
+          
+          .achievement-badge .text-3xl {
+            font-size: 1.5rem;
+          }
         }
       `}</style>
     </div>
