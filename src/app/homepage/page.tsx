@@ -65,40 +65,30 @@ export default function Home() {
 
   // Handle contact form submission
   const handleContactSubmit = async (formData: any) => {
-    // Here you would typically send the form data to your email service
-    console.log('Contact form submitted:', formData);
-    
-    // Log the form data so you can see what's being submitted
-    console.log('Name:', formData.name);
-    console.log('Email:', formData.email);
-    console.log('Company:', formData.company);
-    console.log('Message:', formData.message);
-    
-    // TODO: Replace this with actual email sending logic
-    // Options:
-    // 1. EmailJS - Client-side email service
-    // 2. Create Next.js API route with Nodemailer
-    // 3. Use Formspree or similar form services
-    // 4. Send to your backend API
-    
-    // Example of what you might do later:
-    // try {
-    //   const response = await fetch('/api/contact', {
-    //     method: 'POST',
-    //     headers: { 'Content-Type': 'application/json' },
-    //     body: JSON.stringify(formData)
-    //   });
-    //   
-    //   if (!response.ok) throw new Error('Failed to send email');
-    //   return await response.json();
-    // } catch (error) {
-    //   console.error('Error sending email:', error);
-    //   throw error;
-    // }
-    
-    // For now, just simulate a successful submission
-    // This makes the form show "success" after 1 second
-    return new Promise((resolve) => setTimeout(resolve, 1000));
+    try {
+      console.log('Contact form submitted:', formData);
+      
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 
+          'Content-Type': 'application/json' 
+        },
+        body: JSON.stringify(formData)
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw new Error(result.error || 'Failed to send email');
+      }
+
+      console.log('Email sent successfully:', result);
+      return result;
+
+    } catch (error) {
+      console.error('Error sending email:', error);
+      throw error; // Re-throw so the form component can handle the error state
+    }
   };
 
   // Add this helper function inside your Home component, before the return statement
