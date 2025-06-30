@@ -34,17 +34,13 @@ export async function POST(request: NextRequest) {
 
     // Create transporter for Outlook/Hotmail
     const transporter = nodemailer.createTransport({
-      host: 'smtp-mail.outlook.com',
-      port: 587,
-      secure: false, // true for 465, false for other ports
+      service: 'gmail',
       auth: {
-        user: process.env.EMAIL_USER, // Your outlook email
-        pass: process.env.EMAIL_PASSWORD, // Your outlook password or app password
+        user: process.env.EMAIL_USER, // Your Gmail address
+        pass: process.env.EMAIL_PASSWORD, // Your Gmail app password
       },
-      tls: {
-        ciphers: 'SSLv3'
-      }
     });
+
 
     // Verify connection configuration
     await transporter.verify();
