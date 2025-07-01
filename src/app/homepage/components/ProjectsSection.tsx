@@ -73,11 +73,11 @@ export default function ProjectsGrid({
 
       {/* Grid structure for project cards */}
       <div className="max-w-6xl mx-auto px-4 pb-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 justify-items-center">
           {projects.map((project) => (
             <div
               key={project.id}
-              className="rounded-lg shadow-md overflow-hidden cursor-pointer transform transition duration-300 hover:scale-105 hover:shadow-xl"
+              className="w-full max-w-sm rounded-lg shadow-md overflow-hidden cursor-pointer transform transition duration-300 hover:scale-105 hover:shadow-xl"
               style={{ backgroundColor: colors?.background || '#FFFFFF' }}
               onClick={() => handleProjectClick(project)}
             >
