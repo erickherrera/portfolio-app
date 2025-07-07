@@ -324,19 +324,19 @@ const ContactMe: React.FC<ContactMeProps> = ({
               disabled={isSubmitting}
               className="inline-flex items-center px-8 py-3 rounded-lg font-bold text-white transition-all duration-300 transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
               style={{
-                backgroundColor: isSubmitting ? colors.secondary : colors.primary,
-                boxShadow: isSubmitting ? 'none' : `0 4px 14px 0 ${colors.primary}40`
+                backgroundColor: isSubmitting ? colors.secondary : colors.accent,
+                boxShadow: isSubmitting ? 'none' : `0 4px 14px 0 ${colors.accent}40`
               }}
               onMouseEnter={(e) => {
                 if (!isSubmitting) {
-                  e.currentTarget.style.backgroundColor = colors.secondary;
-                  e.currentTarget.style.boxShadow = `0 6px 20px 0 ${colors.secondary}40`;
+                  e.currentTarget.style.backgroundColor = colors.primary;
+                  e.currentTarget.style.boxShadow = `0 6px 20px 0 ${colors.primary}40`;
                 }
               }}
               onMouseLeave={(e) => {
                 if (!isSubmitting) {
-                  e.currentTarget.style.backgroundColor = colors.primary;
-                  e.currentTarget.style.boxShadow = `0 4px 14px 0 ${colors.primary}40`;
+                  e.currentTarget.style.backgroundColor = colors.accent;
+                  e.currentTarget.style.boxShadow = `0 4px 14px 0 ${colors.accent}40`;
                 }
               }}
             >
@@ -386,6 +386,16 @@ const ContactMe: React.FC<ContactMeProps> = ({
       </div>
 
       <style jsx>{`
+          textarea::placeholder {
+          color: ${colors.foreground} !important;
+          opacity: 0.6;
+        }
+        
+        input::placeholder {
+          color: ${colors.foreground} !important;
+          opacity: 0.6;
+        }
+        
         @keyframes fade-in {
           from {
             opacity: 0;
