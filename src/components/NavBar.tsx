@@ -97,9 +97,20 @@ export default function NavBar(): JSX.Element {
     }
   };
 
+  // Function to handle resume download
+  const handleResumeDownload = () => {
+    // Track download event if you have analytics
+    if (typeof window !== 'undefined' && (window as any).gtag) {
+      (window as any).gtag('event', 'download', {
+        event_category: 'Resume',
+        event_label: 'Navbar Download'
+      });
+    }
+  };
+
   return (
     <nav 
-      className="w-full py-4 px-6 sm:px-10 flex justify-between items-center shadow-sm sticky top-0 z-10 transition-colors duration-200"
+      className="w-full h-[72px] pl-6 sm:pl-10 pr-0 flex justify-between items-center shadow-sm sticky top-0 z-10 transition-colors duration-200"
       style={{ 
         backgroundColor: colors.background,
         color: colors.foreground
@@ -141,34 +152,69 @@ export default function NavBar(): JSX.Element {
         </div>
       </div>
 
-      {/* Desktop Navigation Links */}
-      <div className="hidden md:flex space-x-8 items-center">
-        {navLinks.map((link) => (
-          <a
-            key={link.path}
-            href={link.path}
-            onClick={(e) => handleNavigation(e, link.path, link.isHash)}
-            className="relative py-2 transition-all duration-300 hover:opacity-80"
-            style={{ 
-              color: isActive(link.path) ? colors.accent : colors.foreground,
-              fontWeight: isActive(link.path) ? '600' : '400',
-            }}
-          >
-            {link.name}
-            {/* Animated underline */}
-            <span 
-              className="absolute bottom-0 left-0 w-full h-0.5 transform origin-left transition-transform duration-300"
-              style={{
-                backgroundColor: colors.accent,
-                transform: isActive(link.path) ? 'scaleX(1)' : 'scaleX(0)',
+      {/* Desktop Navigation Links and Resume Button */}
+      <div className="hidden md:flex items-center h-full">
+        <div className="flex space-x-8 items-center mr-8 h-full">
+          {navLinks.map((link) => (
+            <a
+              key={link.path}
+              href={link.path}
+              onClick={(e) => handleNavigation(e, link.path, link.isHash)}
+              className="relative py-2 transition-all duration-300 hover:opacity-80"
+              style={{ 
+                color: isActive(link.path) ? colors.accent : colors.foreground,
+                fontWeight: isActive(link.path) ? '600' : '400',
               }}
+            >
+              {link.name}
+              {/* Animated underline */}
+              <span 
+                className="absolute bottom-0 left-0 w-full h-0.5 transform origin-left transition-transform duration-300"
+                style={{
+                  backgroundColor: colors.accent,
+                  transform: isActive(link.path) ? 'scaleX(1)' : 'scaleX(0)',
+                }}
+              />
+            </a>
+          ))}
+        </div>
+        
+        {/* Resume Download Button */}
+        <a href="/resume.pdf"
+          download="Erick_Herrera_Resume.pdf"
+          onClick={handleResumeDownload}
+          className="flex items-center gap-2 px-6 h-full transition-all duration-300 hover:shadow-lg "
+          style={{
+            backgroundColor: colors.accent,
+            color: colors.background,
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.backgroundColor = colors.primary;
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.backgroundColor = colors.accent;
+          }}
+        >
+          <svg
+            className="w-4 h-4"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
             />
-          </a>
-        ))}
+          </svg>
+          <span className="font-medium">Resume</span>
+        </a>
       </div>
 
       {/* Mobile Menu Button */}
-      <div className="md:hidden">
+      <div className="md:hidden pr-6">
         <button
           onClick={() => setIsMenuOpen(!isMenuOpen)}
           className="p-2 rounded-md transition-colors duration-200"
@@ -227,6 +273,36 @@ export default function NavBar(): JSX.Element {
                 {link.name}
               </a>
             ))}
+            
+            {/* Resume Download in Mobile Menu */}
+            <div className="border-t my-2 pt-2" style={{ borderColor: colors.border }}>
+              <a
+                href="/resume.pdf"
+                download="Erick_Herrera_Resume.pdf"
+                onClick={handleResumeDownload}
+                className="flex items-center gap-2 py-3 px-4 my-1 rounded transition-all duration-200"
+                style={{
+                  backgroundColor: colors.accent,
+                  color: colors.background,
+                }}
+              >
+                <svg
+                  className="w-4 h-4"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                  />
+                </svg>
+                <span className="font-medium">Download Resume</span>
+              </a>
+            </div>
           </div>
         </div>
       )}
