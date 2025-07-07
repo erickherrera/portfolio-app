@@ -7,7 +7,7 @@ import ProfileCard from "./components/ProfileCard";
 import ProjectsGrid from "./components/ProjectsSection"; 
 import TechStackSection from "./components/techsection";
 import ContactMe from "./components/contactmesection";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useMemo } from "react";
 
 export default function Home() {
   const { colors } = useTheme();
@@ -21,6 +21,14 @@ export default function Home() {
     title: string;
     description: string;
     image?: string;
+  }
+
+  // Define interface for contact form data
+  interface ContactFormData {
+    name: string;
+    email: string;
+    message: string;
+    subject?: string;
   }
 
   const projects: Project[] = [
@@ -64,7 +72,7 @@ export default function Home() {
   };
 
   // Handle contact form submission
-  const handleContactSubmit = async (formData: any) => {
+  const handleContactSubmit = async (formData: ContactFormData) => {
     try {
       console.log('Contact form submitted:', formData);
       
@@ -101,14 +109,14 @@ export default function Home() {
     }
   });
 
-  // Navigation sections
-  const sections = [
+  // Navigation sections - memoized to prevent unnecessary re-renders
+  const sections = useMemo(() => [
     { id: "home", name: "Home" },
     { id: "about", name: "About" },
     { id: "tech", name: "Tech" },
     { id: "projects", name: "Projects" },
     { id: "contact", name: "Contact" }
-  ];
+  ], []);
 
   // Scroll to section function
   const scrollToSection = (sectionId: string) => {
@@ -175,7 +183,7 @@ export default function Home() {
         clearTimeout(animationTimeoutRef.current);
       }
     };
-  }, []);
+  }, [sections]);
 
   return (
     <div className="flex flex-col min-h-screen ">

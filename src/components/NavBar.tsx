@@ -1,7 +1,7 @@
 "use client";
 
 import { JSX, useState, useEffect } from "react";
-import { usePathname, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { useTheme } from "../app/ThemeContext";
 
@@ -12,14 +12,26 @@ interface NavLink {
   isHash: boolean;
 }
 
+// Define gtag interface for analytics
+interface GtagWindow extends Window {
+  gtag?: (
+    command: string,
+    action: string,
+    parameters: {
+      event_category?: string;
+      event_label?: string;
+    }
+  ) => void;
+}
+
+// Type assertion for window with gtag
+declare const window: GtagWindow;
+
 export default function NavBar(): JSX.Element {
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
   const [activeSection, setActiveSection] = useState<string>("#home");
   const router = useRouter();
-  const { colors, theme, resolvedTheme } = useTheme();
-  
-  // Determine if we're in dark mode based on theme or resolvedTheme
-  const isDark = theme === 'dark' || resolvedTheme === 'dark';
+  const { colors } = useTheme();
 
   const navLinks: NavLink[] = [
     { name: "Home", path: "#home", isHash: true },
@@ -100,8 +112,8 @@ export default function NavBar(): JSX.Element {
   // Function to handle resume download
   const handleResumeDownload = () => {
     // Track download event if you have analytics
-    if (typeof window !== 'undefined' && (window as any).gtag) {
-      (window as any).gtag('event', 'download', {
+    if (typeof window !== 'undefined' && window.gtag) {
+      window.gtag('event', 'download', {
         event_category: 'Resume',
         event_label: 'Navbar Download'
       });

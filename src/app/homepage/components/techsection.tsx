@@ -3,7 +3,6 @@ import React from 'react';
 import { IconType } from 'react-icons';
 // Frontend icons
 import { SiJavascript, SiTypescript, SiReact, SiNextdotjs, SiTailwindcss } from 'react-icons/si';
-import { FaMobileAlt } from 'react-icons/fa';
 // Backend icons
 import { SiNodedotjs, SiExpress, SiPython } from 'react-icons/si';
 // Database icons

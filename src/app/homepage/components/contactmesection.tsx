@@ -356,7 +356,7 @@ const ContactMe: React.FC<ContactMeProps> = ({
             {/* Status Messages */}
             {submitStatus === 'success' && (
               <p className="text-green-600 font-medium animate-fade-in">
-                ✓ Message sent successfully! I'll get back to you soon.
+                ✓ Message sent successfully! I&aposll get back to you soon.
               </p>
             )}
             {submitStatus === 'error' && (
