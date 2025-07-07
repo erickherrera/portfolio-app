@@ -107,7 +107,7 @@ const TechStackSection: React.FC<TechStackSectionProps> = ({
               </div>
               
               {/* Icon */}
-              <div className="relative z-10 floating-icon spinning-icon">
+              <div className="relative z-8 floating-icon spinning-icon">
                 {typeof tech.icon === 'string' ? (
                   <span className="text-3xl">{tech.icon}</span>
                 ) : (
