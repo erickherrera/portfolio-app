@@ -46,7 +46,7 @@ export default function ThemeToggle() {
   return (
     <button
       onClick={cycleTheme}
-      className="relative p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 transition-all duration-300"
+      className="w-12 h-12 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 transition-all duration-300"
       style={{
         backgroundColor: getBackgroundColor(),
         color: colors.background,
@@ -63,7 +63,7 @@ export default function ThemeToggle() {
         xmlns="http://www.w3.org/2000/svg" 
         viewBox="0 0 24 24" 
         fill="none" 
-        strokeWidth={1.5} 
+        strokeWidth={2} 
         stroke="currentColor" 
         className={`w-5 h-5 absolute inset-0 m-auto transition-all duration-300 ${
           theme === THEMES.LIGHT ? 'opacity-100 transform scale-100' : 'opacity-0 transform scale-75'
@@ -78,7 +78,7 @@ export default function ThemeToggle() {
         xmlns="http://www.w3.org/2000/svg" 
         viewBox="0 0 24 24" 
         fill="none" 
-        strokeWidth={1.5} 
+        strokeWidth={2} 
         stroke="currentColor" 
         className={`w-5 h-5 absolute inset-0 m-auto transition-all duration-300 ${
           theme === THEMES.DARK ? 'opacity-100 transform scale-100' : 'opacity-0 transform scale-75'
@@ -93,7 +93,7 @@ export default function ThemeToggle() {
         xmlns="http://www.w3.org/2000/svg" 
         viewBox="0 0 24 24" 
         fill="none" 
-        strokeWidth={1.5} 
+        strokeWidth={2} 
         stroke="currentColor" 
         className={`w-5 h-5 absolute inset-0 m-auto transition-all duration-300 ${
           theme === THEMES.SYSTEM ? 'opacity-100 transform scale-100' : 'opacity-0 transform scale-75'

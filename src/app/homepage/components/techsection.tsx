@@ -143,7 +143,7 @@ const TechStackSection: React.FC<TechStackSectionProps> = ({
 
       {/* Additional Features Section */}
       {showFeatures && (
-        <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="mt-16 mx-8 grid grid-cols-1 md:grid-cols-3 gap-8">
           <div 
             className="text-center p-6 rounded-lg transition-transform duration-300 hover:scale-105 achievement-feature"
             style={{
