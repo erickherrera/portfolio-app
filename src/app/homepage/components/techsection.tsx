@@ -87,7 +87,7 @@ const TechStackSection: React.FC<TechStackSectionProps> = ({
             <div 
               className="achievement-badge relative w-20 h-20 rounded-full flex items-center justify-center mb-3 cursor-pointer transition-all duration-300"
               style={{
-                background: `linear-gradient(135deg, ${colors.accent}15 0%, ${colors.primary}25 50%, ${colors.secondary}15 100%)`,
+                background: `linear-gradient(135deg, ${colors.background}15 100%)`,
                 border: `3px solid ${colors.accent}`,
                 boxShadow: `0 0 20px ${colors.accent}40, inset 0 0 20px ${colors.accent}20`
               }}
