@@ -13,7 +13,6 @@ export default function Home() {
   const { colors } = useTheme();
   const [activeSection, setActiveSection] = useState("");
   const [showAnimation, setShowAnimation] = useState(false);
-  const [isScrolling, setIsScrolling] = useState(false);
   const animationTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const scrollTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   
@@ -145,7 +144,6 @@ export default function Home() {
     const handleScroll = () => {
       if (!ticking) {
         requestAnimationFrame(() => {
-          setIsScrolling(true);
           setShowAnimation(true);
 
           // Clear existing timeout
@@ -155,7 +153,6 @@ export default function Home() {
 
           // Hide animation 300ms after scrolling stops
           scrollTimeoutRef.current = setTimeout(() => {
-            setIsScrolling(false);
             setShowAnimation(false);
           }, 300);
 
