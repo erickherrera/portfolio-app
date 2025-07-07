@@ -13,7 +13,9 @@ export default function Home() {
   const { colors } = useTheme();
   const [activeSection, setActiveSection] = useState("");
   const [showAnimation, setShowAnimation] = useState(false);
+  const [isScrolling, setIsScrolling] = useState(false);
   const animationTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const scrollTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   
   // Define the Project interface in your page file
   interface Project {
@@ -136,6 +138,43 @@ export default function Home() {
     }
   };
 
+  // Scroll detection effect
+  useEffect(() => {
+    let ticking = false;
+
+    const handleScroll = () => {
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          setIsScrolling(true);
+          setShowAnimation(true);
+
+          // Clear existing timeout
+          if (scrollTimeoutRef.current) {
+            clearTimeout(scrollTimeoutRef.current);
+          }
+
+          // Hide animation 300ms after scrolling stops
+          scrollTimeoutRef.current = setTimeout(() => {
+            setIsScrolling(false);
+            setShowAnimation(false);
+          }, 300);
+
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      if (scrollTimeoutRef.current) {
+        clearTimeout(scrollTimeoutRef.current);
+      }
+    };
+  }, []);
+
   // Set up intersection observer for section detection
   useEffect(() => {
     const observerOptions = {
@@ -148,16 +187,6 @@ export default function Home() {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           setActiveSection(entry.target.id);
-          // Clear any existing timeout
-          if (animationTimeoutRef.current) {
-            clearTimeout(animationTimeoutRef.current);
-          }
-          // Show animation when section changes
-          setShowAnimation(true);
-          // Hide animation after 1 second
-          animationTimeoutRef.current = setTimeout(() => {
-            setShowAnimation(false);
-          }, 1000);
         }
       });
     }, observerOptions);
@@ -186,61 +215,94 @@ export default function Home() {
   }, [sections]);
 
   return (
-    <div className="flex flex-col min-h-screen ">
-      {/* Navigation Indicator */}
-      <div className="fixed right-6 top-1/2 transform -translate-y-1/2 z-40 hidden md:flex flex-col gap-6">
+    <div className="flex flex-col min-h-screen w-full overflow-x-hidden">
+      {/* Desktop Navigation Indicator - Smaller Version */}
+      <div className="fixed right-4 top-1/2 transform -translate-y-1/2 z-40 hidden md:flex flex-col gap-4">
         {sections.map((section) => (
           <div key={section.id} className="relative group">
             {/* Tooltip */}
             <div 
-              className="absolute right-8 top-1/2 transform -translate-y-1/2 px-3 py-1 rounded-lg text-sm font-medium whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none"
+              className={`absolute right-6 top-1/2 transform -translate-y-1/2 px-2 py-1 rounded text-xs font-medium whitespace-nowrap transition-all duration-300 pointer-events-none ${
+                showAnimation ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-2'
+              }`}
               style={{
                 backgroundColor: colors.foreground,
-                color: colors.foreground
+                color: colors.background
               }}
             >
               {section.name}
             </div>
             
-            {/* Navigation Dot */}
+            {/* Navigation Dot - Smaller */}
             <button
               onClick={() => scrollToSection(section.id)}
-              className={`w-3 h-3 rounded-full border-2 transition-all duration-300 hover:scale-125 focus:outline-none focus:ring-2 focus:ring-offset-2 ${
-                activeSection === section.id ? 'scale-110' : ''
+              className={`w-2 h-2 rounded-full border transition-all duration-300 hover:scale-150 focus:outline-none focus:ring-1 focus:ring-offset-1 ${
+                activeSection === section.id ? 'scale-125' : ''
               }`}
               style={{
                 borderColor: activeSection === section.id ? colors.primary : colors.foreground,
                 backgroundColor: activeSection === section.id ? colors.primary : 'transparent',
-                boxShadow: activeSection === section.id ? `0 0 20px ${colors.primary}40` : 'none',
-                animation: activeSection === section.id ? 'pulse 2s infinite' : 'none'
+                boxShadow: activeSection === section.id && showAnimation ? `0 0 12px ${colors.primary}60` : 'none',
+                animation: activeSection === section.id && showAnimation ? 'pulseSmall 1.5s infinite' : 'none'
               }}
               onFocus={(e) => {
                 e.currentTarget.style.outlineColor = colors.primary;
               }}
               aria-label={`Navigate to ${section.name}`}
             />
+            
+            {/* Active Section Line Indicator */}
+            {activeSection === section.id && showAnimation && (
+              <div 
+                className="absolute right-[-8px] top-1/2 transform -translate-y-1/2 w-6 h-0.5 rounded-full transition-all duration-300"
+                style={{
+                  backgroundColor: colors.primary,
+                  boxShadow: `0 0 8px ${colors.primary}80`
+                }}
+              />
+            )}
           </div>
         ))}
       </div>
 
       {/* Mobile Navigation Indicator - Bottom of screen */}
-      <div className="fixed bottom-20 left-1/2 transform -translate-x-1/2 z-40 flex md:hidden gap-4">
-        {sections.map((section) => (
-          <button
-            key={section.id}
-            onClick={() => scrollToSection(section.id)}
-            className={`w-2.5 h-2.5 rounded-full border-2 transition-all duration-300 ${
-              activeSection === section.id ? 'scale-110 w-8' : ''
-            }`}
-            style={{
-              borderColor: activeSection === section.id ? colors.primary : colors.foreground === '#171717' ? '#D1D5DB' : '#4B5563',
-              backgroundColor: activeSection === section.id ? colors.primary : 'transparent',
-              boxShadow: activeSection === section.id && showAnimation ? `0 0 15px ${colors.primary}40` : 'none'
-            }}
-            aria-label={`Navigate to ${section.name}`}
-          />
-        ))}
+      <div className="fixed bottom-6 left-1/2 transform -translate-x-1/2 z-40 flex md:hidden max-w-[90vw]">
+        <div 
+          className="flex gap-1.5 px-3 py-2 rounded-full backdrop-blur-sm border max-w-full"
+          style={{
+            backgroundColor: `${colors.background}E6`,
+            borderColor: colors.foreground === '#171717' ? '#E5E7EB' : '#374151'
+          }}
+        >
+          {sections.map((section) => (
+            <button
+              key={section.id}
+              onClick={() => scrollToSection(section.id)}
+              className={`rounded-full border-2 transition-all duration-300 touch-manipulation flex-shrink-0 ${
+                activeSection === section.id ? 'w-6 h-2.5' : 'w-2.5 h-2.5'
+              }`}
+              style={{
+                borderColor: activeSection === section.id ? colors.primary : colors.foreground === '#171717' ? '#9CA3AF' : '#6B7280',
+                backgroundColor: activeSection === section.id ? colors.primary : 'transparent',
+                boxShadow: activeSection === section.id && showAnimation ? `0 0 6px ${colors.primary}50` : 'none',
+                minWidth: activeSection === section.id ? '24px' : '10px',
+                minHeight: '10px'
+              }}
+              aria-label={`Navigate to ${section.name}`}
+            />
+          ))}
+        </div>
       </div>
+
+      {/* Scroll Progress Indicator */}
+      {showAnimation && (
+        <div 
+          className="fixed right-1 top-1/4 w-0.5 h-1/2 z-30 hidden md:block"
+          style={{
+            background: `linear-gradient(to bottom, ${colors.primary}00, ${colors.primary}60, ${colors.primary}00)`
+          }}
+        />
+      )}
 
       {/* Theme Toggle - Positioned fixed on screen */}
       <div className="fixed bottom-5 right-5 z-50">
@@ -250,32 +312,32 @@ export default function Home() {
       {/* Header/Welcome Section - Home Section */}
       <section 
         id="home" 
-        className="pt-24 pb-16 md:pt-32 md:pb-24 transition-colors duration-200"
+        className="pt-16 pb-12 md:pt-32 md:pb-24 transition-colors duration-200 w-full"
         style={{
           background: `linear-gradient(to bottom, ${colors.background}, ${colors.background})` 
         }}
       >
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 my-20">
-          <div className="flex flex-col items-center text-center">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+          <div className="flex flex-col items-center text-center w-full">
             <h1 
-              className="mb-4 text-4xl sm:text-5xl font-extrabold tracking-tight"
+              className="mb-4 text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight break-words"
               style={{ color: colors.foreground }}
             >
               Welcome to my portfolio.
             </h1>
             <h2 
-              className="mb-6 text-lg sm:text-xl font-semibold"
+              className="mb-6 text-base sm:text-lg md:text-xl font-semibold px-2 break-words"
               style={{ color: colors.foreground}}
             >
               Here you will get to know more about my software engineering journey.
             </h2>
             
-            <div className="flex space-x-6 mt-4">
+            <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 mt-4 w-full max-w-sm">
               <a 
                 href="https://github.com/erickherrera" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="px-4 py-2 font-bold rounded-md transition-colors duration-300 shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2"
+                className="px-4 py-2 font-bold rounded-md transition-colors duration-300 shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 text-center w-full sm:w-auto"
                 style={{
                   backgroundColor: colors.secondary,
                   color: 'white',
@@ -289,7 +351,7 @@ export default function Home() {
                 href="https://www.linkedin.com/in/erick-herrera-cabrera-b2268b1b4/" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="px-4 py-2 font-bold rounded-md transition-colors duration-300 shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2"
+                className="px-4 py-2 font-bold rounded-md transition-colors duration-300 shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 text-center w-full sm:w-auto"
                 style={{
                   backgroundColor: colors.secondary,
                   color: 'white'
@@ -307,16 +369,16 @@ export default function Home() {
       {/* About Me Section */}
       <section 
         id="about" 
-        className="pt-20 pb-20 border-t-6 transition-colors duration-200 scroll-mt-20"
+        className="pt-16 pb-16 md:pt-20 md:pb-20 border-t-6 transition-colors duration-200 scroll-mt-20 w-full"
         style={{
           backgroundColor: colors.hero,
           borderColor: colors.accent
         }}
       >
-        <div className="max-w-4xl mx-auto px-4 sm:px-6">
-          <div className="text-center mb-12">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+          <div className="text-center mb-8 md:mb-12">
             <h2 
-              className="text-3xl font-extrabold mb-4"
+              className="text-2xl sm:text-3xl font-extrabold mb-4"
               style={{ color: colors.foreground }}
             >
               About Me
@@ -324,22 +386,22 @@ export default function Home() {
             <div className="w-20 h-2 mx-auto rounded-full mb-15" style={{ backgroundColor: colors.accent }}></div>
           </div>
           
-          <div className="flex flex-col md:flex-row items-start gap-8 md:gap-10">
+          <div className="flex flex-col md:flex-row items-center md:items-start gap-6 md:gap-10 w-full">
             {/* Profile Card */}
-            <div className="flex-shrink-0">
+            <div className="flex-shrink-0 w-full md:w-auto flex justify-center">
               <ProfileCard/>
             </div>
             
             {/* About text */}
-            <div className="flex-1">
+            <div className="flex-1 w-full">
               <p 
-                className="text-lg font-medium leading-relaxed mb-6"
+                className="text-base sm:text-lg font-medium leading-relaxed mb-4 md:mb-6 break-words"
                 style={{ color: colors.foreground === '#171717' ? '#374151' : '#D1D5DB' }}
               >
                 <span style={{ color: colors.accent, fontWeight: 'bold' }}>Hello!</span> I&apos;m a passionate software engineer with expertise in building modern web applications. My journey in tech began with a deep curiosity about how digital products are created and has evolved into a career focused on crafting elegant solutions to complex problems.
               </p>
               <p 
-                className="text-lg font-medium leading-relaxed"
+                className="text-base sm:text-lg font-medium leading-relaxed break-words"
                 style={{ color: colors.foreground === '#171717' ? '#374151' : '#D1D5DB' }}
               >
                 I specialize in <span className="font-bold">JavaScript</span> and <span className="font-bold">TypeScript</span> development, with particular focus on <span className="font-bold">React</span>, <span className="font-bold">Next.js</span>, and <span className="font-bold">Node.js</span>. When I&apos;m not coding, you can find me exploring new technologies, contributing to open-source projects, or sharing what I&apos;ve learned through technical writing and mentorship.
@@ -352,58 +414,111 @@ export default function Home() {
       {/* Tech Stack section */}
       <section 
         id="tech"
-        className="pt-20 pb-20 border-t-6 transition-colors duration-200 scroll-mt-20"
+        className="pt-16 pb-16 md:pt-20 md:pb-20 border-t-6 transition-colors duration-200 scroll-mt-20 w-full"
         style={{
           backgroundColor: colors.hero,
           borderColor: colors.accent
         }}
       >
-        <TechStackSection 
-          colors={colors}
-          showFeatures={true}
-        />
+        <div className="w-full overflow-hidden">
+          <TechStackSection 
+            colors={colors}
+            showFeatures={true}
+          />
+        </div>
       </section>
 
       {/* My Projects Section */}
       <section 
         id="projects" 
-        className="pt-20 pb-20 border-t-6 transition-colors duration-200 scroll-mt-20"
+        className="pt-16 pb-16 md:pt-20 md:pb-20 border-t-6 transition-colors duration-200 scroll-mt-20 w-full"
         style={{
           backgroundColor: colors.hero,
           borderColor: colors.accent
         }}
       >
-        <ProjectsGrid 
-          projects={projects}
-          title="My Projects"
-          subtitle="Here are some of the projects I've worked on recently"
-          colors={colors}
-          onProjectClick={handleProjectClick}
-          showHeader={true}
-          className=""
-        />
+        <div className="w-full overflow-hidden">
+          <ProjectsGrid 
+            projects={projects}
+            title="My Projects"
+            subtitle="Here are some of the projects I've worked on recently"
+            colors={colors}
+            onProjectClick={handleProjectClick}
+            showHeader={true}
+            className=""
+          />
+        </div>
       </section>
+      
+      {/* Contact Section */}
       <section 
         id="contact" 
-        className="pt-20 pb-20 border-t-6 transition-colors duration-200 scroll-mt-20"
+        className="pt-16 pb-20 md:pt-20 md:pb-20 border-t-6 transition-colors duration-200 scroll-mt-20 w-full"
         style={{
           backgroundColor: colors.hero,
           borderColor: colors.accent
         }}
       >
-        <ContactMe 
-          colors={colors}
-          onSubmit={handleContactSubmit}
-        />
+        <div className="w-full overflow-hidden">
+          <ContactMe 
+            colors={colors}
+            onSubmit={handleContactSubmit}
+          />
+        </div>
       </section>
       {/* Add pulse animation to global styles */}
       <style jsx global>{`
-        @keyframes pulse {
+        /* Prevent horizontal overflow */
+        html, body {
+          overflow-x: hidden;
+          width: 100%;
+          max-width: 100vw;
+        }
+        
+        * {
+          box-sizing: border-box;
+        }
+        
+        /* Ensure all containers respect viewport width */
+        .container, .max-w-4xl, .max-w-6xl {
+          max-width: 100vw !important;
+          padding-left: 1rem;
+          padding-right: 1rem;
+        }
+        
+        @media (min-width: 640px) {
+          .container, .max-w-4xl, .max-w-6xl {
+            padding-left: 1.5rem;
+            padding-right: 1.5rem;
+          }
+        }
+        
+        @media (min-width: 1024px) {
+          .container, .max-w-4xl, .max-w-6xl {
+            padding-left: 2rem;
+            padding-right: 2rem;
+          }
+        }
+        
+        /* Text wrapping */
+        p, h1, h2, h3, h4, h5, h6 {
+          word-wrap: break-word;
+          overflow-wrap: break-word;
+          hyphens: auto;
+        }
+        
+        /* Image responsiveness */
+        img {
+          max-width: 100%;
+          height: auto;
+        }
+        
+        @keyframes pulseSmall {
           0% {
-            box-shadow: 0 0 0 0 ${colors.primary}40;
+            box-shadow: 0 0 0 0 ${colors.primary}60;
           }
           50% {
-            box-shadow: 0 0 0 15px ${colors.primary}20;
+            box-shadow: 0 0 0 8px ${colors.primary}20;
           }
           100% {
             box-shadow: 0 0 0 0 ${colors.primary}00;
