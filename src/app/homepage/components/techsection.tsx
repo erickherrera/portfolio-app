@@ -69,7 +69,7 @@ const TechStackSection: React.FC<TechStackSectionProps> = ({
         <div className="w-20 h-2 mx-auto rounded-full" style={{ backgroundColor: colors.accent }}></div>
         <p 
           className="mt-6 text-lg"
-          style={{ color: colors.primary}}
+          style={{ color: colors.foreground}}
         >
           {subtitle}
         </p>

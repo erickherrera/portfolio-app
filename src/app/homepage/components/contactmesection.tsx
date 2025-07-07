@@ -131,7 +131,7 @@ const ContactMe: React.FC<ContactMeProps> = ({
         <div className="w-20 h-2 mx-auto rounded-full" style={{ backgroundColor: colors.accent }}></div>
         <p 
           className="mt-6 text-lg max-w-2xl mx-auto"
-          style={{ color: colors.foreground === '#171717' ? '#6B7280' : '#9CA3AF' }}
+          style={{ color: colors.foreground }}
         >
           {subtitle}
         </p>
@@ -378,7 +378,7 @@ const ContactMe: React.FC<ContactMeProps> = ({
           <a 
             href="mailto:erickmherrera@outlook.com" 
             className="font-medium hover:underline transition-colors duration-200"
-            style={{ color: colors.primary }}
+            style={{ color: colors.accent }}
           >
             erickmherrera@outlook.com
           </a>

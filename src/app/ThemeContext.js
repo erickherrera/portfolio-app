@@ -12,7 +12,7 @@ export const THEMES = {
 // Theme colors mapping using your custom palette
 export const COLORS = {
   [THEMES.LIGHT]: {
-    primary: '#3b5264',      // Dark blue from your palette
+    primary: '#949494',      // Dark blue from your palette
     secondary: '#51273c',    // Dark burgundy from your palette
     background: '#FFFFFF',   // White as requested
     hero: '#F8F9FA',        // Very light gray for hero sections

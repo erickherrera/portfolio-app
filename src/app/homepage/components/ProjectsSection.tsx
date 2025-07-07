@@ -61,9 +61,7 @@ export default function ProjectsGrid({
             ></div>
             <p 
               className="text-lg max-w-2xl mx-auto"
-              style={{ 
-                color: colors?.foreground === '#171717' ? '#374151' : '#D1D5DB' 
-              }}
+              style={{ color: colors?.foreground}}
             >
               {subtitle}
             </p>

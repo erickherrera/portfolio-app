@@ -187,8 +187,8 @@ export default function Home() {
             <div 
               className="absolute right-8 top-1/2 transform -translate-y-1/2 px-3 py-1 rounded-lg text-sm font-medium whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none"
               style={{
-                backgroundColor: colors.foreground === '#171717' ? 'rgba(0, 0, 0, 0.9)' : 'rgba(255, 255, 255, 0.9)',
-                color: colors.foreground === '#171717' ? '#FFFFFF' : '#000000'
+                backgroundColor: colors.foreground,
+                color: colors.foreground
               }}
             >
               {section.name}
@@ -201,7 +201,7 @@ export default function Home() {
                 activeSection === section.id ? 'scale-110' : ''
               }`}
               style={{
-                borderColor: activeSection === section.id ? colors.primary : colors.foreground === '#171717' ? '#D1D5DB' : '#4B5563',
+                borderColor: activeSection === section.id ? colors.primary : colors.foreground,
                 backgroundColor: activeSection === section.id ? colors.primary : 'transparent',
                 boxShadow: activeSection === section.id ? `0 0 20px ${colors.primary}40` : 'none',
                 animation: activeSection === section.id ? 'pulse 2s infinite' : 'none'
@@ -257,7 +257,7 @@ export default function Home() {
             </h1>
             <h2 
               className="mb-6 text-lg sm:text-xl font-semibold"
-              style={{ color: colors.foreground === '#171717' ? '#4B5563' : '#D1D5DB' }}
+              style={{ color: colors.foreground}}
             >
               Here you will get to know more about my software engineering journey.
             </h2>
