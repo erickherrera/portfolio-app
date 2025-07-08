@@ -310,7 +310,7 @@ export default function Home() {
       {/* Header/Welcome Section - Home Section */}
       <section 
         id="home" 
-        className="pt-16 pb-12 md:pt-32 md:pb-24 transition-colors duration-200 w-full"
+        className="pt-16 pb-16 md:pt-20 md:pb-20 transition-colors duration-200 w-full min-h-[80vh] flex items-center"
         style={{
           background: `linear-gradient(to bottom, ${colors.background}, ${colors.background})` 
         }}
@@ -324,13 +324,13 @@ export default function Home() {
               Welcome to my portfolio.
             </h1>
             <h2 
-              className="mb-6 text-base sm:text-lg md:text-xl font-semibold px-2 break-words"
+              className="mb-8 text-base sm:text-lg md:text-xl font-semibold px-2 break-words"
               style={{ color: colors.foreground}}
             >
               Here you will get to know more about my software engineering journey.
             </h2>
             
-            <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 mt-4 w-full max-w-sm">
+            <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 mt-6 w-full max-w-sm justify-center">
               <a 
                 href="https://github.com/erickherrera" 
                 target="_blank" 
