@@ -327,7 +327,7 @@ export default function Home() {
               className="mb-8 text-base sm:text-lg md:text-xl font-semibold px-2 break-words"
               style={{ color: colors.foreground}}
             >
-              Here you will get to know more about my software engineering journey.
+              More about my software engineering journey.
             </h2>
             
             <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 mt-6 w-full max-w-sm justify-center">
@@ -396,13 +396,13 @@ export default function Home() {
                 className="text-base sm:text-lg font-medium leading-relaxed mb-4 md:mb-6 break-words"
                 style={{ color: colors.foreground === '#171717' ? '#374151' : '#D1D5DB' }}
               >
-                <span style={{ color: colors.accent, fontWeight: 'bold' }}>Hello!</span> I&apos;m a passionate software engineer with expertise in building modern web applications. My journey in tech began with a deep curiosity about how digital products are created and has evolved into a career focused on crafting elegant solutions to complex problems.
+                <span style={{ color: colors.accent, fontWeight: 'bold' }}>Hello!</span> I&apos;m a passionate software engineer with expertise in building modern web applications. My journey in tech began with a deep curiosity about how modern applications are created and has evolved into a career focused on crafting elegant solutions to complex problems.
               </p>
               <p 
                 className="text-base sm:text-lg font-medium leading-relaxed break-words"
                 style={{ color: colors.foreground === '#171717' ? '#374151' : '#D1D5DB' }}
               >
-                I specialize in <span className="font-bold">JavaScript</span> and <span className="font-bold">TypeScript</span> development, with particular focus on <span className="font-bold">React</span>, <span className="font-bold">Next.js</span>, and <span className="font-bold">Node.js</span>. When I&apos;m not coding, you can find me exploring new technologies, contributing to open-source projects, or sharing what I&apos;ve learned through technical writing and mentorship.
+                I specialize in <span className="font-bold">JavaScript</span> and <span className="font-bold">TypeScript</span> development, with particular focus on <span className="font-bold">React</span>, <span className="font-bold">Next.js</span>, and <span className="font-bold">Node.js</span>. When I&apos;m not coding, you can find me exploring the outdoors, learning and teaching new technologies, or attending tech meetups in town.
               </p>
             </div>
           </div>

@@ -10,10 +10,27 @@ interface ProfileCardProps {
 const ProfileCard = ({ className = "" }: ProfileCardProps) => {
   const { colors } = useTheme();
 
+  // Calculate age from birth date
+  const calculateAge = (birthDate: string): number => {
+    const today = new Date();
+    const birth = new Date(birthDate);
+    let age = today.getFullYear() - birth.getFullYear();
+    const monthDiff = today.getMonth() - birth.getMonth();
+    
+    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birth.getDate())) {
+      age--;
+    }
+    
+    return age;
+  };
+
+  const birthDate = '1995-04-23'; // April 23, 1995
+  const currentAge = calculateAge(birthDate);
+
   const stats = [
     { label: "Born", value: "Puerto Rico" },
     { label: "Located", value: "Colorado Springs" },
-    { label: "Age", value: "30" },
+    { label: "Age", value: currentAge.toString() },
     { label: "Work", value: "Keysight Technologies" }
   ];
 
