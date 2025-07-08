@@ -36,12 +36,13 @@ export default function Home() {
     { 
       id: 1, 
       title: "SaSS for HVAC", 
-      description: "SaSS application for an HVAC company to manage their business." 
+      description: "SaSS application for an HVAC company to manage their business."
     },
     { 
       id: 2, 
       title: "Personal Portfolio", 
-      description: "Personal portfolio using NextJS with modern design patterns" 
+      description: "Personal portfolio using NextJS with modern design patterns",
+      image: "/portfolio-screenshot-2.png"
     },
   /*{ 
       id: 3, 

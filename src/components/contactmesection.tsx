@@ -182,7 +182,7 @@ const ContactMe: React.FC<ContactMeProps> = ({
                     e.target.style.borderColor = errors.name ? '#EF4444' : colors.foreground === '#171717' ? '#E5E7EB' : '#374151';
                     e.target.style.boxShadow = 'none';
                   }}
-                  placeholder="John Doe"
+                  placeholder="Full Name"
                 />
               </div>
               {errors.name && (
@@ -225,7 +225,7 @@ const ContactMe: React.FC<ContactMeProps> = ({
                     e.target.style.borderColor = errors.email ? '#EF4444' : colors.foreground === '#171717' ? '#E5E7EB' : '#374151';
                     e.target.style.boxShadow = 'none';
                   }}
-                  placeholder="john@company.com"
+                  placeholder="email@company.com"
                 />
               </div>
               {errors.email && (
@@ -269,7 +269,7 @@ const ContactMe: React.FC<ContactMeProps> = ({
                   e.target.style.borderColor = colors.foreground === '#171717' ? '#E5E7EB' : '#374151';
                   e.target.style.boxShadow = 'none';
                 }}
-                placeholder="Awesome Company Inc."
+                placeholder="Company Name"
               />
             </div>
           </div>
@@ -309,7 +309,7 @@ const ContactMe: React.FC<ContactMeProps> = ({
                   e.target.style.borderColor = errors.message ? '#EF4444' : colors.foreground === '#171717' ? '#E5E7EB' : '#374151';
                   e.target.style.boxShadow = 'none';
                 }}
-                placeholder="Tell me about your project or opportunity..."
+                placeholder="Send me a message!"
               />
             </div>
             {errors.message && (
