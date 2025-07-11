@@ -310,7 +310,7 @@ export default function Home() {
       {/* Header/Welcome Section - Home Section */}
       <section 
         id="home" 
-        className="pt-16 pb-16 md:pt-20 md:pb-20 transition-colors duration-200 w-full min-h-[80vh] flex items-center"
+        className="pt-16 pb-16 md:pt-20 md:pb-20 transition-colors duration-200 w-full min-h-[60vh] flex items-center"
         style={{
           background: `linear-gradient(to bottom, ${colors.background}, ${colors.background})` 
         }}
@@ -365,6 +365,7 @@ export default function Home() {
       </section>
 
       {/* About Me Section */}
+      {/* About Me Section */}
       <section 
         id="about" 
         className="pt-16 pb-16 md:pt-20 md:pb-20 border-t-6 transition-colors duration-200 scroll-mt-20 w-full"
@@ -384,26 +385,29 @@ export default function Home() {
             <div className="w-20 h-2 mx-auto rounded-full mb-15" style={{ backgroundColor: colors.accent }}></div>
           </div>
           
-          <div className="flex flex-col md:flex-row items-center md:items-start gap-6 md:gap-10 w-full">
-            {/* Profile Card */}
-            <div className="flex-shrink-0 w-full md:w-auto flex justify-center">
-              <ProfileCard/>
-            </div>
-            
-            {/* About text */}
-            <div className="flex-1 w-full">
-              <p 
-                className="text-base sm:text-lg font-medium leading-relaxed mb-4 md:mb-6 break-words"
-                style={{ color: colors.foreground === '#171717' ? '#374151' : '#D1D5DB' }}
-              >
-                <span style={{ color: colors.accent, fontWeight: 'bold' }}>Hello!</span> I&apos;m a passionate software engineer with expertise in building modern web applications. My journey in tech began with a deep curiosity about how modern applications are created and has evolved into a career focused on crafting elegant solutions to complex problems.
-              </p>
-              <p 
-                className="text-base sm:text-lg font-medium leading-relaxed break-words"
-                style={{ color: colors.foreground === '#171717' ? '#374151' : '#D1D5DB' }}
-              >
-                I specialize in <span className="font-bold">JavaScript</span> and <span className="font-bold">TypeScript</span> development, with particular focus on <span className="font-bold">React</span>, <span className="font-bold">Next.js</span>, and <span className="font-bold">Node.js</span>. When I&apos;m not coding, you can find me exploring the outdoors, learning and teaching new technologies, or attending tech meetups in town.
-              </p>
+          {/* Centered container for profile card and text */}
+          <div className="flex justify-center w-full">
+            <div className="flex flex-col md:flex-row items-center md:items-start gap-6 md:gap-10 max-w-5xl w-full">
+              {/* Profile Card */}
+              <div className="flex-shrink-0 w-full md:w-auto flex justify-center">
+                <ProfileCard/>
+              </div>
+              
+              {/* About text with max width constraint */}
+              <div className="w-full md:flex-1 md:max-w-2xl">
+                <p 
+                  className="text-base sm:text-lg font-medium leading-relaxed mb-4 md:mb-6 break-words"
+                  style={{ color: colors.foreground === '#171717' ? '#374151' : '#D1D5DB' }}
+                >
+                  <span style={{ color: colors.accent, fontWeight: 'bold' }}>Hello!</span> I&apos;m a passionate software engineer with expertise in building modern web applications. My journey in tech began with a deep curiosity about how modern applications are created and has evolved into a career focused on crafting elegant solutions to complex problems.
+                </p>
+                <p 
+                  className="text-base sm:text-lg font-medium leading-relaxed break-words"
+                  style={{ color: colors.foreground === '#171717' ? '#374151' : '#D1D5DB' }}
+                >
+                  I specialize in <span className="font-bold">JavaScript</span> and <span className="font-bold">TypeScript</span> development, with particular focus on <span className="font-bold">React</span>, <span className="font-bold">Next.js</span>, and <span className="font-bold">Node.js</span>. When I&apos;m not coding, you can find me exploring the outdoors, learning and teaching new technologies, or attending tech meetups in town.
+                </p>
+              </div>
             </div>
           </div>
         </div>
