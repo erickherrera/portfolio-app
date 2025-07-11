@@ -365,7 +365,6 @@ export default function Home() {
       </section>
 
       {/* About Me Section */}
-      {/* About Me Section */}
       <section 
         id="about" 
         className="pt-16 pb-16 md:pt-20 md:pb-20 border-t-6 transition-colors duration-200 scroll-mt-20 w-full"
