@@ -26,7 +26,7 @@ interface ContactFormData {
 
 const ContactMe: React.FC<ContactMeProps> = ({
   title = "Get In Touch",
-  subtitle = "I'm always interested in hearing about new opportunities. Drop me a message and I'll get back to you as soon as possible!",
+  subtitle = "I'm always interested in hearing about new opportunities. \n Drop me a message and I'll get back to you as soon as possible!",
   colors,
   onSubmit,
   className = ""
@@ -118,6 +118,25 @@ const ContactMe: React.FC<ContactMeProps> = ({
     }
   };
 
+  // Split subtitle by newline characters and render each line
+  const renderSubtitle = () => {
+    const lines = subtitle.split('\n').map(line => line.trim()).filter(line => line.length > 0);
+    
+    return (
+      <div className="mt-6 text-lg max-w-xl mx-auto">
+        {lines.map((line, index) => (
+          <p 
+            key={index}
+            className={index > 0 ? "mt-2" : ""}
+            style={{ color: colors.foreground }}
+          >
+            {line}
+          </p>
+        ))}
+      </div>
+    );
+  };
+
   return (
     <div className={`max-w-4xl mx-auto px-4 sm:px-6 ${className}`}>
       {/* Header */}
@@ -129,12 +148,7 @@ const ContactMe: React.FC<ContactMeProps> = ({
           {title}
         </h2>
         <div className="w-20 h-2 mx-auto rounded-full" style={{ backgroundColor: colors.accent }}></div>
-        <p 
-          className="mt-6 text-lg max-w-2xl mx-auto"
-          style={{ color: colors.foreground }}
-        >
-          {subtitle}
-        </p>
+        {renderSubtitle()}
       </div>
 
       {/* Contact Form */}
@@ -356,7 +370,7 @@ const ContactMe: React.FC<ContactMeProps> = ({
             {/* Status Messages */}
             {submitStatus === 'success' && (
               <p className="text-green-600 font-medium animate-fade-in">
-                ✓ Message sent successfully! I&aposll get back to you soon.
+                ✓ Message sent successfully! I&apos;ll get back to you soon.
               </p>
             )}
             {submitStatus === 'error' && (
