@@ -36,7 +36,8 @@ export default function Home() {
     { 
       id: 1, 
       title: "SaSS for HVAC", 
-      description: "SaSS application for an HVAC company to manage their business."
+      description: "SaSS application for an HVAC company to manage their business.",
+      image: "/whitaker.png"
     },
     { 
       id: 2, 
