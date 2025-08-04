@@ -18,10 +18,14 @@ export default function Home() {
   
   // Define the Project interface in your page file
   interface Project {
-    id: number;
-    title: string;
-    description: string;
-    image?: string;
+      id: number;
+      title: string;
+      description: string;
+      image?: string;
+      overview?: string;
+      programmingLanguage?: string;
+      frontend?: string;
+      backend?: string;
   }
 
   // Define interface for contact form data
@@ -37,19 +41,27 @@ export default function Home() {
       id: 1, 
       title: "SaSS for HVAC", 
       description: "SaSS application for an HVAC company to manage their business.",
-      image: "/whitaker.png"
+      image: "/whitaker.png",
+      overview: "This is an application currenlty being used by an HVAC company in Georgia",
+      programmingLanguage: "Javascript",
+      frontend: "React, Tailwind",
+      backend: "MySQl, Express.JS, Node.JS"
     },
     { 
       id: 2, 
       title: "Personal Portfolio", 
       description: "Personal portfolio using NextJS with modern design patterns",
-      image: "/portfolio-screenshot-2.png"
+      image: "/portfolio-screenshot-2.png",
+      programmingLanguage: "TypeScript, Javascript",
+      frontend: "React, NextJS,,Tailwind",
+      backend: "NextJS, Node.JS"
     },
-  /*{ 
+    { 
       id: 3, 
-      title: "E-commerce Platform", 
-      description: "Full-stack e-commerce solution with React and Node.js" 
+      title: "Arduino Certification", 
+      description: "Completed the Arduino starter course. Passed the certification. Completed final project." 
     },
+    /*
     { 
       id: 4, 
       title: "Task Management App", 

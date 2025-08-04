@@ -138,7 +138,7 @@ const ContactMe: React.FC<ContactMeProps> = ({
   };
 
   return (
-    <div className={`max-w-4xl mx-auto px-4 sm:px-6 ${className}`}>
+    <div className={`max-w-3xl mx-auto px-4 sm:px-6 ${className}`}>
       {/* Header */}
       <div className="text-center mb-12">
         <h2 
