@@ -94,7 +94,7 @@ export default function ProjectsGrid({
           {projects.map((project) => (
             <div
               key={project.id}
-              className="w-full max-w-sm h-90 cursor-pointer"
+              className="w-full max-w-sm h-96 md:h-80 cursor-pointer"
               onClick={() => handleProjectClick(project)}
               style={{ perspective: '1000px' }}
             >
@@ -117,7 +117,7 @@ export default function ProjectsGrid({
                 >
                   {/* Project image or placeholder */}
                   <div 
-                    className="h-48 flex items-center justify-center transition-colors duration-200"
+                    className="h-48 flex items-center justify-center transition-colors duration-200 overflow-hidden rounded-t-lg"
                     style={{ 
                       backgroundColor: colors?.background === '#FFFFFF' ? '#E5E7EB' : '#374151'
                     }}
@@ -128,7 +128,7 @@ export default function ProjectsGrid({
                         alt={project.title}
                         width={400}
                         height={200}
-                        className="w-full h-full object-cover"
+                        className="w-full h-48 object-cover object-center rounded-t-lg"
                       />
                     ) : (
                       <span 
@@ -137,7 +137,7 @@ export default function ProjectsGrid({
                           color: colors?.foreground === '#171717' ? '#6B7280' : '#9CA3AF' 
                         }}
                       >
-                        Project Image
+                        Project Image Coming Soon
                       </span>
                     )}
                   </div>

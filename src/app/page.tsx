@@ -59,14 +59,20 @@ export default function Home() {
     { 
       id: 3, 
       title: "Arduino Certification", 
-      description: "Completed the Arduino starter course. Passed the certification. Completed final project." 
+      description: "Completed the Arduino starter course. Passed the certification. Completed final project.",
+      image: "/arduino.jpg",
+      programmingLanguage: "C++",
     },
-    /*
+    
     { 
       id: 4, 
-      title: "Task Management App", 
-      description: "Collaborative task management tool with real-time updates" 
+      title: "Crypto Wallet App", 
+      description: "Cryptocurrency and digital assets wallet for everyone.",
+      programmingLanguage: "C++",
+      frontend: "CMake",
+      backend: "SQLite"
     },
+    /*
     { 
       id: 5, 
       title: "Weather Dashboard", 
