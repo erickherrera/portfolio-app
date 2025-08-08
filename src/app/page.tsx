@@ -7,6 +7,7 @@ import ProfileCard from "../components/ProfileCard";
 import ProjectsGrid from "../components/ProjectsSection"; 
 import TechStackSection from "../components/techsection";
 import ContactMe from "../components/contactmesection";
+import TimelineSection from "../components/TimelineSection";
 import { useState, useEffect, useRef, useMemo } from "react";
 
 export default function Home() {
@@ -134,6 +135,7 @@ export default function Home() {
   const sections = useMemo(() => [
     { id: "home", name: "Home" },
     { id: "about", name: "About" },
+    { id: "timeline", name: "Journey" },
     { id: "tech", name: "Tech" },
     { id: "projects", name: "Projects" },
     { id: "contact", name: "Contact" }
@@ -428,6 +430,20 @@ export default function Home() {
               </div>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* Timeline Section */}
+      <section 
+        id="timeline" 
+        className="pt-16 pb-16 md:pt-20 md:pb-20 border-t-6 transition-colors duration-200 scroll-mt-20 w-full"
+        style={{
+          backgroundColor: colors.background,
+          borderColor: colors.accent
+        }}
+      >
+        <div className="w-full overflow-hidden">
+          <TimelineSection />
         </div>
       </section>
 
