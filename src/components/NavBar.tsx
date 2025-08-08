@@ -122,7 +122,7 @@ export default function NavBar(): JSX.Element {
 
   return (
     <nav 
-      className="w-full h-[72px] pl-6 sm:pl-10 pr-0 flex justify-between items-center shadow-sm sticky top-0 z-10 transition-colors duration-200"
+      className="w-full h-[72px] pl-6 sm:pl-10 pr-0 flex justify-between items-center shadow-sm fixed top-0 z-10 transition-colors duration-200"
       style={{ 
         backgroundColor: colors.background,
         color: colors.foreground
