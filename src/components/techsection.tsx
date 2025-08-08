@@ -75,7 +75,7 @@ const TechStackSection: React.FC<TechStackSectionProps> = ({
       </div>
 
       {/* Achievement Grid */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-8 mb-16">
+      <div className="grid grid-cols-3 lg:grid-cols-4 gap-8 mb-16">
         {techStack.map((tech, index) => (
           <div
             key={tech.name}
