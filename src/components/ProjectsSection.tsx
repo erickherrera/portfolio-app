@@ -33,7 +33,7 @@ interface ProjectsGridProps {
 
 export default function ProjectsGrid({
   projects,
-  title = "My Projects",
+  title = "Personal Projects",
   subtitle = "A collection of my latest work and ongoing projects.",
   onProjectClick,
   className = "",

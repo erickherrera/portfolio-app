@@ -37,8 +37,8 @@ export default function NavBar(): JSX.Element {
     { name: "Home", path: "#home", isHash: true },
     { name: "About", path: "#about", isHash: true },
     { name: "Tech Stack", path: "#tech", isHash: true },
-    { name: "Timeline", path: "#timeline", isHash: true },
-    { name: "My Projects", path: "#projects", isHash: true },
+    { name: "My Experience", path: "#timeline", isHash: true },
+    { name: "Personal Projects", path: "#projects", isHash: true },
     { name: "Contact", path: "#contact", isHash: true },
   ];
 
