@@ -26,9 +26,9 @@ const TimelineSection: React.FC<TimelineSectionProps> = ({ className = "" }) => 
   const timelineData: TimelineItem[] = [
     {
       id: 1,
-      title: "Customer Service Representative",
+      title: "Software Engineer",
       company: "Keysight Technologies",
-      location: "Santa Rosa, CA",
+      location: "Colorado Springs, CO",
       period: "2023 - Present",
       description: [
         "Maintain high customer satisfaction while developing technical solutions for complex product inquiries",
@@ -40,7 +40,7 @@ const TimelineSection: React.FC<TimelineSectionProps> = ({ className = "" }) => 
       id: 2,
       title: "Business Process Analyst",
       company: "Keysight Technologies",
-      location: "Santa Rosa, CA",
+      location: "Colorado Springs, CO",
       period: "2021 - 2023",
       description: [
         "Led automation initiatives for inbound email processing using Salesforce functionality, reducing manual processing time by 40%",
@@ -55,7 +55,7 @@ const TimelineSection: React.FC<TimelineSectionProps> = ({ className = "" }) => 
       id: 3,
       title: "Customer Service Representative / Customer Technical Assistant",
       company: "Keysight Technologies",
-      location: "Santa Rosa, CA",
+      location: "Colorado Springs, CO",
       period: "2019 - 2021",
       description: [
         "Provided technical support for complex electronic testing equipment",
@@ -67,7 +67,7 @@ const TimelineSection: React.FC<TimelineSectionProps> = ({ className = "" }) => 
       id: 4,
       title: "Intelligence Specialist",
       company: "U.S. Coast Guard",
-      location: "United States",
+      location: "Puerto Rico",
       period: "2016 - 2018",
       description: [
         "Led a team of 4 junior personnel in daily operations and training initiatives",
@@ -131,7 +131,7 @@ const TimelineSection: React.FC<TimelineSectionProps> = ({ className = "" }) => 
   };
 
   return (
-    <div className={`w-full max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 ${className}`}>
+    <div className={`w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 xl:px-16 2xl:px-24 ${className}`}>
       {/* Header */}
       <div className="text-center mb-10 sm:mb-12">
         <h2 

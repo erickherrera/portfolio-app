@@ -37,6 +37,7 @@ export default function NavBar(): JSX.Element {
     { name: "Home", path: "#home", isHash: true },
     { name: "About", path: "#about", isHash: true },
     { name: "Tech Stack", path: "#tech", isHash: true },
+    { name: "Timeline", path: "#timeline", isHash: true },
     { name: "My Projects", path: "#projects", isHash: true },
     { name: "Contact", path: "#contact", isHash: true },
   ];
@@ -60,7 +61,7 @@ export default function NavBar(): JSX.Element {
     }, observerOptions);
 
     // Observe all sections
-    const sections = ['home', 'about', 'projects', 'contact'];
+    const sections = ['home', 'about', 'tech', 'timeline', 'projects', 'contact'];
     sections.forEach(sectionId => {
       const element = document.getElementById(sectionId);
       if (element) {
