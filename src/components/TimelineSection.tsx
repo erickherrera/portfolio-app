@@ -322,9 +322,6 @@ const TimelineSection: React.FC<TimelineSectionProps> = ({ className = "" }) => 
 
       {/* Mobile Timeline - Card Stack Design (hidden on desktop) */}
       <div className="block lg:hidden">
-        {/* Mobile Header */}
-        
-
         {/* Card Stack Layout */}
         <div className="relative">
           {/* Stacked Cards */}
@@ -348,7 +345,6 @@ const TimelineSection: React.FC<TimelineSectionProps> = ({ className = "" }) => 
                     style={{
                       backgroundColor: `${colors.card}f0`,
                       borderColor: getTypeColor(item.type),
-                      boxShadow: isVisible ? `0 25px 50px ${getTypeColor(item.type)}20, 0 0 0 1px ${getTypeColor(item.type)}20` : 'none',
                       transitionDelay: `${index * 400}ms`,
                       marginLeft: `${index * 4}px`,
                       marginRight: `${(timelineData.length - index - 1) * 4}px`
@@ -419,7 +415,6 @@ const TimelineSection: React.FC<TimelineSectionProps> = ({ className = "" }) => 
                           backgroundColor: `${getTypeColor(item.type)}25`,
                           color: getTypeColor(item.type),
                           border: `2px solid ${getTypeColor(item.type)}40`,
-                          boxShadow: isVisible ? `0 0 15px ${getTypeColor(item.type)}20` : 'none',
                           transitionDelay: `${index * 400 + 700}ms`
                         }}
                       >
@@ -470,18 +465,6 @@ const TimelineSection: React.FC<TimelineSectionProps> = ({ className = "" }) => 
                         ))}
                       </div>
                     </div>
-
-                    {/* Card shine effect */}
-                    {isVisible && (
-                      <div
-                        className="absolute inset-0 rounded-2xl pointer-events-none"
-                        style={{
-                          background: `linear-gradient(135deg, transparent 30%, ${getTypeColor(item.type)}10 50%, transparent 70%)`,
-                          animation: 'shine 3s ease-in-out infinite',
-                          animationDelay: `${index * 2}s`
-                        }}
-                      ></div>
-                    )}
                   </div>
                 </div>
               );
@@ -509,14 +492,6 @@ const TimelineSection: React.FC<TimelineSectionProps> = ({ className = "" }) => 
             </div>
           </div>
         </div>
-
-        {/* Add shine animation keyframes */}
-        <style jsx>{`
-          @keyframes shine {
-            0% { transform: translateX(-100%) skew(-15deg); }
-            100% { transform: translateX(200%) skew(-15deg); }
-          }
-        `}</style>
       </div>
     </div>
   );
