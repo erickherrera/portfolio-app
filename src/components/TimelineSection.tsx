@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import { useTheme } from '../app/ThemeContext';
+import { MdWork, MdSchool, MdVerifiedUser } from 'react-icons/md';
 
 interface TimelineItem {
   id: number;
@@ -106,24 +107,11 @@ const TimelineSection: React.FC<TimelineSectionProps> = ({ className = "" }) => 
   const getIconForType = (type: string) => {
     switch (type) {
       case 'work':
-        return (
-          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2-2v2m8 0V6a2 2 0 002 2h2a1 1 0 011 1v6.5M7 7h10v4l-2 2H9l-2-2V7z" />
-          </svg>
-        );
+        return <MdWork className="w-full h-full" />;
       case 'education':
-        return (
-          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 14l9-5-9-5-9 5 9 5z" />
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" />
-          </svg>
-        );
+        return <MdSchool className="w-full h-full" />;
       case 'certification':
-        return (
-          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
-          </svg>
-        );
+        return <MdVerifiedUser className="w-full h-full" />;
       default:
         return null;
     }
@@ -132,11 +120,11 @@ const TimelineSection: React.FC<TimelineSectionProps> = ({ className = "" }) => 
   const getTypeColor = (type: string) => {
     switch (type) {
       case 'work':
-        return colors.primary;
-      case 'education':
-        return colors.secondary;
-      case 'certification':
         return colors.accent;
+      case 'education':
+        return colors.primary;
+      case 'certification':
+        return colors.primary;
       default:
         return colors.primary;
     }
@@ -150,7 +138,7 @@ const TimelineSection: React.FC<TimelineSectionProps> = ({ className = "" }) => 
           className="text-2xl sm:text-3xl md:text-4xl font-extrabold mb-3 sm:mb-4"
           style={{ color: colors.foreground }}
         >
-          My Journey
+          My Experience
         </h2>
         <div 
           className="w-16 sm:w-20 h-1 mx-auto rounded-full mb-4 sm:mb-6"
@@ -165,17 +153,17 @@ const TimelineSection: React.FC<TimelineSectionProps> = ({ className = "" }) => 
       </div>
 
       {/* Desktop / Tablet timeline (hidden on mobile) */}
-      <div className="relative hidden md:block">
+      <div className="relative hidden lg:block">
         {/* Central Timeline Line */}
         <div 
           className="absolute left-1/2 -translate-x-1/2 w-1 h-full rounded-full"
           style={{ 
-            background: `linear-gradient(to bottom, ${colors.accent}20, ${colors.accent}60, ${colors.accent}20)`
+            background: `linear-gradient(to bottom, ${colors.accent}20, ${colors.accent}80, ${colors.accent}20)`
           }}
         ></div>
 
         {/* Timeline Items */}
-        <div className="space-y-12">
+        <div className="space-y-16">
           {timelineData.map((item, index) => {
             const isVisible = visibleItems.has(item.id);
             const isLeft = index % 2 === 0;
@@ -187,96 +175,120 @@ const TimelineSection: React.FC<TimelineSectionProps> = ({ className = "" }) => 
                 className={`timeline-item flex items-center ${isLeft ? 'flex-row' : 'flex-row-reverse'}`}
               >
                 {/* Content Card */}
-                <div className={`w-5/12 ${isLeft ? 'pr-8' : 'pl-8'}`}>
+                <div className={`w-5/12 ${isLeft ? 'pr-12' : 'pl-12'}`}>
                   <div
-                    className={`p-6 rounded-lg border-2 transition-all duration-700 transform motion-reduce:transition-none motion-reduce:transform-none ${
+                    className={`relative p-8 rounded-xl border-2 transition-all duration-1000 transform motion-reduce:transition-none motion-reduce:transform-none ${
                       isVisible 
-                        ? 'opacity-100 translate-y-0 scale-100' 
-                        : 'opacity-0 translate-y-8 scale-95'
+                        ? 'opacity-100 translate-y-0 scale-100 rotate-0' 
+                        : `opacity-0 ${isLeft ? 'translate-x-16 -rotate-3' : '-translate-x-16 rotate-3'} translate-y-12 scale-90`
                     }`}
                     style={{
                       backgroundColor: colors.card,
                       borderColor: getTypeColor(item.type),
-                      boxShadow: isVisible ? `0 10px 25px ${getTypeColor(item.type)}20` : 'none',
-                      transitionDelay: `${index * 200}ms`
+                      boxShadow: isVisible ? `0 20px 40px ${getTypeColor(item.type)}25, 0 0 0 1px ${getTypeColor(item.type)}10` : 'none',
+                      transitionDelay: `${index * 300}ms`
                     }}
                   >
+                    {/* Floating Icon */}
+                    <div
+                      className={`absolute ${isLeft ? '-right-4' : '-left-4'} -top-4 w-12 h-12 rounded-full border-4 flex items-center justify-center transition-all duration-1000 ${
+                        isVisible ? 'scale-110 rotate-0' : 'scale-0 rotate-180'
+                      }`}
+                      style={{
+                        backgroundColor: colors.card,
+                        borderColor: getTypeColor(item.type),
+                        boxShadow: isVisible ? `0 8px 20px ${getTypeColor(item.type)}30` : 'none',
+                        transitionDelay: `${index * 300 + 200}ms`
+                      }}
+                    >
+                      <div className="w-6 h-6" style={{ color: getTypeColor(item.type) }}>
+                        {getIconForType(item.type)}
+                      </div>
+                    </div>
+
                     {/* Header */}
-                    <div className="flex items-start justify-between mb-3">
-                      <div className="flex-1">
-                        <h3 
-                          className="text-xl font-bold mb-1"
-                          style={{ color: colors.foreground }}
-                        >
-                          {item.title}
-                        </h3>
-                        <p 
-                          className="font-semibold mb-1"
-                          style={{ color: getTypeColor(item.type) }}
-                        >
-                          {item.company}
-                        </p>
-                        <p 
-                          className="text-sm"
-                          style={{ color: colors.foreground === '#171717' ? '#6B7280' : '#9CA3AF' }}
-                        >
-                          {item.location}
-                        </p>
-                      </div>
-                      <div
-                        className="flex-shrink-0 p-2 rounded-full ml-3"
-                        style={{ backgroundColor: `${getTypeColor(item.type)}20` }}
-                        aria-hidden
+                    <div className="mb-4">
+                      <h3 
+                        className="text-2xl font-bold mb-2"
+                        style={{ color: colors.foreground }}
                       >
-                        <div style={{ color: getTypeColor(item.type) }}>
-                          {getIconForType(item.type)}
-                        </div>
-                      </div>
+                        {item.title}
+                      </h3>
+                      <p 
+                        className="font-semibold text-lg mb-1"
+                        style={{ color: getTypeColor(item.type) }}
+                      >
+                        {item.company}
+                      </p>
+                      <p 
+                        className="text-sm opacity-80"
+                        style={{ color: colors.foreground === '#171717' ? '#6B7280' : '#9CA3AF' }}
+                      >
+                        {item.location}
+                      </p>
                     </div>
 
                     {/* Period Badge */}
                     <div 
-                      className="inline-block px-3 py-1 rounded-full text-sm font-medium mb-4"
+                      className="inline-block px-4 py-2 rounded-full text-sm font-bold mb-6"
                       style={{ 
-                        backgroundColor: `${getTypeColor(item.type)}15`,
-                        color: getTypeColor(item.type)
+                        backgroundColor: `${getTypeColor(item.type)}20`,
+                        color: getTypeColor(item.type),
+                        border: `2px solid ${getTypeColor(item.type)}30`
                       }}
                     >
                       {item.period}
                     </div>
 
-                    {/* Description */}
-                    <ul className="space-y-2">
+                    {/* Description with custom bullets */}
+                    <div className="space-y-3">
                       {item.description.map((desc, descIndex) => (
-                        <li
+                        <div
                           key={descIndex}
-                          className={`text-sm leading-relaxed transition-all duration-500 motion-reduce:transition-none ${
-                            isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-4'
+                          className={`flex items-start gap-3 text-sm leading-relaxed transition-all duration-800 motion-reduce:transition-none ${
+                            isVisible ? 'opacity-100 translate-x-0' : `opacity-0 ${isLeft ? 'translate-x-8' : '-translate-x-8'}`
                           }`}
                           style={{ 
-                            color: colors.foreground === '#171717' ? '#374151' : '#D1D5DB',
-                            transitionDelay: `${(index * 200) + (descIndex * 100)}ms`
+                            transitionDelay: `${(index * 300) + (descIndex * 150) + 400}ms`
                           }}
                         >
-                          • {desc}
-                        </li>
+                          <div 
+                            className="w-2 h-2 rounded-full mt-2 flex-shrink-0"
+                            style={{ backgroundColor: getTypeColor(item.type) }}
+                          ></div>
+                          <span style={{ color: colors.foreground === '#171717' ? '#374151' : '#D1D5DB' }}>
+                            {desc}
+                          </span>
+                        </div>
                       ))}
-                    </ul>
+                    </div>
                   </div>
                 </div>
 
-                {/* Center Circle */}
-                <div className="relative z-10 flex items-center justify-center">
+                {/* Enhanced Center Node */}
+                <div className="relative z-20 flex items-center justify-center">
                   <div
-                    className={`w-4 h-4 rounded-full border-4 transition-all duration-500 motion-reduce:transition-none ${
-                      isVisible ? 'scale-110' : 'scale-100'
+                    className={`w-6 h-6 rounded-full border-4 transition-all duration-800 motion-reduce:transition-none ${
+                      isVisible ? 'scale-125 rotate-180' : 'scale-75 rotate-0'
                     }`}
                     style={{
                       backgroundColor: isVisible ? getTypeColor(item.type) : colors.background,
                       borderColor: getTypeColor(item.type),
-                      boxShadow: isVisible ? `0 0 20px ${getTypeColor(item.type)}40` : 'none'
+                      boxShadow: isVisible ? `0 0 30px ${getTypeColor(item.type)}60, 0 0 60px ${getTypeColor(item.type)}30` : 'none',
+                      transitionDelay: `${index * 300 + 100}ms`
                     }}
-                  ></div>
+                  >
+                    {/* Pulsing ring */}
+                    {isVisible && (
+                      <div
+                        className="absolute inset-0 rounded-full animate-ping"
+                        style={{
+                          backgroundColor: getTypeColor(item.type),
+                          opacity: 0.3
+                        }}
+                      ></div>
+                    )}
+                  </div>
                 </div>
 
                 {/* Spacer */}
@@ -286,31 +298,37 @@ const TimelineSection: React.FC<TimelineSectionProps> = ({ className = "" }) => 
           })}
         </div>
 
-        {/* Timeline End Indicator */}
-        <div className="flex justify-center mt-12">
-          <div
-            className="w-6 h-6 rounded-full border-4"
-            style={{
-              backgroundColor: colors.background,
-              borderColor: colors.accent
-            }}
-          ></div>
+        {/* Enhanced Timeline End */}
+        <div className="flex justify-center mt-16 mb-8">
+          <div className="relative">
+            <div
+              className="w-8 h-8 rounded-full border-4 animate-pulse"
+              style={{
+                backgroundColor: colors.background,
+                borderColor: colors.accent,
+                boxShadow: `0 0 20px ${colors.accent}40`
+              }}
+            ></div>
+            <div
+              className="absolute inset-0 rounded-full animate-ping"
+              style={{
+                backgroundColor: colors.accent,
+                opacity: 0.2
+              }}
+            ></div>
+          </div>
         </div>
       </div>
 
-      {/* Mobile Timeline (single-column, only on small screens) */}
-      <div className="block md:hidden">
-        <div className="relative pl-8 pr-2 overflow-x-hidden">
-          {/* Mobile Timeline Line */}
-          <div 
-            className="absolute left-4 top-0 w-0.5 h-full rounded-full"
-            style={{ 
-              background: `linear-gradient(to bottom, ${colors.accent}20, ${colors.accent}60, ${colors.accent}20)`
-            }}
-          ></div>
+      {/* Mobile Timeline - Card Stack Design (hidden on desktop) */}
+      <div className="block lg:hidden">
+        {/* Mobile Header */}
+        
 
-          {/* Mobile Timeline Items */}
-          <div className="space-y-6 sm:space-y-8">
+        {/* Card Stack Layout */}
+        <div className="relative">
+          {/* Stacked Cards */}
+          <div className="space-y-4">
             {timelineData.map((item, index) => {
               const isVisible = visibleItems.has(item.id);
               
@@ -320,89 +338,185 @@ const TimelineSection: React.FC<TimelineSectionProps> = ({ className = "" }) => 
                   data-id={item.id}
                   className="timeline-item relative"
                 >
-                  {/* Mobile Circle */}
+                  {/* Card with dramatic entrance */}
                   <div
-                    className={`absolute -left-3 top-2 w-3 h-3 rounded-full border-2 transition-all duration-500 motion-reduce:transition-none ${
-                      isVisible ? 'scale-110' : 'scale-100'
-                    }`}
-                    style={{
-                      backgroundColor: isVisible ? getTypeColor(item.type) : colors.background,
-                      borderColor: getTypeColor(item.type)
-                    }}
-                  ></div>
-
-                  {/* Mobile Content */}
-                  <div
-                    className={`p-4 rounded-lg border-l-4 transition-all duration-700 transform motion-reduce:transition-none motion-reduce:transform-none ${
+                    className={`relative p-6 rounded-2xl border-2 backdrop-blur-sm transition-all duration-1200 transform motion-reduce:transition-none motion-reduce:transform-none ${
                       isVisible 
-                        ? 'opacity-100 translate-x-0' 
-                        : 'opacity-0 translate-x-4'
+                        ? 'opacity-100 translate-y-0 scale-100 rotate-0' 
+                        : 'opacity-0 translate-y-16 scale-95 rotate-2'
                     }`}
                     style={{
-                      backgroundColor: colors.card,
+                      backgroundColor: `${colors.card}f0`,
                       borderColor: getTypeColor(item.type),
-                      transitionDelay: `${index * 200}ms`
+                      boxShadow: isVisible ? `0 25px 50px ${getTypeColor(item.type)}20, 0 0 0 1px ${getTypeColor(item.type)}20` : 'none',
+                      transitionDelay: `${index * 400}ms`,
+                      marginLeft: `${index * 4}px`,
+                      marginRight: `${(timelineData.length - index - 1) * 4}px`
                     }}
                   >
-                    <div className="flex items-start justify-between mb-2">
-                      <div className="flex-1">
+                    {/* Floating icon badge */}
+                    <div
+                      className={`absolute -top-3 -right-3 w-12 h-12 rounded-full border-3 flex items-center justify-center transition-all duration-1200 ${
+                        isVisible ? 'scale-110 rotate-0' : 'scale-0 rotate-180'
+                      }`}
+                      style={{
+                        backgroundColor: colors.card,
+                        borderColor: getTypeColor(item.type),
+                        boxShadow: isVisible ? `0 10px 25px ${getTypeColor(item.type)}30` : 'none',
+                        transitionDelay: `${index * 400 + 300}ms`
+                      }}
+                    >
+                      <div className="w-6 h-6" style={{ color: getTypeColor(item.type) }}>
+                        {getIconForType(item.type)}
+                      </div>
+                    </div>
+
+                    {/* Content with staggered animation */}
+                    <div className="relative z-10">
+                      {/* Header section */}
+                      <div className="mb-4">
                         <h3 
-                          className="text-base sm:text-lg font-bold mb-1"
-                          style={{ color: colors.foreground }}
+                          className={`text-lg md:text-xl font-bold mb-2 transition-all duration-800 ${
+                            isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+                          }`}
+                          style={{ 
+                            color: colors.foreground,
+                            transitionDelay: `${index * 400 + 400}ms`
+                          }}
                         >
                           {item.title}
                         </h3>
                         <p 
-                          className="font-semibold text-sm mb-1"
-                          style={{ color: getTypeColor(item.type) }}
+                          className={`font-semibold text-base mb-1 transition-all duration-800 ${
+                            isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+                          }`}
+                          style={{ 
+                            color: getTypeColor(item.type),
+                            transitionDelay: `${index * 400 + 500}ms`
+                          }}
                         >
                           {item.company}
                         </p>
                         <p 
-                          className="text-xs mb-2"
-                          style={{ color: colors.foreground === '#171717' ? '#6B7280' : '#9CA3AF' }}
+                          className={`text-sm opacity-80 transition-all duration-800 ${
+                            isVisible ? 'opacity-80 translate-y-0' : 'opacity-0 translate-y-4'
+                          }`}
+                          style={{ 
+                            color: colors.foreground === '#171717' ? '#6B7280' : '#9CA3AF',
+                            transitionDelay: `${index * 400 + 600}ms`
+                          }}
                         >
                           {item.location}
                         </p>
                       </div>
-                      <div
-                        className="p-1.5 rounded-full"
-                        style={{ backgroundColor: `${getTypeColor(item.type)}20` }}
-                        aria-hidden
+
+                      {/* Period badge with glow */}
+                      <div 
+                        className={`inline-block px-4 py-2 rounded-full text-sm font-bold mb-4 transition-all duration-800 ${
+                          isVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-75'
+                        }`}
+                        style={{ 
+                          backgroundColor: `${getTypeColor(item.type)}25`,
+                          color: getTypeColor(item.type),
+                          border: `2px solid ${getTypeColor(item.type)}40`,
+                          boxShadow: isVisible ? `0 0 15px ${getTypeColor(item.type)}20` : 'none',
+                          transitionDelay: `${index * 400 + 700}ms`
+                        }}
                       >
-                        <div className="w-4 h-4" style={{ color: getTypeColor(item.type) }}>
-                          {getIconForType(item.type)}
-                        </div>
+                        {item.period}
+                      </div>
+
+                      {/* Enhanced descriptions */}
+                      <div className="space-y-3">
+                        {item.description.map((desc, descIndex) => (
+                          <div
+                            key={descIndex}
+                            className={`flex items-start gap-3 transition-all duration-800 ${
+                              isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-6'
+                            }`}
+                            style={{ 
+                              transitionDelay: `${index * 400 + 800 + (descIndex * 200)}ms`
+                            }}
+                          >
+                            {/* Animated bullet */}
+                            <div 
+                              className={`w-3 h-3 rounded-full mt-1.5 flex-shrink-0 transition-all duration-500 ${
+                                isVisible ? 'scale-100' : 'scale-0'
+                              }`}
+                              style={{ 
+                                backgroundColor: getTypeColor(item.type),
+                                transitionDelay: `${index * 400 + 900 + (descIndex * 200)}ms`
+                              }}
+                            >
+                              {/* Ripple effect */}
+                              {isVisible && (
+                                <div
+                                  className="absolute inset-0 rounded-full animate-ping"
+                                  style={{
+                                    backgroundColor: getTypeColor(item.type),
+                                    opacity: 0.4,
+                                    animationDelay: `${descIndex * 0.5}s`
+                                  }}
+                                ></div>
+                              )}
+                            </div>
+                            <span 
+                              className="text-sm leading-relaxed flex-1"
+                              style={{ color: colors.foreground === '#171717' ? '#374151' : '#D1D5DB' }}
+                            >
+                              {desc}
+                            </span>
+                          </div>
+                        ))}
                       </div>
                     </div>
 
-                    <div 
-                      className="inline-block px-2 py-1 rounded text-xs font-medium mb-3"
-                      style={{ 
-                        backgroundColor: `${getTypeColor(item.type)}15`,
-                        color: getTypeColor(item.type)
-                      }}
-                    >
-                      {item.period}
-                    </div>
-
-                    <ul className="space-y-1">
-                      {item.description.map((desc, descIndex) => (
-                        <li
-                          key={descIndex}
-                          className="text-xs leading-relaxed"
-                          style={{ color: colors.foreground === '#171717' ? '#374151' : '#D1D5DB' }}
-                        >
-                          • {desc}
-                        </li>
-                      ))}
-                    </ul>
+                    {/* Card shine effect */}
+                    {isVisible && (
+                      <div
+                        className="absolute inset-0 rounded-2xl pointer-events-none"
+                        style={{
+                          background: `linear-gradient(135deg, transparent 30%, ${getTypeColor(item.type)}10 50%, transparent 70%)`,
+                          animation: 'shine 3s ease-in-out infinite',
+                          animationDelay: `${index * 2}s`
+                        }}
+                      ></div>
+                    )}
                   </div>
                 </div>
               );
             })}
           </div>
+
+          {/* Mobile timeline end */}
+          <div className="flex justify-center mt-12 mb-6">
+            <div className="relative">
+              <div
+                className="w-6 h-6 rounded-full border-3 animate-pulse"
+                style={{
+                  backgroundColor: colors.background,
+                  borderColor: colors.accent,
+                  boxShadow: `0 0 15px ${colors.accent}40`
+                }}
+              ></div>
+              <div
+                className="absolute inset-0 rounded-full animate-ping"
+                style={{
+                  backgroundColor: colors.accent,
+                  opacity: 0.3
+                }}
+              ></div>
+            </div>
+          </div>
         </div>
+
+        {/* Add shine animation keyframes */}
+        <style jsx>{`
+          @keyframes shine {
+            0% { transform: translateX(-100%) skew(-15deg); }
+            100% { transform: translateX(200%) skew(-15deg); }
+          }
+        `}</style>
       </div>
     </div>
   );
