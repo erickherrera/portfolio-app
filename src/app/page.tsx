@@ -336,7 +336,7 @@ export default function Home() {
           background: `linear-gradient(to bottom, ${colors.background}, ${colors.background})` 
         }}
       >
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+        <div className="max-w-4xl mx-auto my-25 px-4 sm:px-6 lg:px-8 w-full">
           <div className="flex flex-col items-center text-center w-full">
             <h1 
               className="mb-4 text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight break-words"
