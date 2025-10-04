@@ -91,20 +91,20 @@ export default function NavBar(): JSX.Element {
   // Function to handle navigation
   const handleNavigation = (e: React.MouseEvent<HTMLAnchorElement>, path: string, isHash: boolean): void => {
     e.preventDefault();
-    
+
     if (isHash) {
-      // For hash links, scroll to the section
+      // For hash links, instantly jump to the section
       const elementId = path.substring(1); // Remove the #
       const element = document.getElementById(elementId);
       if (element) {
-        element.scrollIntoView({ behavior: "smooth" });
+        element.scrollIntoView({ behavior: "auto" });
         setActiveSection(path);
       }
     } else {
       // For non-hash links (like Projects), use the router
       router.push(path);
     }
-    
+
     if (isMenuOpen) {
       setIsMenuOpen(false);
     }
