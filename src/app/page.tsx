@@ -69,9 +69,10 @@ export default function Home() {
       id: 4, 
       title: "Crypto Wallet App", 
       description: "Cryptocurrency and digital assets wallet for everyone.",
-      programmingLanguage: "C++",
-      frontend: "CMake",
-      backend: "SQLite"
+      image: "/criptogualet.png",
+      programmingLanguage: "C++ with Clang Compiler",
+      frontend: "QT, CMake",
+      backend: "SQLite, SQLCipher"
     },
     /*
     { 
