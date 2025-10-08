@@ -382,7 +382,12 @@ export default function Home() {
                 LinkedIn
               </a>
               <button
-                onClick={() => scrollToSection("contact")}
+                onClick={() => {
+                  const element = document.getElementById("contact");
+                  if (element) {
+                    element.scrollIntoView({ behavior: "auto" });
+                  }
+                }}
                 className="px-4 py-2 font-bold rounded-md transition-colors duration-300 shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 text-center w-full sm:w-auto"
                 style={{
                   backgroundColor: colors.secondary,
