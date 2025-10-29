@@ -54,7 +54,7 @@ export default function Home() {
       description: "Personal portfolio using NextJS with modern design patterns",
       image: "/portfolio-screenshot-2.png",
       programmingLanguage: "TypeScript, Javascript",
-      frontend: "React, NextJS,,Tailwind",
+      frontend: "React, NextJS, Tailwind",
       backend: "NextJS, Node.JS"
     },
     { 
