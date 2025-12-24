@@ -54,7 +54,7 @@ export default function Home() {
       description: "Personal portfolio using NextJS with modern design patterns",
       image: "/portfolio-screenshot-2.png",
       programmingLanguage: "TypeScript, Javascript",
-      frontend: "React, NextJS,,Tailwind",
+      frontend: "React, NextJS, Tailwind",
       backend: "NextJS, Node.JS"
     },
     { 
@@ -69,9 +69,10 @@ export default function Home() {
       id: 4, 
       title: "Crypto Wallet App", 
       description: "Cryptocurrency and digital assets wallet for everyone.",
-      programmingLanguage: "C++",
-      frontend: "CMake",
-      backend: "SQLite"
+      image: "/criptogualet.png",
+      programmingLanguage: "C++ with Clang Compiler",
+      frontend: "QT, CMake",
+      backend: "SQLite, SQLCipher"
     },
     /*
     { 
@@ -123,10 +124,10 @@ export default function Home() {
 
   // Add this helper function inside your Home component, before the return statement
   const createHoverHandlers = () => ({
-    onMouseEnter: (e: React.MouseEvent<HTMLAnchorElement>) => {
+    onMouseEnter: (e: React.MouseEvent<HTMLAnchorElement | HTMLButtonElement>) => {
       e.currentTarget.style.backgroundColor = colors.primary;
     },
-    onMouseLeave: (e: React.MouseEvent<HTMLAnchorElement>) => {
+    onMouseLeave: (e: React.MouseEvent<HTMLAnchorElement | HTMLButtonElement>) => {
       e.currentTarget.style.backgroundColor = colors.secondary;
     }
   });
@@ -351,10 +352,10 @@ export default function Home() {
               Learn more about my software engineering path.
             </h2>
             
-            <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 mt-6 w-full max-w-sm justify-center">
-              <a 
-                href="https://github.com/erickherrera" 
-                target="_blank" 
+            <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 mt-6 w-full max-w-md justify-center">
+              <a
+                href="https://github.com/erickherrera"
+                target="_blank"
                 rel="noopener noreferrer"
                 className="px-4 py-2 font-bold rounded-md transition-colors duration-300 shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 text-center w-full sm:w-auto"
                 style={{
@@ -366,9 +367,9 @@ export default function Home() {
               >
                 GitHub
               </a>
-              <a 
-                href="https://www.linkedin.com/in/erick-herrera-cabrera-b2268b1b4/" 
-                target="_blank" 
+              <a
+                href="https://www.linkedin.com/in/erick-herrera-cabrera-b2268b1b4/"
+                target="_blank"
                 rel="noopener noreferrer"
                 className="px-4 py-2 font-bold rounded-md transition-colors duration-300 shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 text-center w-full sm:w-auto"
                 style={{
@@ -380,6 +381,23 @@ export default function Home() {
               >
                 LinkedIn
               </a>
+              <button
+                onClick={() => {
+                  const element = document.getElementById("contact");
+                  if (element) {
+                    element.scrollIntoView({ behavior: "auto" });
+                  }
+                }}
+                className="px-4 py-2 font-bold rounded-md transition-colors duration-300 shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 text-center w-full sm:w-auto"
+                style={{
+                  backgroundColor: colors.secondary,
+                  color: 'white'
+                }}
+                {...createHoverHandlers()}
+                aria-label="Contact Me"
+              >
+                Contact Me
+              </button>
             </div>
           </div>
         </div>

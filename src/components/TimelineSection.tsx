@@ -24,8 +24,8 @@ const TimelineSection: React.FC<TimelineSectionProps> = ({ className = "" }) => 
   const observerRef = useRef<IntersectionObserver | null>(null);
 
   const timelineData: TimelineItem[] = [
-    {
-      id: 1,
+    /*  {
+    id: 1,
       title: "Software Engineer",
       company: "Keysight Technologies",
       location: "Colorado Springs, CO",
@@ -35,13 +35,13 @@ const TimelineSection: React.FC<TimelineSectionProps> = ({ className = "" }) => 
         "Collaborate with engineering teams to resolve technical issues and provide product feedback"
       ],
       type: 'work'
-    },
+    }, */ 
     {
       id: 2,
       title: "Business Process Analyst",
       company: "Keysight Technologies",
       location: "Colorado Springs, CO",
-      period: "2021 - 2023",
+      period: "2022 - Present",
       description: [
         "Led automation initiatives for inbound email processing using Salesforce functionality, reducing manual processing time by 40%",
         "Saved 15+ work hours weekly through implementation of process improvements and workflow optimization",
@@ -53,10 +53,10 @@ const TimelineSection: React.FC<TimelineSectionProps> = ({ className = "" }) => 
     },
     {
       id: 3,
-      title: "Customer Service Representative / Customer Technical Assistant",
+      title: "Customer Support Specialist",
       company: "Keysight Technologies",
       location: "Colorado Springs, CO",
-      period: "2019 - 2021",
+      period: "2019 - 2022",
       description: [
         "Provided technical support for complex electronic testing equipment",
         "Developed problem-solving skills through troubleshooting hardware and software issues"
