@@ -24,7 +24,7 @@ const TimelineSection: React.FC<TimelineSectionProps> = ({ className = "" }) => 
   const observerRef = useRef<IntersectionObserver | null>(null);
 
   const timelineData: TimelineItem[] = [
-      {
+    /*  {
     id: 1,
       title: "Software Engineer",
       company: "Keysight Technologies",
@@ -35,7 +35,7 @@ const TimelineSection: React.FC<TimelineSectionProps> = ({ className = "" }) => 
         "Collaborate with engineering teams to resolve technical issues and provide product feedback"
       ],
       type: 'work'
-    },  
+    }, */ 
     {
       id: 2,
       title: "Business Process Analyst",
