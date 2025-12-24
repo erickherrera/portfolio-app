@@ -348,7 +348,7 @@ export default function Home() {
               className="mb-8 text-base sm:text-lg md:text-xl font-semibold px-2 break-words"
               style={{ color: colors.foreground}}
             >
-              Learn more about my software engineering journey.
+              Learn more about my software engineering path.
             </h2>
             
             <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 mt-6 w-full max-w-sm justify-center">
