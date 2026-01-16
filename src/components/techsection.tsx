@@ -1,6 +1,7 @@
 // TechStackSection.tsx
 import React from 'react';
 import { IconType } from 'react-icons';
+import { useTheme, THEMES } from '../app/ThemeContext';
 // Frontend icons
 import { SiJavascript, SiTypescript, SiReact, SiNextdotjs, SiTailwindcss } from 'react-icons/si';
 // Backend icons
@@ -55,6 +56,7 @@ const TechStackSection: React.FC<TechStackSectionProps> = ({
   showFeatures = true,
   className = ""
 }) => {
+  const { resolvedTheme } = useTheme();
   return (
     <div className={`max-w-5xl mx-auto px-4 sm:px-6 ${className}`}>
       {/* Header */}
@@ -105,17 +107,17 @@ const TechStackSection: React.FC<TechStackSectionProps> = ({
                 />
               </div>
               
-              {/* Icon */}
-              <div className="relative z-8 floating-icon spinning-icon">
-                {typeof tech.icon === 'string' ? (
-                  <span className="text-3xl">{tech.icon}</span>
-                ) : (
-                  tech.icon && React.createElement(tech.icon as IconType, {
-                    className: "text-3xl spinning-icon",
-                    style: { color: colors.secondary }
-                  })
-                )}
-              </div>
+               {/* Icon */}
+               <div className="relative z-8 floating-icon spinning-icon">
+                 {typeof tech.icon === 'string' ? (
+                   <span className="text-3xl" style={{ color: resolvedTheme === THEMES.LIGHT ? '#000000' : '#ffffff' }}>{tech.icon}</span>
+                 ) : (
+                   tech.icon && React.createElement(tech.icon as IconType, {
+                     className: "text-3xl spinning-icon",
+                     style: { color: resolvedTheme === THEMES.LIGHT ? '#000000' : '#ffffff' }
+                   })
+                 )}
+               </div>
             </div>
             
             {/* Achievement Label */}

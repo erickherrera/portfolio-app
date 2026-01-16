@@ -27,6 +27,7 @@ export default function Home() {
       programmingLanguage?: string;
       frontend?: string;
       backend?: string;
+      githubUrl?: string;
   }
 
   // Define interface for contact form data
@@ -38,41 +39,43 @@ export default function Home() {
   }
 
   const projects: Project[] = [
-    { 
-      id: 1, 
-      title: "SaSS for HVAC", 
+    {
+      id: 1,
+      title: "SaSS for HVAC",
       description: "SaSS application for an HVAC company to manage their business.",
       image: "/whitaker.png",
       overview: "This is an application currenlty being used by an HVAC company in Georgia",
       programmingLanguage: "Javascript",
       frontend: "React, Tailwind",
-      backend: "MySQl, Express.JS, Node.JS"
+      backend: "MySQl, Express.JS, Node.JS",
     },
-    { 
-      id: 2, 
-      title: "Personal Portfolio", 
+    {
+      id: 2,
+      title: "Personal Portfolio",
       description: "Personal portfolio using NextJS with modern design patterns",
       image: "/portfolio-screenshot-2.png",
       programmingLanguage: "TypeScript, Javascript",
       frontend: "React, NextJS, Tailwind",
-      backend: "NextJS, Node.JS"
+      backend: "NextJS, Node.JS",
+      githubUrl: "https://github.com/erickherrera/portfolio-app"
     },
-    { 
-      id: 3, 
-      title: "Arduino Certification", 
+    {
+      id: 3,
+      title: "Arduino Certification",
       description: "Completed the Arduino starter course. Passed the certification. Completed final project.",
       image: "/arduino.jpg",
       programmingLanguage: "C++",
     },
-    
-    { 
-      id: 4, 
-      title: "Crypto Wallet App", 
+
+    {
+      id: 4,
+      title: "Crypto Wallet App",
       description: "Cryptocurrency and digital assets wallet for everyone.",
       image: "/criptogualet.png",
       programmingLanguage: "C++ with Clang Compiler",
       frontend: "QT, CMake",
-      backend: "SQLite, SQLCipher"
+      backend: "SQLite, SQLCipher",
+      githubUrl: "https://github.com/erickherrera/CriptoGualet"
     },
     /*
     { 
@@ -437,13 +440,18 @@ export default function Home() {
                   className="text-base sm:text-lg font-medium leading-relaxed mb-4 md:mb-6 break-words"
                   style={{ color: colors.foreground === '#171717' ? '#374151' : '#D1D5DB' }}
                 >
-                  <span style={{ color: colors.accent, fontWeight: 'bold' }}>Hello!</span> I&apos;m a passionate software engineer with expertise in building modern web applications. My journey in tech began with a deep curiosity about how modern applications are created and has evolved into a career focused on crafting elegant solutions to complex problems.
+                  <span style={{ color: colors.accent, fontWeight: 'bold' }}>
+                    Hello!</span> I&apos;m a passionate software engineer with expertise in building modern software applications. 
+                    My journey in tech began with a deep curiosity about how modern software is created and has evolved into a career focused 
+                    on crafting elegant solutions to complex problems.
                 </p>
                 <p 
                   className="text-base sm:text-lg font-medium leading-relaxed break-words"
                   style={{ color: colors.foreground === '#171717' ? '#374151' : '#D1D5DB' }}
                 >
-                  I specialize in <span className="font-bold">JavaScript</span> and <span className="font-bold">TypeScript</span> development, with particular focus on <span className="font-bold">React</span>, <span className="font-bold">Next.js</span>, and <span className="font-bold">Node.js</span>. When I&apos;m not coding, you can find me exploring the outdoors, learning and teaching new technologies, or attending tech meetups in town.
+                  I specialize in TypeScript development, with particular focus on React, 
+                  Next.js, and SQL.
+                  Additionally I&apos;m learning C++, embedded systems and cryptography as part of a personal project so checkout my Github! When I&apos;m not coding, you can find me exploring the outdoors, learning and teaching new technologies, or attending tech meetups in town.
                 </p>
               </div>
             </div>

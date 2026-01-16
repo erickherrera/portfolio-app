@@ -34,7 +34,7 @@ export default function RootLayout({
       >
         <ThemeProvider>
           <NavBar />
-          <main className="flex-grow">
+          <main className="flex-grow pb-16">
             {children}
           </main>
           <ThemedFooter />
