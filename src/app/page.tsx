@@ -3,11 +3,12 @@
 
 import ThemeToggle from "./ThemeToggle";
 import { useTheme } from "./ThemeContext";
-import ProfileCard from "../components/ProfileCard";
 import ProjectsGrid from "../components/ProjectsSection"; 
 import TechStackSection from "../components/techsection";
 import ContactMe from "../components/contactmesection";
 import TimelineSection from "../components/TimelineSection";
+import HomeSection from "../components/HomeSection";
+import AboutSection from "../components/AboutSection";
 import { useState, useEffect, useRef, useMemo } from "react";
 
 export default function Home() {
@@ -124,16 +125,6 @@ export default function Home() {
       throw error; // Re-throw so the form component can handle the error state
     }
   };
-
-  // Add this helper function inside your Home component, before the return statement
-  const createHoverHandlers = () => ({
-    onMouseEnter: (e: React.MouseEvent<HTMLAnchorElement | HTMLButtonElement>) => {
-      e.currentTarget.style.backgroundColor = colors.primary;
-    },
-    onMouseLeave: (e: React.MouseEvent<HTMLAnchorElement | HTMLButtonElement>) => {
-      e.currentTarget.style.backgroundColor = colors.secondary;
-    }
-  });
 
   // Navigation sections - memoized to prevent unnecessary re-renders
   const sections = useMemo(() => [
@@ -332,132 +323,8 @@ export default function Home() {
         <ThemeToggle />
       </div>
       
-      {/* Header/Welcome Section - Home Section */}
-      <section 
-        id="home" 
-        className="pt-16 pb-16 md:pt-20 md:pb-20 transition-colors duration-200 w-full min-h-[60vh] flex items-center"
-        style={{
-          background: `linear-gradient(to bottom, ${colors.background}, ${colors.background})` 
-        }}
-      >
-        <div className="max-w-4xl mx-auto my-25 px-4 sm:px-6 lg:px-8 w-full">
-          <div className="flex flex-col items-center text-center w-full">
-            <h1 
-              className="mb-4 text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight break-words"
-              style={{ color: colors.foreground }}
-            >
-              Welcome to my portfolio.
-            </h1>
-            <h2 
-              className="mb-8 text-base sm:text-lg md:text-xl font-semibold px-2 break-words"
-              style={{ color: colors.foreground}}
-            >
-              Learn more about my software engineering path.
-            </h2>
-            
-            <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 mt-6 w-full max-w-md justify-center">
-              <a
-                href="https://github.com/erickherrera"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="px-4 py-2 font-bold rounded-md transition-colors duration-300 shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 text-center w-full sm:w-auto"
-                style={{
-                  backgroundColor: colors.secondary,
-                  color: 'white',
-                }}
-                {...createHoverHandlers()}
-                aria-label="GitHub Profile"
-              >
-                GitHub
-              </a>
-              <a
-                href="https://www.linkedin.com/in/erick-herrera-cabrera-b2268b1b4/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="px-4 py-2 font-bold rounded-md transition-colors duration-300 shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 text-center w-full sm:w-auto"
-                style={{
-                  backgroundColor: colors.secondary,
-                  color: 'white'
-                }}
-                {...createHoverHandlers()}
-                aria-label="LinkedIn Profile"
-              >
-                LinkedIn
-              </a>
-              <button
-                onClick={() => {
-                  const element = document.getElementById("contact");
-                  if (element) {
-                    element.scrollIntoView({ behavior: "auto" });
-                  }
-                }}
-                className="px-4 py-2 font-bold rounded-md transition-colors duration-300 shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 text-center w-full sm:w-auto"
-                style={{
-                  backgroundColor: colors.secondary,
-                  color: 'white'
-                }}
-                {...createHoverHandlers()}
-                aria-label="Contact Me"
-              >
-                Contact Me
-              </button>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* About Me Section */}
-      <section 
-        id="about" 
-        className="pt-16 pb-16 md:pt-20 md:pb-20 border-t-6 transition-colors duration-200 scroll-mt-20 w-full"
-        style={{
-          backgroundColor: colors.hero,
-          borderColor: colors.accent
-        }}
-      >
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-          <div className="text-center mb-8 md:mb-12">
-            <h2 
-              className="text-2xl sm:text-3xl font-extrabold mb-4"
-              style={{ color: colors.foreground }}
-            >
-              About Me
-            </h2>
-            <div className="w-20 h-2 mx-auto rounded-full mb-15" style={{ backgroundColor: colors.accent }}></div>
-          </div>
-          
-          {/* Centered container for profile card and text */}
-          <div className="flex justify-center w-full">
-            <div className="flex flex-col md:flex-row items-center md:items-start gap-6 md:gap-10 max-w-5xl w-full">
-              {/* Profile Card */}
-              <div className="flex-shrink-0 w-full md:w-auto flex justify-center">
-                <ProfileCard/>
-              </div>
-              
-              {/* About text with max width constraint */}
-              <div className="w-full md:flex-1 md:max-w-2xl">
-                <p 
-                  className="text-base sm:text-lg font-medium leading-relaxed mb-4 md:mb-6 break-words"
-                  style={{ color: colors.foreground === '#171717' ? '#374151' : '#D1D5DB' }}
-                >
-                  <span style={{ color: colors.accent, fontWeight: 'bold' }}>
-                    Hello!</span> I&apos;m a passionate software engineer with expertise in building modern software applications. 
-                    My journey in tech began with a deep curiosity about how modern software is created and has evolved into a career focused 
-                    on crafting elegant solutions to complex problems.
-                </p>
-                <p 
-                  className="text-base sm:text-lg font-medium leading-relaxed break-words"
-                  style={{ color: colors.foreground === '#171717' ? '#374151' : '#D1D5DB' }}
-                >
-                  I specialize in TypeScript development, with particular focus on React, 
-                  Next.js, and SQL.
-                  Additionally I&apos;m learning C++, embedded systems and cryptography as part of a personal project so checkout my Github! When I&apos;m not coding, you can find me exploring the outdoors, learning and teaching new technologies, or attending tech meetups in town.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      <HomeSection />
+      <AboutSection />
 
       {/* Timeline Section */}
       <section 
