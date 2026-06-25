@@ -5,6 +5,7 @@ interface Project {
   id: number;
   title: string;
   description: string;
+  year: number;
   image?: string; // Optional image URL
   overview?: string;
   programmingLanguage?: string;
@@ -63,6 +64,18 @@ export default function ProjectsGrid({
 
   const isFlipped = (projectId: number) => flippedCards.has(projectId);
 
+  const sortedProjects = [...projects].sort((a, b) => b.year - a.year);
+
+  const groupedByYear = sortedProjects.reduce<{ year: number; projects: Project[] }[]>((acc, project) => {
+    const last = acc[acc.length - 1];
+    if (last && last.year === project.year) {
+      last.projects.push(project);
+    } else {
+      acc.push({ year: project.year, projects: [project] });
+    }
+    return acc;
+  }, []);
+
   return (
     <div className={className}>
       {/* Conditional header - Now matches your homepage section style */}
@@ -89,10 +102,45 @@ export default function ProjectsGrid({
         </div>
       )}
 
-      {/* Grid structure for project cards */}
+      {/* Timeline-style year groups */}
       <div className="max-w-6xl mx-auto px-4 pb-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 justify-items-center">
-          {projects.map((project) => (
+        {groupedByYear.map((group, groupIndex) => (
+          <div key={group.year} className="relative">
+            {/* Timeline line connecting year nodes */}
+            {groupIndex > 0 && (
+              <div 
+                className="absolute left-1/2 -translate-x-1/2 w-0.5"
+                style={{ 
+                  backgroundColor: colors?.accent || '#2563EB',
+                  top: 0,
+                  bottom: 0
+                }}
+              />
+            )}
+
+            {/* Year node */}
+            <div className="flex items-center justify-center mb-10 mt-6">
+              <div 
+                className="absolute left-1/2 -translate-x-1/2 w-4 h-4 rounded-full border-2 z-10"
+                style={{ 
+                  borderColor: colors?.accent || '#2563EB',
+                  backgroundColor: colors?.background || '#FFFFFF'
+                }}
+              />
+              <div 
+                className="px-6 py-2 rounded-full text-lg font-bold z-20"
+                style={{ 
+                  backgroundColor: colors?.accent || '#2563EB',
+                  color: '#FFFFFF'
+                }}
+              >
+                {group.year}
+              </div>
+            </div>
+
+            {/* Project cards grid for this year */}
+            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 justify-items-center mb-16">
+              {group.projects.map((project) => (
             <div
               key={project.id}
               className="w-full max-w-sm h-96 md:h-80 cursor-pointer"
@@ -318,7 +366,10 @@ export default function ProjectsGrid({
               </div>
             </div>
           ))}
-        </div>
+            </div>
+          </div>
+        ))}
+
       </div>
 
       <style jsx>{`

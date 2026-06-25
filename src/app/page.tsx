@@ -23,6 +23,7 @@ export default function Home() {
       id: number;
       title: string;
       description: string;
+      year: number;
       image?: string;
       overview?: string;
       programmingLanguage?: string;
@@ -44,6 +45,7 @@ export default function Home() {
       id: 1,
       title: "SaSS for HVAC",
       description: "SaSS application for an HVAC company to manage their business.",
+      year: 2024,
       image: "/whitaker.png",
       overview: "This is an application currenlty being used by an HVAC company in Georgia",
       programmingLanguage: "Javascript",
@@ -54,6 +56,7 @@ export default function Home() {
       id: 2,
       title: "Personal Portfolio",
       description: "Personal portfolio using NextJS with modern design patterns",
+      year: 2024,
       image: "/portfolio-screenshot-2.png",
       programmingLanguage: "TypeScript, Javascript",
       frontend: "React, NextJS, Tailwind",
@@ -64,6 +67,7 @@ export default function Home() {
       id: 3,
       title: "Arduino Certification",
       description: "Completed the Arduino starter course. Passed the certification. Completed final project.",
+      year: 2025,
       image: "/arduino.jpg",
       programmingLanguage: "C++",
     },
@@ -72,18 +76,26 @@ export default function Home() {
       id: 4,
       title: "Crypto Wallet App",
       description: "Cryptocurrency and digital assets wallet for everyone.",
+      year: 2025,
       image: "/criptogualet.png",
       programmingLanguage: "C++ with Clang Compiler",
       frontend: "QT, CMake",
       backend: "SQLite, SQLCipher",
       githubUrl: "https://github.com/erickherrera/CriptoGualet"
     },
-    /*
+    
     { 
       id: 5, 
-      title: "Weather Dashboard", 
-      description: "Interactive weather dashboard with data visualization" 
+      title: "CloudMG", 
+      description: "Cloud application for mobile phones that enables peer to peer mountain gear renting",
+      year: 2026,
+      image: "/criptogualet.png",
+      programmingLanguage: "Typescript",
+      frontend: "React Native, Tailwind",
+      backend: "SupaBase, PostgreSQL",
+      githubUrl: "https://github.com/erickherrera/CloudMG"
     },
+    /*
     { 
       id: 6, 
       title: "API Documentation Tool", 
