@@ -139,11 +139,11 @@ export default function ProjectsGrid({
             </div>
 
             {/* Project cards grid for this year */}
-            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 justify-items-center mb-16">
+            <div className="flex flex-wrap justify-center gap-4 mb-16">
               {group.projects.map((project) => (
             <div
               key={project.id}
-              className="w-full max-w-sm h-96 md:h-80 cursor-pointer"
+              className="w-full md:w-1/2 xl:w-1/3 max-w-sm h-96 md:h-80 cursor-pointer"
               onClick={() => handleProjectClick(project)}
               style={{ perspective: '1000px' }}
             >
