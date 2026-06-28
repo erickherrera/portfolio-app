@@ -48,32 +48,27 @@ export function ThemeProvider({ children }) {
   const [resolvedTheme, setResolvedTheme] = useState(THEMES.LIGHT);
   const [colors, setColors] = useState(COLORS[THEMES.LIGHT]);
 
-  // Function to update theme
+  // Function to update theme (session-only, no localStorage)
   const setTheme = (newTheme) => {
     if (!Object.values(THEMES).includes(newTheme)) {
       console.error(`Invalid theme: ${newTheme}`);
       return;
     }
-    localStorage.setItem('theme', newTheme);
     setThemeState(newTheme);
   };
 
   // Effect to handle theme change and system preference
   useEffect(() => {
-    // Get stored theme or default to system
-    const storedTheme = localStorage.getItem('theme') || THEMES.SYSTEM;
-    setThemeState(storedTheme);
+    // Always start from system
+    setThemeState(THEMES.SYSTEM);
 
     // Setup system preference change listener
     const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
     
-    // Function to handle theme resolution
+    // Function to handle theme resolution (always follows system)
     const resolveTheme = () => {
-      const currentTheme = localStorage.getItem('theme') || THEMES.SYSTEM;
       const isDarkMode = mediaQuery.matches;
-      const resolved = currentTheme === THEMES.SYSTEM 
-        ? (isDarkMode ? THEMES.DARK : THEMES.LIGHT)
-        : currentTheme;
+      const resolved = isDarkMode ? THEMES.DARK : THEMES.LIGHT;
       
       setResolvedTheme(resolved);
       setColors(COLORS[resolved]);
