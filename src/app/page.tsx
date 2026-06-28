@@ -89,7 +89,7 @@ export default function Home() {
       title: "CloudMG", 
       description: "Cloud application for mobile phones that enables peer to peer mountain gear renting",
       year: 2026,
-      image: "/criptogualet.png",
+      image: "/cloudMG.png",
       programmingLanguage: "Typescript",
       frontend: "React Native, Tailwind",
       backend: "SupaBase, PostgreSQL",
