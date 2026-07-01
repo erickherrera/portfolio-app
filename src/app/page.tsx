@@ -3,11 +3,12 @@
 
 import ThemeToggle from "./ThemeToggle";
 import { useTheme } from "./ThemeContext";
-import ProfileCard from "../components/ProfileCard";
 import ProjectsGrid from "../components/ProjectsSection"; 
 import TechStackSection from "../components/techsection";
 import ContactMe from "../components/contactmesection";
 import TimelineSection from "../components/TimelineSection";
+import HomeSection from "../components/HomeSection";
+import AboutSection from "../components/AboutSection";
 import { useState, useEffect, useRef, useMemo } from "react";
 
 export default function Home() {
@@ -22,11 +23,13 @@ export default function Home() {
       id: number;
       title: string;
       description: string;
+      year: number;
       image?: string;
       overview?: string;
       programmingLanguage?: string;
       frontend?: string;
       backend?: string;
+      githubUrl?: string;
   }
 
   // Define interface for contact form data
@@ -38,48 +41,61 @@ export default function Home() {
   }
 
   const projects: Project[] = [
-    { 
-      id: 1, 
-      title: "SaSS for HVAC", 
+    {
+      id: 1,
+      title: "SaSS for HVAC",
       description: "SaSS application for an HVAC company to manage their business.",
+      year: 2024,
       image: "/whitaker.png",
       overview: "This is an application currenlty being used by an HVAC company in Georgia",
       programmingLanguage: "Javascript",
       frontend: "React, Tailwind",
-      backend: "MySQl, Express.JS, Node.JS"
+      backend: "MySQl, Express.JS, Node.JS",
     },
-    { 
-      id: 2, 
-      title: "Personal Portfolio", 
+    {
+      id: 2,
+      title: "Personal Portfolio",
       description: "Personal portfolio using NextJS with modern design patterns",
+      year: 2024,
       image: "/portfolio-screenshot-2.png",
       programmingLanguage: "TypeScript, Javascript",
       frontend: "React, NextJS, Tailwind",
-      backend: "NextJS, Node.JS"
+      backend: "NextJS, Node.JS",
+      githubUrl: "https://github.com/erickherrera/portfolio-app"
     },
-    { 
-      id: 3, 
-      title: "Arduino Certification", 
+    {
+      id: 3,
+      title: "Arduino Certification",
       description: "Completed the Arduino starter course. Passed the certification. Completed final project.",
+      year: 2025,
       image: "/arduino.jpg",
       programmingLanguage: "C++",
     },
-    
-    { 
-      id: 4, 
-      title: "Crypto Wallet App", 
+
+    {
+      id: 4,
+      title: "Crypto Wallet App",
       description: "Cryptocurrency and digital assets wallet for everyone.",
+      year: 2025,
       image: "/criptogualet.png",
       programmingLanguage: "C++ with Clang Compiler",
       frontend: "QT, CMake",
-      backend: "SQLite, SQLCipher"
+      backend: "SQLite, SQLCipher",
+      githubUrl: "https://github.com/erickherrera/CriptoGualet"
     },
-    /*
+    
     { 
       id: 5, 
-      title: "Weather Dashboard", 
-      description: "Interactive weather dashboard with data visualization" 
+      title: "CloudMG", 
+      description: "Cloud application for mobile phones that enables peer to peer mountain gear renting",
+      year: 2026,
+      image: "/cloudMG.png",
+      programmingLanguage: "Typescript",
+      frontend: "React Native, Tailwind",
+      backend: "SupaBase, PostgreSQL",
+      githubUrl: "https://github.com/erickherrera/CloudMG"
     },
+    /*
     { 
       id: 6, 
       title: "API Documentation Tool", 
@@ -121,16 +137,6 @@ export default function Home() {
       throw error; // Re-throw so the form component can handle the error state
     }
   };
-
-  // Add this helper function inside your Home component, before the return statement
-  const createHoverHandlers = () => ({
-    onMouseEnter: (e: React.MouseEvent<HTMLAnchorElement | HTMLButtonElement>) => {
-      e.currentTarget.style.backgroundColor = colors.primary;
-    },
-    onMouseLeave: (e: React.MouseEvent<HTMLAnchorElement | HTMLButtonElement>) => {
-      e.currentTarget.style.backgroundColor = colors.secondary;
-    }
-  });
 
   // Navigation sections - memoized to prevent unnecessary re-renders
   const sections = useMemo(() => [
@@ -329,127 +335,8 @@ export default function Home() {
         <ThemeToggle />
       </div>
       
-      {/* Header/Welcome Section - Home Section */}
-      <section 
-        id="home" 
-        className="pt-16 pb-16 md:pt-20 md:pb-20 transition-colors duration-200 w-full min-h-[60vh] flex items-center"
-        style={{
-          background: `linear-gradient(to bottom, ${colors.background}, ${colors.background})` 
-        }}
-      >
-        <div className="max-w-4xl mx-auto my-25 px-4 sm:px-6 lg:px-8 w-full">
-          <div className="flex flex-col items-center text-center w-full">
-            <h1 
-              className="mb-4 text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight break-words"
-              style={{ color: colors.foreground }}
-            >
-              Welcome to my portfolio.
-            </h1>
-            <h2 
-              className="mb-8 text-base sm:text-lg md:text-xl font-semibold px-2 break-words"
-              style={{ color: colors.foreground}}
-            >
-              Learn more about my software engineering path.
-            </h2>
-            
-            <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 mt-6 w-full max-w-md justify-center">
-              <a
-                href="https://github.com/erickherrera"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="px-4 py-2 font-bold rounded-md transition-colors duration-300 shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 text-center w-full sm:w-auto"
-                style={{
-                  backgroundColor: colors.secondary,
-                  color: 'white',
-                }}
-                {...createHoverHandlers()}
-                aria-label="GitHub Profile"
-              >
-                GitHub
-              </a>
-              <a
-                href="https://www.linkedin.com/in/erick-herrera-cabrera-b2268b1b4/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="px-4 py-2 font-bold rounded-md transition-colors duration-300 shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 text-center w-full sm:w-auto"
-                style={{
-                  backgroundColor: colors.secondary,
-                  color: 'white'
-                }}
-                {...createHoverHandlers()}
-                aria-label="LinkedIn Profile"
-              >
-                LinkedIn
-              </a>
-              <button
-                onClick={() => {
-                  const element = document.getElementById("contact");
-                  if (element) {
-                    element.scrollIntoView({ behavior: "auto" });
-                  }
-                }}
-                className="px-4 py-2 font-bold rounded-md transition-colors duration-300 shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 text-center w-full sm:w-auto"
-                style={{
-                  backgroundColor: colors.secondary,
-                  color: 'white'
-                }}
-                {...createHoverHandlers()}
-                aria-label="Contact Me"
-              >
-                Contact Me
-              </button>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* About Me Section */}
-      <section 
-        id="about" 
-        className="pt-16 pb-16 md:pt-20 md:pb-20 border-t-6 transition-colors duration-200 scroll-mt-20 w-full"
-        style={{
-          backgroundColor: colors.hero,
-          borderColor: colors.accent
-        }}
-      >
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-          <div className="text-center mb-8 md:mb-12">
-            <h2 
-              className="text-2xl sm:text-3xl font-extrabold mb-4"
-              style={{ color: colors.foreground }}
-            >
-              About Me
-            </h2>
-            <div className="w-20 h-2 mx-auto rounded-full mb-15" style={{ backgroundColor: colors.accent }}></div>
-          </div>
-          
-          {/* Centered container for profile card and text */}
-          <div className="flex justify-center w-full">
-            <div className="flex flex-col md:flex-row items-center md:items-start gap-6 md:gap-10 max-w-5xl w-full">
-              {/* Profile Card */}
-              <div className="flex-shrink-0 w-full md:w-auto flex justify-center">
-                <ProfileCard/>
-              </div>
-              
-              {/* About text with max width constraint */}
-              <div className="w-full md:flex-1 md:max-w-2xl">
-                <p 
-                  className="text-base sm:text-lg font-medium leading-relaxed mb-4 md:mb-6 break-words"
-                  style={{ color: colors.foreground === '#171717' ? '#374151' : '#D1D5DB' }}
-                >
-                  <span style={{ color: colors.accent, fontWeight: 'bold' }}>Hello!</span> I&apos;m a passionate software engineer with expertise in building modern web applications. My journey in tech began with a deep curiosity about how modern applications are created and has evolved into a career focused on crafting elegant solutions to complex problems.
-                </p>
-                <p 
-                  className="text-base sm:text-lg font-medium leading-relaxed break-words"
-                  style={{ color: colors.foreground === '#171717' ? '#374151' : '#D1D5DB' }}
-                >
-                  I specialize in <span className="font-bold">JavaScript</span> and <span className="font-bold">TypeScript</span> development, with particular focus on <span className="font-bold">React</span>, <span className="font-bold">Next.js</span>, and <span className="font-bold">Node.js</span>. When I&apos;m not coding, you can find me exploring the outdoors, learning and teaching new technologies, or attending tech meetups in town.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      <HomeSection />
+      <AboutSection />
 
       {/* Timeline Section */}
       <section 
