@@ -1,27 +1,9 @@
+"use client";
+
 import Image from "next/image";
 import { useState } from "react";
-
-interface Project {
-  id: number;
-  title: string;
-  description: string;
-  year: number;
-  image?: string; // Optional image URL
-  overview?: string;
-  programmingLanguage?: string;
-  frontend?: string;
-  backend?: string;
-  githubUrl?: string;
-}
-
-interface ThemeColors {
-  background: string;
-  foreground: string;
-  hero: string;
-  primary: string;
-  secondary: string;
-  accent: string;
-}
+import { useTheme } from "@/components/ThemeProvider";
+import type { Project } from "@/types";
 
 interface ProjectsGridProps {
   projects: Project[];
@@ -30,7 +12,6 @@ interface ProjectsGridProps {
   onProjectClick?: (project: Project) => void;
   className?: string;
   showHeader?: boolean;
-  colors?: ThemeColors; // Theme colors for styling
 }
 
 export default function ProjectsGrid({
@@ -40,8 +21,8 @@ export default function ProjectsGrid({
   onProjectClick,
   className = "",
   showHeader = true,
-  colors
 }: ProjectsGridProps) {
+  const { colors } = useTheme();
   const [flippedCards, setFlippedCards] = useState<Set<number>>(new Set());
 
   const handleProjectClick = (project: Project) => {
@@ -84,17 +65,17 @@ export default function ProjectsGrid({
           <div className="text-center">
             <h2 
               className="text-3xl font-extrabold mb-4"
-              style={{ color: colors?.foreground || '#1F2937' }}
+              style={{ color: colors.foreground }}
             >
               {title}
             </h2>
             <div 
               className="w-20 h-2 mx-auto rounded-full mb-6" 
-              style={{ backgroundColor: colors?.accent || '#2563EB' }}
+              style={{ backgroundColor: colors.accent }}
             ></div>
             <p 
               className="text-lg max-w-2xl mx-auto"
-              style={{ color: colors?.foreground}}
+              style={{ color: colors.foreground}}
             >
               {subtitle}
             </p>
@@ -111,7 +92,7 @@ export default function ProjectsGrid({
               <div 
                 className="absolute left-1/2 -translate-x-1/2 w-0.5"
                 style={{ 
-                  backgroundColor: colors?.accent || '#2563EB',
+                  backgroundColor: colors.accent,
                   top: 0,
                   bottom: 0
                 }}
@@ -123,14 +104,14 @@ export default function ProjectsGrid({
               <div 
                 className="absolute left-1/2 -translate-x-1/2 w-4 h-4 rounded-full border-2 z-10"
                 style={{ 
-                  borderColor: colors?.accent || '#2563EB',
-                  backgroundColor: colors?.background || '#FFFFFF'
+                  borderColor: colors.accent,
+                  backgroundColor: colors.background
                 }}
               />
               <div 
                 className="px-6 py-2 rounded-full text-lg font-bold z-20"
                 style={{ 
-                  backgroundColor: colors?.accent || '#2563EB',
+                  backgroundColor: colors.accent,
                   color: '#FFFFFF'
                 }}
               >
@@ -160,7 +141,7 @@ export default function ProjectsGrid({
                 <div
                   className="absolute w-full h-full rounded-lg shadow-md overflow-hidden backface-hidden hover:shadow-xl transition-shadow duration-300"
                   style={{ 
-                    backgroundColor: colors?.background || '#FFFFFF',
+                    backgroundColor: colors.background,
                     backfaceVisibility: 'hidden'
                   }}
                 >
@@ -168,7 +149,7 @@ export default function ProjectsGrid({
                   <div 
                     className="h-48 flex items-center justify-center transition-colors duration-200 overflow-hidden rounded-t-lg"
                     style={{ 
-                      backgroundColor: colors?.background === '#FFFFFF' ? '#E5E7EB' : '#374151'
+                      backgroundColor: colors.border
                     }}
                   >
                     {project.image ? (
@@ -183,7 +164,7 @@ export default function ProjectsGrid({
                       <span 
                         className="transition-colors duration-200"
                         style={{ 
-                          color: colors?.foreground === '#171717' ? '#6B7280' : '#9CA3AF' 
+                          color: colors.textMuted 
                         }}
                       >
                         Project Image Coming Soon
@@ -195,7 +176,7 @@ export default function ProjectsGrid({
                      <div className="flex items-center justify-between mb-2">
                        <h3
                          className="text-xl font-semibold transition-colors duration-200"
-                         style={{ color: colors?.foreground || '#1F2937' }}
+                         style={{ color: colors.foreground }}
                        >
                          {project.title}
                        </h3>
@@ -206,8 +187,8 @@ export default function ProjectsGrid({
                            rel="noopener noreferrer"
                            className="w-8 h-8 rounded-full flex items-center justify-center transition duration-300 hover:scale-110 focus:outline-none focus:ring-2 focus:ring-offset-2"
                            style={{
-                             backgroundColor: colors?.accent ? `${colors.accent}20` : '#DBEAFE',
-                             color: colors?.accent || '#2563EB'
+                             backgroundColor: `${colors.accent}20`,
+                             color: colors.accent
                            }}
                            onClick={(e) => e.stopPropagation()}
                            aria-label={`View ${project.title} on GitHub`}
@@ -227,7 +208,7 @@ export default function ProjectsGrid({
                     <p 
                       className="transition-colors duration-200 text-sm"
                       style={{ 
-                        color: colors?.foreground === '#171717' ? '#6B7280' : '#9CA3AF' 
+                        color: colors.textMuted 
                       }}
                     >
                       {project.description}
@@ -236,7 +217,7 @@ export default function ProjectsGrid({
                     <div className="mt-4 flex justify-between items-center">
                       <span 
                         className="font-medium transition duration-300 text-sm"
-                        style={{ color: colors?.accent || '#2563EB' }}
+                        style={{ color: colors.accent }}
                       >
                         Click to see more details
                       </span>
@@ -248,7 +229,7 @@ export default function ProjectsGrid({
                 <div
                   className="absolute w-full h-full rounded-lg shadow-md overflow-hidden p-6 hover:shadow-xl transition-shadow duration-300"
                   style={{ 
-                    backgroundColor: colors?.background || '#FFFFFF',
+                    backgroundColor: colors.background,
                     backfaceVisibility: 'hidden',
                     transform: 'rotateY(180deg)'
                   }}
@@ -257,16 +238,17 @@ export default function ProjectsGrid({
                     <div className="flex justify-between items-center mb-4">
                       <h3 
                         className="text-lg font-semibold"
-                        style={{ color: colors?.foreground || '#1F2937' }}
+                        style={{ color: colors.foreground }}
                       >
                         {project.title}
                       </h3>
                       <button
                         className="w-8 h-8 rounded-full flex items-center justify-center transition duration-300"
                         style={{
-                          backgroundColor: colors?.accent ? `${colors.accent}20` : '#DBEAFE',
-                          color: colors?.accent || '#2563EB'
+                          backgroundColor: `${colors.accent}20`,
+                          color: colors.accent
                         }}
+                        aria-label={`Show less about ${project.title}`}
                         onClick={(e) => {
                           e.stopPropagation();
                           handleProjectClick(project);
@@ -281,13 +263,13 @@ export default function ProjectsGrid({
                         <div>
                           <h4 
                             className="font-semibold mb-1"
-                            style={{ color: colors?.foreground || '#1F2937' }}
+                            style={{ color: colors.foreground }}
                           >
                             Project Overview:
                           </h4>
                           <p 
                             style={{ 
-                              color: colors?.foreground === '#171717' ? '#6B7280' : '#9CA3AF' 
+                              color: colors.textMuted 
                             }}
                           >
                             {project.overview}
@@ -299,13 +281,13 @@ export default function ProjectsGrid({
                         <div>
                           <h4 
                             className="font-semibold mb-1"
-                            style={{ color: colors?.foreground || '#1F2937' }}
+                            style={{ color: colors.foreground }}
                           >
                             Programming Language:
                           </h4>
                           <p 
                             style={{ 
-                              color: colors?.foreground === '#171717' ? '#6B7280' : '#9CA3AF' 
+                              color: colors.textMuted 
                             }}
                           >
                             {project.programmingLanguage}
@@ -317,13 +299,13 @@ export default function ProjectsGrid({
                         <div>
                           <h4 
                             className="font-semibold mb-1"
-                            style={{ color: colors?.foreground || '#1F2937' }}
+                            style={{ color: colors.foreground }}
                           >
                             Frontend:
                           </h4>
                           <p 
                             style={{ 
-                              color: colors?.foreground === '#171717' ? '#6B7280' : '#9CA3AF' 
+                              color: colors.textMuted 
                             }}
                           >
                             {project.frontend}
@@ -334,13 +316,13 @@ export default function ProjectsGrid({
                         <div>
                           <h4 
                             className="font-semibold mb-1"
-                            style={{ color: colors?.foreground || '#1F2937' }}
+                            style={{ color: colors.foreground }}
                           >
                             Backend:
                           </h4>
                           <p 
                             style={{ 
-                              color: colors?.foreground === '#171717' ? '#6B7280' : '#9CA3AF' 
+                              color: colors.textMuted 
                             }}
                           >
                             {project.backend}
@@ -353,7 +335,7 @@ export default function ProjectsGrid({
                           <p 
                             className="text-center italic"
                             style={{ 
-                              color: colors?.foreground === '#171717' ? '#6B7280' : '#9CA3AF' 
+                              color: colors.textMuted 
                             }}
                           >
                             No additional details available

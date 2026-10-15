@@ -1,6 +1,7 @@
 "use client";
 
-import { useTheme } from "../app/ThemeContext";
+import { useTheme } from "@/components/ThemeProvider";
+import { SITE } from "@/data/site";
 
 export default function HomeSection() {
   const { colors } = useTheme();
@@ -11,15 +12,18 @@ export default function HomeSection() {
     },
     onMouseLeave: (e: React.MouseEvent<HTMLAnchorElement | HTMLButtonElement>) => {
       e.currentTarget.style.backgroundColor = colors.secondary;
-    }
+    },
   });
+
+  const actionClass =
+    "px-4 py-2 font-bold rounded-md transition-colors duration-300 shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 text-center w-full sm:w-auto";
 
   return (
     <section
       id="home"
       className="pt-16 pb-16 md:pt-20 md:pb-20 transition-colors duration-200 w-full min-h-[60vh] flex items-center"
       style={{
-        background: `linear-gradient(to bottom, ${colors.background}, ${colors.background})`
+        background: `linear-gradient(to bottom, ${colors.background}, ${colors.background})`,
       }}
     >
       <div className="max-w-4xl mx-auto my-25 px-4 sm:px-6 lg:px-8 w-full">
@@ -39,47 +43,34 @@ export default function HomeSection() {
 
           <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 mt-6 w-full max-w-md justify-center">
             <a
-              href="https://github.com/erickherrera"
+              href={SITE.socials.github}
               target="_blank"
               rel="noopener noreferrer"
-              className="px-4 py-2 font-bold rounded-md transition-colors duration-300 shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 text-center w-full sm:w-auto"
-              style={{
-                backgroundColor: colors.secondary,
-                color: 'white',
-              }}
+              className={actionClass}
+              style={{ backgroundColor: colors.secondary, color: "white" }}
               {...createHoverHandlers()}
-              aria-label="GitHub Profile"
             >
               GitHub
             </a>
             <a
-              href="http://www.linkedin.com/in/erick-herrera-cabrera-b2268b1b4"
+              href={SITE.socials.linkedin}
               target="_blank"
               rel="noopener noreferrer"
-              className="px-4 py-2 font-bold rounded-md transition-colors duration-300 shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 text-center w-full sm:w-auto"
-              style={{
-                backgroundColor: colors.secondary,
-                color: 'white'
-              }}
+              className={actionClass}
+              style={{ backgroundColor: colors.secondary, color: "white" }}
               {...createHoverHandlers()}
-              aria-label="LinkedIn Profile"
             >
               LinkedIn
             </a>
             <button
               onClick={() => {
-                const element = document.getElementById("contact");
-                if (element) {
-                  element.scrollIntoView({ behavior: "auto" });
-                }
+                document
+                  .getElementById("contact")
+                  ?.scrollIntoView({ behavior: "auto" });
               }}
-              className="px-4 py-2 font-bold rounded-md transition-colors duration-300 shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 text-center w-full sm:w-auto"
-              style={{
-                backgroundColor: colors.secondary,
-                color: 'white'
-              }}
+              className={actionClass}
+              style={{ backgroundColor: colors.secondary, color: "white" }}
               {...createHoverHandlers()}
-              aria-label="Contact Me"
             >
               Contact Me
             </button>

@@ -1,18 +1,9 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from 'react';
-import { useTheme } from '../app/ThemeContext';
+import { useTheme } from "@/components/ThemeProvider";
+import { timeline as timelineData } from "@/data/timeline";
 import { MdWork, MdSchool, MdVerifiedUser } from 'react-icons/md';
-
-interface TimelineItem {
-  id: number;
-  title: string;
-  company: string;
-  location: string;
-  period: string;
-  description: string[];
-  type: 'work' | 'education' | 'certification';
-}
 
 interface TimelineSectionProps {
   className?: string;
@@ -22,62 +13,6 @@ const TimelineSection: React.FC<TimelineSectionProps> = ({ className = "" }) => 
   const { colors } = useTheme();
   const [visibleItems, setVisibleItems] = useState<Set<number>>(new Set());
   const observerRef = useRef<IntersectionObserver | null>(null);
-
-  const timelineData: TimelineItem[] = [
-    /*  {
-    id: 1,
-      title: "Software Engineer",
-      company: "Keysight Technologies",
-      location: "Colorado Springs, CO",
-      period: "2023 - Present",
-      description: [
-        "Maintain high customer satisfaction while developing technical solutions for complex product inquiries",
-        "Collaborate with engineering teams to resolve technical issues and provide product feedback"
-      ],
-      type: 'work'
-    }, */ 
-    {
-      id: 2,
-      title: "Business Process Analyst",
-      company: "Keysight Technologies",
-      location: "Colorado Springs, CO",
-      period: "2022 - Present",
-      description: [
-        "Led automation initiatives for inbound email processing using Salesforce functionality, reducing manual processing time by 40%",
-        "Saved 15+ work hours weekly through implementation of process improvements and workflow optimization",
-        "Conducted waste walks and value stream mapping to identify and eliminate process inefficiencies",
-        "Developed and maintained comprehensive documentation for critical business processes",
-        "Collaborated with cross-functional teams to implement scalable solutions"
-      ],
-      type: 'work'
-    },
-    {
-      id: 3,
-      title: "Customer Support Specialist",
-      company: "Keysight Technologies",
-      location: "Colorado Springs, CO",
-      period: "2019 - 2022",
-      description: [
-        "Provided technical support for complex electronic testing equipment",
-        "Developed problem-solving skills through troubleshooting hardware and software issues"
-      ],
-      type: 'work'
-    },
-    {
-      id: 4,
-      title: "Intelligence Specialist",
-      company: "U.S. Coast Guard",
-      location: "Puerto Rico",
-      period: "2016 - 2018",
-      description: [
-        "Led a team of 4 junior personnel in daily operations and training initiatives",
-        "Analyzed and compiled intelligence reports using specialized software tools",
-        "Managed sensitive data while maintaining strict information security protocols",
-        "Earned commendation for developing a streamlined information processing workflow"
-      ],
-      type: 'work'
-    }
-  ];
 
   useEffect(() => {
     observerRef.current = new IntersectionObserver(
@@ -146,7 +81,7 @@ const TimelineSection: React.FC<TimelineSectionProps> = ({ className = "" }) => 
         ></div>
         <p 
           className="text-base sm:text-lg font-medium max-w-2xl mx-auto"
-          style={{ color: colors.foreground === '#171717' ? '#6B7280' : '#9CA3AF' }}
+          style={{ color: colors.textMuted }}
         >
           A timeline of my professional experience, education, and key achievements
         </p>
@@ -222,7 +157,7 @@ const TimelineSection: React.FC<TimelineSectionProps> = ({ className = "" }) => 
                       </p>
                       <p 
                         className="text-sm opacity-80"
-                        style={{ color: colors.foreground === '#171717' ? '#6B7280' : '#9CA3AF' }}
+                        style={{ color: colors.textMuted }}
                       >
                         {item.location}
                       </p>
@@ -256,7 +191,7 @@ const TimelineSection: React.FC<TimelineSectionProps> = ({ className = "" }) => 
                             className="w-2 h-2 rounded-full mt-2 flex-shrink-0"
                             style={{ backgroundColor: getTypeColor(item.type) }}
                           ></div>
-                          <span style={{ color: colors.foreground === '#171717' ? '#374151' : '#D1D5DB' }}>
+                          <span style={{ color: colors.text }}>
                             {desc}
                           </span>
                         </div>
@@ -398,7 +333,7 @@ const TimelineSection: React.FC<TimelineSectionProps> = ({ className = "" }) => 
                             isVisible ? 'opacity-80 translate-y-0' : 'opacity-0 translate-y-4'
                           }`}
                           style={{ 
-                            color: colors.foreground === '#171717' ? '#6B7280' : '#9CA3AF',
+                            color: colors.textMuted,
                             transitionDelay: `${index * 400 + 600}ms`
                           }}
                         >
@@ -457,7 +392,7 @@ const TimelineSection: React.FC<TimelineSectionProps> = ({ className = "" }) => 
                             </div>
                             <span 
                               className="text-sm leading-relaxed flex-1"
-                              style={{ color: colors.foreground === '#171717' ? '#374151' : '#D1D5DB' }}
+                              style={{ color: colors.text }}
                             >
                               {desc}
                             </span>

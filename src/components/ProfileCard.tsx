@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useTheme } from "../app/ThemeContext";
+import { useTheme } from "@/components/ThemeProvider";
 
 interface ProfileCardProps {
   className?: string;
