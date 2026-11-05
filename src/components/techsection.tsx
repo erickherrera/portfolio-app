@@ -73,66 +73,72 @@ const TechStackSection: React.FC<TechStackSectionProps> = ({
   const { isCyber, tokens } = useTheme();
   const reduceMotion = useReducedMotion();
 
-  const iconColor = isCyber ? colors.primary : colors.foreground;
-
   return (
     <div className={`max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 ${className}`}>
       <SectionHeading title={title} subtitle={subtitle} />
 
-      {/* Achievement Grid - holographic badges */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-x-6 gap-y-10 mb-16">
+      {/* Projector grid - each platform beams up a spinning hologram */}
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-x-6 gap-y-12 mb-16">
         {techStack.map((tech, index) => (
           <motion.div
             key={tech.name}
-            className="holo-card group relative flex flex-col items-center text-center"
-            initial={reduceMotion ? false : { opacity: 0, y: 24, scale: 0.9 }}
-            whileInView={reduceMotion ? undefined : { opacity: 1, y: 0, scale: 1 }}
+            className="holo-projector group flex flex-col items-center text-center"
+            initial={reduceMotion ? false : { opacity: 0, y: 24 }}
+            whileInView={reduceMotion ? undefined : { opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.4 }}
             transition={{
               duration: 0.5,
               delay: reduceMotion ? 0 : index * 0.05,
               ease: [0.16, 1, 0.3, 1],
             }}
-            whileHover={reduceMotion ? undefined : { y: -6 }}
           >
-            {/* Badge */}
-            <div className="relative w-20 h-20 sm:w-24 sm:h-24 flex items-center justify-center">
-              {/* Orbiting prismatic ring */}
-              <div className="holo-ring" aria-hidden="true" />
-              <div className="holo-ring-mask" aria-hidden="true" />
+            <div className="holo-stage">
+              {/* Floor glow */}
+              <div className="holo-pool" aria-hidden="true" />
 
-              {/* Disc */}
-              <div
-                className="absolute inset-0 rounded-full flex items-center justify-center backdrop-blur-sm"
-                style={{
-                  backgroundColor: colors.card,
-                  border: `1px solid ${colors.border}`,
-                  boxShadow: `inset 0 0 24px ${colors.glow}`,
-                }}
+              {/* Projection cone */}
+              <div className="holo-beam" aria-hidden="true" />
+
+              {/* Energy rings rising from the emitter */}
+              <span
+                className="holo-ping"
+                style={{ animationDelay: `${(index % 4) * 0.7}s` }}
+                aria-hidden="true"
+              />
+              <span
+                className="holo-ping"
+                style={{ animationDelay: `${(index % 4) * 0.7 + 1.5}s` }}
+                aria-hidden="true"
               />
 
-              {/* Specular sheen */}
-              <div className="holo-sheen" aria-hidden="true" />
+              {/* Floating, spinning hologram */}
+              <div className="holo-float">
+                <div className="holo-bob">
+                  <div className="holo-spin">
+                    <div className="holo-logo">
+                      {typeof tech.icon === 'string' ? (
+                        <span className="text-4xl sm:text-5xl">{tech.icon}</span>
+                      ) : (
+                        tech.icon &&
+                        React.createElement(tech.icon as IconType, {
+                          className: "text-4xl sm:text-5xl",
+                        })
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </div>
 
-              {/* Icon */}
-              <div className="relative z-10 holo-prism">
-                {typeof tech.icon === 'string' ? (
-                  <span className="text-3xl" style={{ color: iconColor }}>
-                    {tech.icon}
-                  </span>
-                ) : (
-                  tech.icon &&
-                  React.createElement(tech.icon as IconType, {
-                    className: "text-3xl sm:text-4xl",
-                    style: { color: iconColor },
-                  })
-                )}
+              {/* Emitter platform */}
+              <div className="holo-platform" aria-hidden="true">
+                <div className="holo-platform-top" />
+                <div className="holo-platform-body" />
               </div>
             </div>
 
             {/* Label */}
             <div
-              className="mt-4 px-3 py-1.5 rounded-full text-xs sm:text-sm font-semibold backdrop-blur-sm transition-all duration-200"
+              className="mt-2 px-3 py-1.5 rounded-full text-xs sm:text-sm font-semibold backdrop-blur-sm transition-all duration-200"
               style={{
                 backgroundColor: `${colors.card}E6`,
                 border: `1px solid ${colors.border}`,
