@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import { useTheme } from '../app/ThemeContext';
+import SectionHeading from './SectionHeading';
 import { MdWork, MdSchool, MdVerifiedUser } from 'react-icons/md';
 
 interface TimelineItem {
@@ -133,24 +134,10 @@ const TimelineSection: React.FC<TimelineSectionProps> = ({ className = "" }) => 
   return (
     <div className={`w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 xl:px-16 2xl:px-24 ${className}`}>
       {/* Header */}
-      <div className="text-center mb-10 sm:mb-12">
-        <h2 
-          className="text-2xl sm:text-3xl md:text-4xl font-extrabold mb-3 sm:mb-4"
-          style={{ color: colors.foreground }}
-        >
-          My Experience
-        </h2>
-        <div 
-          className="w-16 sm:w-20 h-1 mx-auto rounded-full mb-4 sm:mb-6"
-          style={{ backgroundColor: colors.accent }}
-        ></div>
-        <p 
-          className="text-base sm:text-lg font-medium max-w-2xl mx-auto"
-          style={{ color: colors.foreground === '#171717' ? '#6B7280' : '#9CA3AF' }}
-        >
-          A timeline of my professional experience, education, and key achievements
-        </p>
-      </div>
+      <SectionHeading
+        title="My Experience"
+        subtitle="A timeline of my professional experience, education, and key achievements"
+      />
 
       {/* Desktop / Tablet timeline (hidden on mobile) */}
       <div className="relative hidden lg:block">
@@ -222,7 +209,7 @@ const TimelineSection: React.FC<TimelineSectionProps> = ({ className = "" }) => 
                       </p>
                       <p 
                         className="text-sm opacity-80"
-                        style={{ color: colors.foreground === '#171717' ? '#6B7280' : '#9CA3AF' }}
+                        style={{ color: colors.muted }}
                       >
                         {item.location}
                       </p>
@@ -256,7 +243,7 @@ const TimelineSection: React.FC<TimelineSectionProps> = ({ className = "" }) => 
                             className="w-2 h-2 rounded-full mt-2 flex-shrink-0"
                             style={{ backgroundColor: getTypeColor(item.type) }}
                           ></div>
-                          <span style={{ color: colors.foreground === '#171717' ? '#374151' : '#D1D5DB' }}>
+                          <span style={{ color: colors.muted }}>
                             {desc}
                           </span>
                         </div>
@@ -398,7 +385,7 @@ const TimelineSection: React.FC<TimelineSectionProps> = ({ className = "" }) => 
                             isVisible ? 'opacity-80 translate-y-0' : 'opacity-0 translate-y-4'
                           }`}
                           style={{ 
-                            color: colors.foreground === '#171717' ? '#6B7280' : '#9CA3AF',
+                            color: colors.muted,
                             transitionDelay: `${index * 400 + 600}ms`
                           }}
                         >
@@ -457,7 +444,7 @@ const TimelineSection: React.FC<TimelineSectionProps> = ({ className = "" }) => 
                             </div>
                             <span 
                               className="text-sm leading-relaxed flex-1"
-                              style={{ color: colors.foreground === '#171717' ? '#374151' : '#D1D5DB' }}
+                              style={{ color: colors.muted }}
                             >
                               {desc}
                             </span>

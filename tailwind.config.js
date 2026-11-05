@@ -1,45 +1,83 @@
-/** @type {import('tailwindcss').Config} */
+/**
+ * Tailwind v4 reads its theme from `src/app/globals.css` (see the `@theme`
+ * block and the `[data-theme]` selectors). This file mirrors those tokens so
+ * the two stay in sync - it is not loaded by Tailwind v4 automatically.
+ *
+ * @type {import('tailwindcss').Config}
+ */
 module.exports = {
-  content: [
-    './pages/**/*.{js,ts,jsx,tsx,mdx}',
-    './components/**/*.{js,ts,jsx,tsx,mdx}',
-    './app/**/*.{js,ts,jsx,tsx,mdx}',
-  ],
-  darkMode: 'class', // or 'media' if you want to use system preference
+  darkMode: 'class',
   theme: {
     extend: {
       colors: {
-        // Add your custom theme colors here
         primary: {
-          light: '#3B82F6', // blue-500
-          dark: '#60A5FA', // blue-400
+          light: '#4F46E5',
+          dark: '#22D3EE',
+          cyber: '#00E5FF',
         },
         secondary: {
-          light: '#1F2937', // gray-800
-          dark: '#374151', // gray-700
-        },
-        background: {
-          light: '#FFFFFF', // white
-          dark: '#1F2937', // gray-800
-        },
-        hero: {
-          light: '#E5E7EB', // gray-200
-          dark: '#1F2937', // gray-800
+          light: '#1F2937',
+          dark: '#1E293B',
+          cyber: '#141B2E',
         },
         accent: {
-          light: '#3B82F6', // blue-500
-          dark: '#60A5FA', // blue-400
+          light: '#BE185D',
+          dark: '#F472B6',
+          cyber: '#FF2E9A',
         },
-        // Add foreground (text) colors
+        background: {
+          light: '#FFFFFF',
+          dark: '#0B0F17',
+          cyber: '#05070E',
+        },
+        hero: {
+          light: '#F8FAFC',
+          dark: '#111827',
+          cyber: '#0A0F1C',
+        },
         foreground: {
-          light: '#171717', // near black for light mode
-          dark: '#ededed', // near white for dark mode
+          light: '#111827',
+          dark: '#F1F5F9',
+          cyber: '#E6F7FF',
         },
-        // Add secondary text colors for paragraphs
-        text: {
-          light: '#374151', // gray-700 for light mode
-          dark: '#D1D5DB', // gray-300 for dark mode
-        }
+        muted: {
+          light: '#4B5563',
+          dark: '#A8B3C4',
+          cyber: '#8FA3BF',
+        },
+        card: {
+          light: '#FFFFFF',
+          dark: '#151C2B',
+          cyber: '#0D1424',
+        },
+        surface: {
+          light: '#F1F5F9',
+          dark: '#1B2334',
+          cyber: '#121A2C',
+        },
+        border: {
+          light: '#E2E8F0',
+          dark: '#28324A',
+          cyber: '#1E2A44',
+        },
+      },
+      fontFamily: {
+        sans: ['var(--font-inter)', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+        mono: ['var(--font-jetbrains-mono)', 'ui-monospace', 'monospace'],
+        display: ['var(--font-orbitron)', 'var(--font-inter)', 'sans-serif'],
+      },
+      borderRadius: {
+        xs: '4px',
+        sm: '6px',
+        md: '8px',
+        lg: '12px',
+        xl: '16px',
+        '2xl': '24px',
+      },
+      transitionTimingFunction: {
+        standard: 'cubic-bezier(0.2, 0, 0, 1)',
+        emphasized: 'cubic-bezier(0.4, 0, 0.2, 1)',
+        entrance: 'cubic-bezier(0.16, 1, 0.3, 1)',
       },
     },
   },

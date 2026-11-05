@@ -1,18 +1,16 @@
 // ContactMe.tsx
+"use client";
+
 import React, { useState } from 'react';
 import { MdEmail, MdPerson, MdBusiness, MdMessage, MdSend } from 'react-icons/md';
+import SectionHeading from './SectionHeading';
+import { useTheme } from '../app/ThemeContext';
+import { ThemeColors } from '../types/theme';
 
 interface ContactMeProps {
   title?: string;
   subtitle?: string;
-  colors: {
-    primary: string;
-    secondary: string;
-    accent: string;
-    background: string;
-    foreground: string;
-    hero: string;
-  };
+  colors: ThemeColors;
   onSubmit?: (formData: ContactFormData) => void;
   className?: string;
 }
@@ -37,6 +35,8 @@ const ContactMe: React.FC<ContactMeProps> = ({
     company: '',
     message: ''
   });
+
+  const { isCyber } = useTheme();
 
   const [errors, setErrors] = useState<Partial<ContactFormData>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -141,22 +141,19 @@ const ContactMe: React.FC<ContactMeProps> = ({
     <div className={`max-w-3xl mx-auto px-4 sm:px-6 ${className}`}>
       {/* Header */}
       <div className="text-center mb-12">
-        <h2 
-          className="text-3xl font-extrabold mb-4"
-          style={{ color: colors.foreground }}
-        >
-          {title}
-        </h2>
-        <div className="w-20 h-2 mx-auto rounded-full" style={{ backgroundColor: colors.accent }}></div>
+        <SectionHeading title={title} />
         {renderSubtitle()}
       </div>
 
       {/* Contact Form */}
       <div 
-        className="rounded-2xl p-8 md:p-10 shadow-lg transition-all duration-300"
+        className={`rounded-2xl p-8 md:p-10 shadow-lg transition-all duration-300 ${
+          isCyber ? "clip-corner" : ""
+        }`}
         style={{
-          backgroundColor: colors.foreground === '#171717' ? '#F9FAFB' : '#1F2937',
-          border: `2px solid ${colors.accent}`
+          backgroundColor: colors.surface,
+          border: `2px solid ${colors.border}`,
+          boxShadow: isCyber ? `0 0 40px -18px ${colors.glow}` : undefined
         }}
       >
         <form onSubmit={handleSubmit} className="space-y-6">
@@ -184,7 +181,7 @@ const ContactMe: React.FC<ContactMeProps> = ({
                   style={{
                     backgroundColor: colors.background,
                     color: colors.foreground,
-                    borderColor: errors.name ? '#EF4444' : colors.foreground === '#171717' ? '#E5E7EB' : '#374151',
+                    borderColor: errors.name ? colors.danger : colors.borderStrong,
                     borderWidth: '1px',
                     borderStyle: 'solid'
                   }}
@@ -193,14 +190,14 @@ const ContactMe: React.FC<ContactMeProps> = ({
                     e.target.style.boxShadow = `0 0 0 3px ${colors.primary}20`;
                   }}
                   onBlur={(e) => {
-                    e.target.style.borderColor = errors.name ? '#EF4444' : colors.foreground === '#171717' ? '#E5E7EB' : '#374151';
+                    e.target.style.borderColor = errors.name ? colors.danger : colors.borderStrong;
                     e.target.style.boxShadow = 'none';
                   }}
                   placeholder="Full Name"
                 />
               </div>
               {errors.name && (
-                <p className="mt-1 text-sm text-red-500">{errors.name}</p>
+                <p className="mt-1 text-sm" style={{ color: colors.danger }}>{errors.name}</p>
               )}
             </div>
 
@@ -227,7 +224,7 @@ const ContactMe: React.FC<ContactMeProps> = ({
                   style={{
                     backgroundColor: colors.background,
                     color: colors.foreground,
-                    borderColor: errors.email ? '#EF4444' : colors.foreground === '#171717' ? '#E5E7EB' : '#374151',
+                    borderColor: errors.email ? colors.danger : colors.borderStrong,
                     borderWidth: '1px',
                     borderStyle: 'solid'
                   }}
@@ -236,14 +233,14 @@ const ContactMe: React.FC<ContactMeProps> = ({
                     e.target.style.boxShadow = `0 0 0 3px ${colors.primary}20`;
                   }}
                   onBlur={(e) => {
-                    e.target.style.borderColor = errors.email ? '#EF4444' : colors.foreground === '#171717' ? '#E5E7EB' : '#374151';
+                    e.target.style.borderColor = errors.email ? colors.danger : colors.borderStrong;
                     e.target.style.boxShadow = 'none';
                   }}
                   placeholder="email@company.com"
                 />
               </div>
               {errors.email && (
-                <p className="mt-1 text-sm text-red-500">{errors.email}</p>
+                <p className="mt-1 text-sm" style={{ color: colors.danger }}>{errors.email}</p>
               )}
             </div>
           </div>
@@ -271,7 +268,7 @@ const ContactMe: React.FC<ContactMeProps> = ({
                 style={{
                   backgroundColor: colors.background,
                   color: colors.foreground,
-                  borderColor: colors.foreground === '#171717' ? '#E5E7EB' : '#374151',
+                  borderColor: colors.borderStrong,
                   borderWidth: '1px',
                   borderStyle: 'solid'
                 }}
@@ -280,7 +277,7 @@ const ContactMe: React.FC<ContactMeProps> = ({
                   e.target.style.boxShadow = `0 0 0 3px ${colors.primary}20`;
                 }}
                 onBlur={(e) => {
-                  e.target.style.borderColor = colors.foreground === '#171717' ? '#E5E7EB' : '#374151';
+                  e.target.style.borderColor = colors.borderStrong;
                   e.target.style.boxShadow = 'none';
                 }}
                 placeholder="Company Name"
@@ -311,7 +308,7 @@ const ContactMe: React.FC<ContactMeProps> = ({
                 style={{
                   backgroundColor: colors.background,
                   color: colors.foreground,
-                  borderColor: errors.message ? '#EF4444' : colors.foreground === '#171717' ? '#E5E7EB' : '#374151',
+                  borderColor: errors.message ? colors.danger : colors.borderStrong,
                   borderWidth: '1px',
                   borderStyle: 'solid'
                 }}
@@ -320,14 +317,14 @@ const ContactMe: React.FC<ContactMeProps> = ({
                   e.target.style.boxShadow = `0 0 0 3px ${colors.primary}20`;
                 }}
                 onBlur={(e) => {
-                  e.target.style.borderColor = errors.message ? '#EF4444' : colors.foreground === '#171717' ? '#E5E7EB' : '#374151';
+                  e.target.style.borderColor = errors.message ? colors.danger : colors.borderStrong;
                   e.target.style.boxShadow = 'none';
                 }}
                 placeholder="Send me a message!"
               />
             </div>
             {errors.message && (
-              <p className="mt-1 text-sm text-red-500">{errors.message}</p>
+              <p className="mt-1 text-sm" style={{ color: colors.danger }}>{errors.message}</p>
             )}
           </div>
 
@@ -336,27 +333,31 @@ const ContactMe: React.FC<ContactMeProps> = ({
             <button
               type="submit"
               disabled={isSubmitting}
-              className="inline-flex items-center px-8 py-3 rounded-lg font-bold text-white transition-all duration-300 transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+              className="inline-flex items-center px-8 py-3 rounded-lg font-bold transition-all duration-200 transform hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none focus-visible:ring-2 focus-visible:ring-offset-2"
               style={{
                 backgroundColor: isSubmitting ? colors.secondary : colors.accent,
-                boxShadow: isSubmitting ? 'none' : `0 4px 14px 0 ${colors.accent}40`
+                color: isSubmitting ? colors.onSecondary : colors.onAccent,
+                boxShadow: isSubmitting ? 'none' : `0 4px 14px -4px ${colors.accent}66`,
+                outlineColor: colors.focus
               }}
               onMouseEnter={(e) => {
                 if (!isSubmitting) {
                   e.currentTarget.style.backgroundColor = colors.primary;
-                  e.currentTarget.style.boxShadow = `0 6px 20px 0 ${colors.primary}40`;
+                  e.currentTarget.style.color = colors.onPrimary;
+                  e.currentTarget.style.boxShadow = `0 6px 20px -6px ${colors.glow}`;
                 }
               }}
               onMouseLeave={(e) => {
                 if (!isSubmitting) {
                   e.currentTarget.style.backgroundColor = colors.accent;
-                  e.currentTarget.style.boxShadow = `0 4px 14px 0 ${colors.accent}40`;
+                  e.currentTarget.style.color = colors.onAccent;
+                  e.currentTarget.style.boxShadow = `0 4px 14px -4px ${colors.accent}66`;
                 }
               }}
             >
               {isSubmitting ? (
                 <>
-                  <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-3"></div>
+                  <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-current mr-3"></div>
                   Sending...
                 </>
               ) : (
@@ -369,12 +370,12 @@ const ContactMe: React.FC<ContactMeProps> = ({
 
             {/* Status Messages */}
             {submitStatus === 'success' && (
-              <p className="text-green-600 font-medium animate-fade-in">
+              <p className="font-medium animate-fade-in" style={{ color: colors.success }}>
                 ✓ Message sent successfully! I&apos;ll get back to you soon.
               </p>
             )}
             {submitStatus === 'error' && (
-              <p className="text-red-600 font-medium animate-fade-in">
+              <p className="font-medium animate-fade-in" style={{ color: colors.danger }}>
                 ✗ Something went wrong. Please try again or email me directly.
               </p>
             )}
@@ -386,7 +387,7 @@ const ContactMe: React.FC<ContactMeProps> = ({
       <div className="mt-12 text-center">
         <p 
           className="text-sm"
-          style={{ color: colors.foreground === '#171717' ? '#6B7280' : '#9CA3AF' }}
+          style={{ color: colors.muted }}
         >
           Prefer to reach out directly? Email me at{' '}
           <a 
@@ -401,13 +402,13 @@ const ContactMe: React.FC<ContactMeProps> = ({
 
       <style jsx>{`
           textarea::placeholder {
-          color: ${colors.foreground} !important;
-          opacity: 0.6;
+          color: ${colors.muted} !important;
+          opacity: 1;
         }
         
         input::placeholder {
-          color: ${colors.foreground} !important;
-          opacity: 0.6;
+          color: ${colors.muted} !important;
+          opacity: 1;
         }
         
         @keyframes fade-in {

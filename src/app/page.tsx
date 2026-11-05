@@ -3,21 +3,22 @@
 
 import ThemeToggle from "./ThemeToggle";
 import { useTheme } from "./ThemeContext";
-import ProjectsGrid from "../components/ProjectsSection"; 
+import ProjectsGrid from "../components/ProjectsSection";
 import TechStackSection from "../components/techsection";
 import ContactMe from "../components/contactmesection";
 import TimelineSection from "../components/TimelineSection";
 import HomeSection from "../components/HomeSection";
 import AboutSection from "../components/AboutSection";
+import CyberBackdrop from "../components/CyberBackdrop";
 import { useState, useEffect, useRef, useMemo } from "react";
 
 export default function Home() {
-  const { colors } = useTheme();
+  const { colors, isCyber } = useTheme();
   const [activeSection, setActiveSection] = useState("");
   const [showAnimation, setShowAnimation] = useState(false);
   const animationTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const scrollTimeoutRef = useRef<NodeJS.Timeout | null>(null);
-  
+
   // Define the Project interface in your page file
   interface Project {
       id: number;
@@ -83,10 +84,10 @@ export default function Home() {
       backend: "SQLite, SQLCipher",
       githubUrl: "https://github.com/erickherrera/CriptoGualet"
     },
-    
-    { 
-      id: 5, 
-      title: "CloudMG", 
+
+    {
+      id: 5,
+      title: "CloudMG",
       description: "Cloud application for mobile phones that enables peer to peer mountain gear renting",
       year: 2026,
       image: "/cloudMG.png",
@@ -96,10 +97,10 @@ export default function Home() {
       githubUrl: "https://github.com/erickherrera/CloudMG"
     },
     /*
-    { 
-      id: 6, 
-      title: "API Documentation Tool", 
-      description: "Automated API documentation generator with live examples" 
+    {
+      id: 6,
+      title: "API Documentation Tool",
+      description: "Automated API documentation generator with live examples"
     },
   */
   ];
@@ -114,11 +115,11 @@ export default function Home() {
   const handleContactSubmit = async (formData: ContactFormData) => {
     try {
       console.log('Contact form submitted:', formData);
-      
+
       const response = await fetch('/api/contact', {
         method: 'POST',
-        headers: { 
-          'Content-Type': 'application/json' 
+        headers: {
+          'Content-Type': 'application/json'
         },
         body: JSON.stringify(formData)
       });
@@ -240,92 +241,111 @@ export default function Home() {
     };
   }, [sections]);
 
+  // Shared styling for the section shells
+  const sectionShell = {
+    backgroundColor: colors.hero,
+    borderColor: colors.accent,
+    borderTopWidth: "2px",
+    borderTopStyle: "solid" as const,
+    boxShadow: isCyber ? `inset 0 1px 0 0 ${colors.glow}` : undefined,
+  };
+
   return (
     <div className="flex flex-col min-h-screen w-full overflow-x-hidden">
-      {/* Desktop Navigation Indicator - Smaller Version */}
-      <div className="fixed right-4 top-1/2 transform -translate-y-1/2 z-40 hidden md:flex flex-col gap-4">
-        {sections.map((section) => (
-          <div key={section.id} className="relative group">
-            {/* Tooltip */}
-            <div 
-              className={`absolute right-6 top-1/2 transform -translate-y-1/2 px-2 py-1 rounded text-xs font-medium whitespace-nowrap transition-all duration-300 pointer-events-none ${
-                showAnimation ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-2'
-              }`}
-              style={{
-                backgroundColor: colors.foreground,
-                color: colors.background
-              }}
-            >
-              {section.name}
-            </div>
-            
-            {/* Navigation Dot - Smaller */}
-            <button
-              onClick={() => scrollToSection(section.id)}
-              className={`w-2 h-2 rounded-full border transition-all duration-300 hover:scale-150 focus:outline-none focus:ring-1 focus:ring-offset-1 ${
-                activeSection === section.id ? 'scale-125' : ''
-              }`}
-              style={{
-                borderColor: activeSection === section.id ? colors.primary : colors.foreground,
-                backgroundColor: activeSection === section.id ? colors.primary : 'transparent',
-                boxShadow: activeSection === section.id && showAnimation ? `0 0 12px ${colors.primary}60` : 'none',
-                animation: activeSection === section.id && showAnimation ? 'pulseSmall 1.5s infinite' : 'none'
-              }}
-              onFocus={(e) => {
-                e.currentTarget.style.outlineColor = colors.primary;
-              }}
-              aria-label={`Navigate to ${section.name}`}
-            />
-            
-            {/* Active Section Line Indicator */}
-            {activeSection === section.id && showAnimation && (
-              <div 
-                className="absolute right-[-8px] top-1/2 transform -translate-y-1/2 w-6 h-0.5 rounded-full transition-all duration-300"
-                style={{
-                  backgroundColor: colors.primary,
-                  boxShadow: `0 0 8px ${colors.primary}80`
-                }}
-              />
-            )}
-          </div>
-        ))}
-      </div>
+      <CyberBackdrop />
 
-      {/* Mobile Navigation Indicator - Bottom of screen */}
-      <div className="fixed bottom-6 left-1/2 transform -translate-x-1/2 z-40 flex md:hidden max-w-[90vw]">
-        <div 
-          className="flex gap-1.5 px-3 py-2 rounded-full backdrop-blur-sm border max-w-full"
+      {/* Desktop Navigation Indicator */}
+      <nav
+        aria-label="Section navigation"
+        className="fixed right-5 top-1/2 transform -translate-y-1/2 z-40 hidden md:flex flex-col gap-5"
+      >
+        {sections.map((section) => {
+          const isActive = activeSection === section.id;
+          return (
+            <div key={section.id} className="relative group">
+              {/* Tooltip */}
+              <div
+                className={`absolute right-7 top-1/2 -translate-y-1/2 px-2.5 py-1 rounded-md text-xs font-medium whitespace-nowrap transition-all duration-200 pointer-events-none border ${
+                  showAnimation ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-2'
+                }`}
+                style={{
+                  backgroundColor: colors.card,
+                  color: colors.foreground,
+                  borderColor: colors.border,
+                  boxShadow: colors.glow ? `0 6px 20px -8px ${colors.glow}` : undefined,
+                }}
+              >
+                {section.name}
+              </div>
+
+              {/* Navigation Dot */}
+              <button
+                onClick={() => scrollToSection(section.id)}
+                className="relative w-2.5 h-2.5 rounded-full border transition-transform duration-200 hover:scale-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
+                style={{
+                  borderColor: isActive ? colors.primary : colors.borderStrong,
+                  backgroundColor: isActive ? colors.primary : 'transparent',
+                  boxShadow: isActive ? `0 0 12px ${colors.glow}` : 'none',
+                  outlineColor: colors.focus,
+                }}
+                aria-label={`Navigate to ${section.name}`}
+                aria-current={isActive ? "true" : undefined}
+              />
+
+              {/* Active Section Line Indicator */}
+              {isActive && showAnimation && (
+                <div
+                  className="absolute right-[-9px] top-1/2 -translate-y-1/2 w-6 h-0.5 rounded-full"
+                  style={{
+                    backgroundColor: colors.primary,
+                    boxShadow: `0 0 10px ${colors.glow}`
+                  }}
+                />
+              )}
+            </div>
+          );
+        })}
+      </nav>
+
+      {/* Mobile Navigation Indicator */}
+      <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-40 flex md:hidden max-w-[90vw]">
+        <div
+          className="flex gap-2 px-3 py-2 rounded-full backdrop-blur-md border max-w-full"
           style={{
             backgroundColor: `${colors.background}E6`,
-            borderColor: colors.foreground === '#171717' ? '#E5E7EB' : '#374151'
+            borderColor: colors.border,
           }}
         >
-          {sections.map((section) => (
-            <button
-              key={section.id}
-              onClick={() => scrollToSection(section.id)}
-              className={`rounded-full border-2 transition-all duration-300 touch-manipulation flex-shrink-0 ${
-                activeSection === section.id ? 'w-6 h-2.5' : 'w-2.5 h-2.5'
-              }`}
-              style={{
-                borderColor: activeSection === section.id ? colors.primary : colors.foreground === '#171717' ? '#9CA3AF' : '#6B7280',
-                backgroundColor: activeSection === section.id ? colors.primary : 'transparent',
-                boxShadow: activeSection === section.id && showAnimation ? `0 0 6px ${colors.primary}50` : 'none',
-                minWidth: activeSection === section.id ? '24px' : '10px',
-                minHeight: '10px'
-              }}
-              aria-label={`Navigate to ${section.name}`}
-            />
-          ))}
+          {sections.map((section) => {
+            const isActive = activeSection === section.id;
+            return (
+              <button
+                key={section.id}
+                onClick={() => scrollToSection(section.id)}
+                className={`rounded-full border-2 transition-all duration-200 touch-manipulation flex-shrink-0 ${
+                  isActive ? 'w-7 h-2.5' : 'w-2.5 h-2.5'
+                }`}
+                style={{
+                  borderColor: isActive ? colors.primary : colors.borderStrong,
+                  backgroundColor: isActive ? colors.primary : 'transparent',
+                  boxShadow: isActive ? `0 0 8px ${colors.glow}` : 'none',
+                  minWidth: isActive ? '28px' : '10px',
+                  minHeight: '10px',
+                }}
+                aria-label={`Navigate to ${section.name}`}
+                aria-current={isActive ? "true" : undefined}
+              />
+            );
+          })}
         </div>
       </div>
 
       {/* Scroll Progress Indicator */}
       {showAnimation && (
-        <div 
+        <div
           className="fixed right-1 top-1/4 w-0.5 h-1/2 z-30 hidden md:block"
           style={{
-            background: `linear-gradient(to bottom, ${colors.primary}00, ${colors.primary}60, ${colors.primary}00)`
+            background: `linear-gradient(to bottom, ${colors.primary}00, ${colors.primary}80, ${colors.primary}00)`
           }}
         />
       )}
@@ -334,18 +354,15 @@ export default function Home() {
       <div className="fixed bottom-5 right-5 z-50">
         <ThemeToggle />
       </div>
-      
+
       <HomeSection />
       <AboutSection />
 
       {/* Timeline Section */}
-      <section 
-        id="timeline" 
-        className="pt-16 pb-16 md:pt-20 md:pb-20 border-t-6 transition-colors duration-200 scroll-mt-20 w-full"
-        style={{
-          backgroundColor: colors.background,
-          borderColor: colors.accent
-        }}
+      <section
+        id="timeline"
+        className="pt-16 pb-16 md:pt-20 md:pb-20 border-t-2 transition-colors duration-200 scroll-mt-20 w-full"
+        style={sectionShell}
       >
         <div className="w-full overflow-hidden">
           <TimelineSection />
@@ -353,16 +370,13 @@ export default function Home() {
       </section>
 
       {/* Tech Stack section */}
-      <section 
+      <section
         id="tech"
-        className="pt-16 pb-16 md:pt-20 md:pb-20 border-t-6 transition-colors duration-200 scroll-mt-20 w-full"
-        style={{
-          backgroundColor: colors.hero,
-          borderColor: colors.accent
-        }}
+        className="pt-16 pb-16 md:pt-20 md:pb-20 border-t-2 transition-colors duration-200 scroll-mt-20 w-full"
+        style={sectionShell}
       >
         <div className="w-full overflow-hidden">
-          <TechStackSection 
+          <TechStackSection
             colors={colors}
             showFeatures={true}
           />
@@ -370,16 +384,13 @@ export default function Home() {
       </section>
 
       {/* My Projects Section */}
-      <section 
-        id="projects" 
-        className="pt-16 pb-16 md:pt-20 md:pb-20 border-t-6 transition-colors duration-200 scroll-mt-20 w-full"
-        style={{
-          backgroundColor: colors.hero,
-          borderColor: colors.accent
-        }}
+      <section
+        id="projects"
+        className="pt-16 pb-16 md:pt-20 md:pb-20 border-t-2 transition-colors duration-200 scroll-mt-20 w-full"
+        style={sectionShell}
       >
         <div className="w-full overflow-hidden">
-          <ProjectsGrid 
+          <ProjectsGrid
             projects={projects}
             title="My Projects"
             subtitle="Here are some of the projects I've worked on recently"
@@ -390,24 +401,22 @@ export default function Home() {
           />
         </div>
       </section>
-      
+
       {/* Contact Section */}
-      <section 
-        id="contact" 
-        className="pt-16 pb-20 md:pt-20 md:pb-20 border-t-6 transition-colors duration-200 scroll-mt-20 w-full"
-        style={{
-          backgroundColor: colors.hero,
-          borderColor: colors.accent
-        }}
+      <section
+        id="contact"
+        className="pt-16 pb-20 md:pt-20 md:pb-20 border-t-2 transition-colors duration-200 scroll-mt-20 w-full"
+        style={sectionShell}
       >
         <div className="w-full overflow-hidden">
-          <ContactMe 
+          <ContactMe
             colors={colors}
             onSubmit={handleContactSubmit}
           />
         </div>
       </section>
-      {/* Add pulse animation to global styles */}
+
+      {/* Global layout rules */}
       <style jsx global>{`
         /* Prevent horizontal overflow */
         html, body {
@@ -415,45 +424,45 @@ export default function Home() {
           width: 100%;
           max-width: 100vw;
         }
-        
+
         * {
           box-sizing: border-box;
         }
-        
+
         /* Ensure all containers respect viewport width */
-        .container, .max-w-4xl, .max-w-6xl {
+        .container, .max-w-4xl, .max-w-5xl, .max-w-6xl, .max-w-7xl {
           max-width: 100vw !important;
           padding-left: 1rem;
           padding-right: 1rem;
         }
-        
+
         @media (min-width: 640px) {
-          .container, .max-w-4xl, .max-w-6xl {
+          .container, .max-w-4xl, .max-w-5xl, .max-w-6xl, .max-w-7xl {
             padding-left: 1.5rem;
             padding-right: 1.5rem;
           }
         }
-        
+
         @media (min-width: 1024px) {
-          .container, .max-w-4xl, .max-w-6xl {
+          .container, .max-w-4xl, .max-w-5xl, .max-w-6xl, .max-w-7xl {
             padding-left: 2rem;
             padding-right: 2rem;
           }
         }
-        
+
         /* Text wrapping */
         p, h1, h2, h3, h4, h5, h6 {
           word-wrap: break-word;
           overflow-wrap: break-word;
           hyphens: auto;
         }
-        
+
         /* Image responsiveness */
         img {
           max-width: 100%;
           height: auto;
         }
-        
+
         @keyframes pulseSmall {
           0% {
             box-shadow: 0 0 0 0 ${colors.primary}60;

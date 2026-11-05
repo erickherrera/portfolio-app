@@ -2,6 +2,7 @@
 
 import { useTheme } from "../app/ThemeContext";
 import ProfileCard from "./ProfileCard";
+import SectionHeading from "./SectionHeading";
 
 export default function AboutSection() {
   const { colors } = useTheme();
@@ -16,15 +17,10 @@ export default function AboutSection() {
       }}
     >
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-        <div className="text-center mb-8 md:mb-12">
-          <h2
-            className="text-2xl sm:text-3xl font-extrabold mb-4"
-            style={{ color: colors.foreground }}
-          >
-            About Me
-          </h2>
-          <div className="w-20 h-2 mx-auto rounded-full mb-15" style={{ backgroundColor: colors.accent }}></div>
-        </div>
+        <SectionHeading
+          title="About Me"
+          subtitle="A quick look at who I am and what I build."
+        />
 
         <div className="flex justify-center w-full">
           <div className="flex flex-col md:flex-row items-center md:items-start gap-6 md:gap-10 max-w-5xl w-full">
@@ -35,7 +31,7 @@ export default function AboutSection() {
             <div className="w-full md:flex-1 md:max-w-2xl">
               <p
                 className="text-base sm:text-lg font-medium leading-relaxed mb-4 md:mb-6 break-words"
-                style={{ color: colors.foreground === '#171717' ? '#374151' : '#D1D5DB' }}
+                style={{ color: colors.muted }}
               >
                 <span style={{ color: colors.accent, fontWeight: 'bold' }}>
                   Hello!</span> I&apos;m a passionate software engineer with expertise in building modern software applications.
@@ -44,7 +40,7 @@ export default function AboutSection() {
               </p>
               <p
                 className="text-base sm:text-lg font-medium leading-relaxed break-words"
-                style={{ color: colors.foreground === '#171717' ? '#374151' : '#D1D5DB' }}
+                style={{ color: colors.muted }}
               >
                 I specialize in TypeScript development, with particular focus on React,
                 Next.js, and SQL.

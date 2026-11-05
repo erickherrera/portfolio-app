@@ -31,7 +31,7 @@ export default function NavBar(): JSX.Element {
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
   const [activeSection, setActiveSection] = useState<string>("#home");
   const router = useRouter();
-  const { colors } = useTheme();
+  const { colors, isCyber } = useTheme();
 
   const navLinks: NavLink[] = [
     { name: "Home", path: "#home", isHash: true },
@@ -123,10 +123,12 @@ export default function NavBar(): JSX.Element {
 
   return (
     <nav 
-      className="w-full h-[72px] pl-6 sm:pl-10 pr-0 flex justify-between items-center shadow-sm fixed top-0 z-10 transition-colors duration-200"
+      className="w-full h-[72px] pl-6 sm:pl-10 pr-0 flex justify-between items-center shadow-sm fixed top-0 z-50 transition-colors duration-200 backdrop-blur-md"
       style={{ 
-        backgroundColor: colors.background,
-        color: colors.foreground
+        backgroundColor: isCyber ? `${colors.background}D9` : colors.background,
+        color: colors.foreground,
+        borderBottom: `1px solid ${colors.border}`,
+        boxShadow: isCyber ? `0 1px 0 0 ${colors.border}, 0 10px 30px -20px ${colors.glow}` : undefined
       }}
     >
       {/* Logo and Name - Left side */}
@@ -146,6 +148,16 @@ export default function NavBar(): JSX.Element {
               background: `linear-gradient(135deg, ${colors.background}30, ${colors.primary}20, ${colors.accent}15)`
             }}
           />
+          {isCyber && (
+            <div
+              className="absolute -inset-1 rounded-xl"
+              style={{
+                background: `linear-gradient(135deg, ${colors.primary}55, transparent 45%, ${colors.accent}55)`,
+                filter: "blur(10px)",
+                zIndex: -1
+              }}
+            />
+          )}
         </div>
         
         {/* Name and Title */}
@@ -177,6 +189,7 @@ export default function NavBar(): JSX.Element {
               style={{ 
                 color: isActive(link.path) ? colors.accent : colors.foreground,
                 fontWeight: isActive(link.path) ? '600' : '400',
+                textShadow: isCyber && isActive(link.path) ? `0 0 14px ${colors.glow}` : undefined,
               }}
             >
               {link.name}
@@ -196,16 +209,21 @@ export default function NavBar(): JSX.Element {
         <a href="/resume.pdf"
           download="Erick_Herrera_Resume.pdf"
           onClick={handleResumeDownload}
-          className="flex items-center gap-2 px-6 h-full transition-all duration-300 hover:shadow-lg "
+          className={`flex items-center gap-2 px-6 h-full transition-all duration-200 hover:shadow-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-inset ${
+            isCyber ? "clip-corner-sm" : ""
+          }`}
           style={{
             backgroundColor: colors.accent,
-            color: colors.background,
+            color: colors.onAccent,
+            boxShadow: isCyber ? `0 0 24px -10px ${colors.glow}` : undefined,
           }}
           onMouseEnter={(e) => {
             e.currentTarget.style.backgroundColor = colors.primary;
+            e.currentTarget.style.color = colors.onPrimary;
           }}
           onMouseLeave={(e) => {
             e.currentTarget.style.backgroundColor = colors.accent;
+            e.currentTarget.style.color = colors.onAccent;
           }}
         >
           <svg
@@ -296,7 +314,7 @@ export default function NavBar(): JSX.Element {
                 className="flex items-center gap-2 py-3 px-4 my-1 rounded transition-all duration-200"
                 style={{
                   backgroundColor: colors.accent,
-                  color: colors.background,
+                  color: colors.onAccent,
                 }}
               >
                 <svg

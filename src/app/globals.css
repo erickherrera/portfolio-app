@@ -1,53 +1,496 @@
 @import "tailwindcss";
 
+/* Class-based dark mode (the app toggles `.dark` on <html>) */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* Theme-aware variant so components can style the cyberpunk theme only */
+@custom-variant cyber (&:where([data-theme="cyber"], [data-theme="cyber"] *));
+
 @theme {
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: var(--font-jetbrains-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
+  --font-display: var(--font-orbitron), var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+
+  --radius-xs: 4px;
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-2xl: 24px;
+
+  --ease-standard: cubic-bezier(0.2, 0, 0, 1);
+  --ease-emphasized: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-entrance: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* Default light theme variables */
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-  --text: #374151;
-  --primary: #3B82F6;
-  --secondary: #1F2937;
-  --hero: #E5E7EB;
-  --accent: #3B82F6;
+/* ---------------------------------------------------------------------------
+   Theme palettes - mirrors of COLORS in ThemeContext.js.
+   Every text pair meets WCAG 2.1 AA (>= 4.5:1 body, >= 3:1 large/UI).
+--------------------------------------------------------------------------- */
+:root,
+[data-theme="light"] {
+  --c-primary: #4F46E5;
+  --c-secondary: #1F2937;
+  --c-accent: #BE185D;
+  --c-background: #FFFFFF;
+  --c-hero: #F8FAFC;
+  --c-foreground: #111827;
+  --c-muted: #4B5563;
+  --c-card: #FFFFFF;
+  --c-surface: #F1F5F9;
+  --c-border: #E2E8F0;
+  --c-border-strong: #64748B;
+  --c-on-primary: #FFFFFF;
+  --c-on-accent: #FFFFFF;
+  --c-on-secondary: #FFFFFF;
+  --c-focus: #4F46E5;
+  --c-success: #15803D;
+  --c-warning: #B45309;
+  --c-danger: #DC2626;
+  --c-info: #0E7490;
+  --c-glow: rgba(79, 70, 229, 0.28);
+  --c-grid-line: rgba(79, 70, 229, 0.08);
+  --c-overlay: rgba(15, 23, 42, 0.55);
+  --c-neon-cyan: #0891B2;
+  --c-neon-magenta: #DB2777;
+  --c-neon-violet: #7C3AED;
+  --c-neon-lime: #4D7C0F;
+  --holo-gradient: linear-gradient(115deg, #4F46E5 0%, #DB2777 28%, #0891B2 58%, #7C3AED 82%, #4F46E5 100%);
+  --holo-blend: normal;
+  --holo-sheen-blend: normal;
+  --holo-sheen-color: rgba(79, 70, 229, 0.18);
 }
 
-/* Dark theme when .dark class is present (for manual toggle) */
-.dark {
-  --background: #1F2937;
-  --foreground: #ededed;
-  --text: #D1D5DB;
-  --primary: #60A5FA;
-  --secondary: #374151;
-  --hero: #1F2937;
-  --accent: #60A5FA;
+[data-theme="dark"] {
+  --c-primary: #22D3EE;
+  --c-secondary: #1E293B;
+  --c-accent: #F472B6;
+  --c-background: #0B0F17;
+  --c-hero: #111827;
+  --c-foreground: #F1F5F9;
+  --c-muted: #A8B3C4;
+  --c-card: #151C2B;
+  --c-surface: #1B2334;
+  --c-border: #28324A;
+  --c-border-strong: #64748B;
+  --c-on-primary: #04212B;
+  --c-on-accent: #3B0A25;
+  --c-on-secondary: #F1F5F9;
+  --c-focus: #22D3EE;
+  --c-success: #4ADE80;
+  --c-warning: #FBBF24;
+  --c-danger: #F87171;
+  --c-info: #38BDF8;
+  --c-glow: rgba(34, 211, 238, 0.35);
+  --c-grid-line: rgba(34, 211, 238, 0.07);
+  --c-overlay: rgba(2, 6, 16, 0.75);
+  --c-neon-cyan: #22D3EE;
+  --c-neon-magenta: #F472B6;
+  --c-neon-violet: #A78BFA;
+  --c-neon-lime: #A3E635;
+  --holo-gradient: linear-gradient(115deg, #22D3EE 0%, #F472B6 28%, #A78BFA 58%, #A3E635 82%, #22D3EE 100%);
+  --holo-blend: color-dodge;
+  --holo-sheen-blend: screen;
+  --holo-sheen-color: rgba(255, 255, 255, 0.55);
 }
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+[data-theme="cyber"] {
+  --c-primary: #00E5FF;
+  --c-secondary: #141B2E;
+  --c-accent: #FF2E9A;
+  --c-background: #05070E;
+  --c-hero: #0A0F1C;
+  --c-foreground: #E6F7FF;
+  --c-muted: #8FA3BF;
+  --c-card: #0D1424;
+  --c-surface: #121A2C;
+  --c-border: #1E2A44;
+  --c-border-strong: #5B7099;
+  --c-on-primary: #041016;
+  --c-on-accent: #2A0416;
+  --c-on-secondary: #E6F7FF;
+  --c-focus: #00E5FF;
+  --c-success: #7CFF6B;
+  --c-warning: #FFE45E;
+  --c-danger: #FF5A5F;
+  --c-info: #00E5FF;
+  --c-glow: rgba(0, 229, 255, 0.42);
+  --c-grid-line: rgba(0, 229, 255, 0.10);
+  --c-overlay: rgba(2, 4, 10, 0.80);
+  --c-neon-cyan: #00E5FF;
+  --c-neon-magenta: #FF2E9A;
+  --c-neon-violet: #B14CFF;
+  --c-neon-lime: #B6FF3C;
+  --holo-gradient: linear-gradient(115deg, #00E5FF 0%, #B14CFF 26%, #FF2E9A 54%, #FFE45E 78%, #00E5FF 100%);
+  --holo-blend: color-dodge;
+  --holo-sheen-blend: screen;
+  --holo-sheen-color: rgba(255, 255, 255, 0.6);
 }
 
-/* Hide scrollbar for all browsers */
+/* ---------------------------------------------------------------------------
+   Base typography
+--------------------------------------------------------------------------- */
 html {
-  scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none; /* Internet Explorer 10+ */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  scroll-behavior: smooth;
+  background-color: var(--c-background);
 }
 
 html::-webkit-scrollbar {
-  display: none; /* Safari and Chrome */
+  display: none;
 }
 
 body {
-  scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none; /* Internet Explorer 10+ */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  margin: 0;
+  color: var(--c-foreground);
+  background-color: var(--c-background);
+  font-family: var(--font-inter), ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  font-size: 1rem;
+  line-height: 1.65;
+  letter-spacing: 0;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  transition: background-color 200ms var(--ease-standard), color 200ms var(--ease-standard);
 }
 
 body::-webkit-scrollbar {
-  display: none; /* Safari and Chrome */
+  display: none;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  text-wrap: balance;
+  letter-spacing: -0.015em;
+  line-height: 1.2;
+  font-weight: 700;
+}
+
+p {
+  text-wrap: pretty;
+  max-width: 68ch;
+}
+
+::selection {
+  background-color: color-mix(in srgb, var(--c-accent) 30%, transparent);
+  color: var(--c-foreground);
+}
+
+:focus-visible {
+  outline: 2px solid var(--c-focus);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* ---------------------------------------------------------------------------
+   Cyberpunk chrome
+--------------------------------------------------------------------------- */
+[data-theme="cyber"] body {
+  font-feature-settings: "ss01" on, "cv01" on;
+}
+
+[data-theme="cyber"] .cyber-display {
+  font-family: var(--font-orbitron), var(--font-inter), sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+[data-theme="cyber"] .cyber-mono {
+  font-family: var(--font-jetbrains-mono), ui-monospace, monospace;
+}
+
+/* Angled "cut" corner used by cyber panels and buttons */
+.clip-corner {
+  clip-path: polygon(14px 0, 100% 0, 100% calc(100% - 14px), calc(100% - 14px) 100%, 0 100%, 0 14px);
+}
+
+.clip-corner-sm {
+  clip-path: polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px);
+}
+
+.neon-text {
+  text-shadow:
+    0 0 8px var(--c-glow),
+    0 0 24px color-mix(in srgb, var(--c-primary) 45%, transparent);
+}
+
+.neon-border {
+  border: 1px solid color-mix(in srgb, var(--c-primary) 45%, transparent);
+  box-shadow:
+    inset 0 0 22px color-mix(in srgb, var(--c-primary) 10%, transparent),
+    0 0 22px -6px var(--c-glow);
+}
+
+/* ---------------------------------------------------------------------------
+   Holographic effects
+--------------------------------------------------------------------------- */
+.holo-surface {
+  overflow: hidden;
+  background-image: var(--holo-gradient);
+  background-size: 300% 300%;
+  background-position: 0% 50%;
+  opacity: 0;
+  transition: opacity 320ms var(--ease-standard);
+  mix-blend-mode: var(--holo-blend);
+  pointer-events: none;
+}
+
+.holo-surface::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    100deg,
+    rgba(255, 255, 255, 0) 0px,
+    rgba(255, 255, 255, 0.28) 3px,
+    rgba(255, 255, 255, 0) 7px
+  );
+  background-size: 220% 100%;
+  animation: holo-stripes 6s linear infinite;
+}
+
+.holo-card:hover .holo-surface,
+.holo-card:focus-within .holo-surface {
+  opacity: 0.42;
+}
+
+.holo-card:hover .holo-surface::after,
+.holo-card:focus-within .holo-surface::after {
+  animation-duration: 2.4s;
+}
+
+/* Panel with an orbiting prismatic border */
+.holo-panel {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+.holo-panel::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: conic-gradient(
+    from 0deg,
+    var(--c-neon-cyan),
+    var(--c-neon-violet),
+    var(--c-neon-magenta),
+    var(--c-neon-lime),
+    var(--c-neon-cyan)
+  );
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  mask-composite: exclude;
+  animation: holo-orbit 8s linear infinite;
+  opacity: 0.45;
+  transition: opacity 320ms var(--ease-standard);
+  pointer-events: none;
+}
+
+.holo-panel:hover::before,
+.holo-panel:focus-within::before {
+  opacity: 0.95;
+  animation-duration: 3.5s;
+}
+
+/* Specular sheen sweeping across the element */
+.holo-sheen {
+  position: absolute;
+  inset: -40%;
+  background: linear-gradient(
+    100deg,
+    transparent 42%,
+    var(--holo-sheen-color) 50%,
+    transparent 58%
+  );
+  transform: translateX(-120%);
+  transition: transform 900ms var(--ease-entrance);
+  pointer-events: none;
+  mix-blend-mode: var(--holo-sheen-blend);
+}
+
+.holo-card:hover .holo-sheen,
+.holo-card:focus-within .holo-sheen {
+  transform: translateX(120%);
+}
+
+/* Prismatic ring that slowly orbits the badge */
+.holo-ring {
+  position: absolute;
+  inset: -2px;
+  border-radius: 9999px;
+  background: conic-gradient(
+    from 0deg,
+    var(--c-neon-cyan),
+    var(--c-neon-violet),
+    var(--c-neon-magenta),
+    var(--c-neon-lime),
+    var(--c-neon-cyan)
+  );
+  animation: holo-orbit 6s linear infinite;
+  opacity: 0.55;
+  transition: opacity 320ms var(--ease-standard);
+}
+
+.holo-card:hover .holo-ring {
+  opacity: 1;
+  animation-duration: 2.6s;
+}
+
+.holo-ring-mask {
+  position: absolute;
+  inset: 2px;
+  border-radius: 9999px;
+  background: var(--c-card);
+}
+
+/* Subtle prismatic colour drift for icons */
+.holo-prism {
+  filter: drop-shadow(0 0 6px var(--c-glow));
+  transition: filter 320ms var(--ease-standard), transform 320ms var(--ease-entrance);
+}
+
+.holo-card:hover .holo-prism {
+  filter:
+    drop-shadow(0 0 4px color-mix(in srgb, var(--c-neon-cyan) 70%, transparent))
+    drop-shadow(0 0 12px color-mix(in srgb, var(--c-neon-magenta) 55%, transparent))
+    saturate(1.35);
+  transform: translateY(-2px);
+}
+
+@keyframes holo-orbit {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes holo-stripes {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 200% 50%;
+  }
+}
+
+@keyframes holo-pulse {
+  0%,
+  100% {
+    opacity: 0.45;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.85;
+    transform: scale(1.03);
+  }
+}
+
+@keyframes cyber-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+@keyframes cyber-scan {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(400%);
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Cyberpunk backdrop layers
+--------------------------------------------------------------------------- */
+.cyber-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 30;
+  pointer-events: none;
+  opacity: 0;
+  mix-blend-mode: screen;
+  transition: opacity 400ms var(--ease-standard);
+}
+
+[data-theme="cyber"] .cyber-backdrop {
+  opacity: 1;
+}
+
+.cyber-grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(to right, var(--c-grid-line) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--c-grid-line) 1px, transparent 1px);
+  background-size: 64px 64px;
+  mask-image: radial-gradient(ellipse 90% 70% at 50% 30%, #000 30%, transparent 78%);
+  -webkit-mask-image: radial-gradient(ellipse 90% 70% at 50% 30%, #000 30%, transparent 78%);
+}
+
+.cyber-orb {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(90px);
+  opacity: 0.4;
+  animation: cyber-float 14s ease-in-out infinite;
+}
+
+.cyber-scanlines {
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0) 0px,
+    rgba(0, 0, 0, 0) 2px,
+    rgba(0, 229, 255, 0.035) 3px,
+    rgba(0, 0, 0, 0) 4px
+  );
+}
+
+/* Subtle edge darkening drawn over the content (multiply blend) */
+.cyber-vignette {
+  position: fixed;
+  inset: 0;
+  z-index: 30;
+  pointer-events: none;
+  mix-blend-mode: multiply;
+  opacity: 0;
+  transition: opacity 400ms var(--ease-standard);
+  background: radial-gradient(ellipse 130% 100% at 50% 45%, transparent 55%, rgba(2, 4, 10, 0.55) 100%);
+}
+
+[data-theme="cyber"] .cyber-vignette {
+  opacity: 1;
+}
+
+/* ---------------------------------------------------------------------------
+   Motion preferences
+--------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
 }
