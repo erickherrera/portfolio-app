@@ -10,23 +10,23 @@ interface SectionHeadingProps {
 
 /**
  * Shared section heading.
- * Uses the type scale from ThemeContext and switches to the cyberpunk
- * treatment (display font + glowing accent bar) in the cyber theme.
+ * Uses the type scale from ThemeContext with the cyberpunk treatment
+ * (display font + glowing gradient accent bar) shared by both themes.
  */
 export default function SectionHeading({
   title,
   subtitle,
   className = "",
 }: SectionHeadingProps) {
-  const { colors, typography, isCyber } = useTheme();
+  const { colors, typography } = useTheme();
 
   return (
     <header className={`text-center mb-10 sm:mb-14 ${className}`}>
       <h2
-        className={`${isCyber ? "cyber-display" : ""} text-3xl sm:text-4xl font-extrabold mb-4 break-words`}
+        className="cyber-display text-3xl sm:text-4xl font-extrabold mb-4 break-words"
         style={{
           color: colors.foreground,
-          ...(isCyber ? { textShadow: `0 0 22px ${colors.glow}` } : null),
+          textShadow: `0 0 22px ${colors.glow}`,
         }}
       >
         {title}
@@ -35,10 +35,8 @@ export default function SectionHeading({
       <div
         className="h-1.5 w-20 sm:w-24 mx-auto rounded-full"
         style={{
-          background: isCyber
-            ? `linear-gradient(90deg, ${colors.primary}, ${colors.accent})`
-            : colors.accent,
-          boxShadow: isCyber ? `0 0 18px ${colors.glow}` : undefined,
+          background: `linear-gradient(90deg, ${colors.primary}, ${colors.accent})`,
+          boxShadow: `0 0 18px ${colors.glow}`,
         }}
         aria-hidden="true"
       />

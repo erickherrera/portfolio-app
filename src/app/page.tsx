@@ -13,7 +13,7 @@ import CyberBackdrop from "../components/CyberBackdrop";
 import { useState, useEffect, useRef, useMemo } from "react";
 
 export default function Home() {
-  const { colors, isCyber } = useTheme();
+  const { colors } = useTheme();
   const [activeSection, setActiveSection] = useState("");
   const [showAnimation, setShowAnimation] = useState(false);
   const animationTimeoutRef = useRef<NodeJS.Timeout | null>(null);
@@ -247,7 +247,7 @@ export default function Home() {
     borderColor: colors.accent,
     borderTopWidth: "2px",
     borderTopStyle: "solid" as const,
-    boxShadow: isCyber ? `inset 0 1px 0 0 ${colors.glow}` : undefined,
+    boxShadow: `inset 0 1px 0 0 ${colors.glow}`,
   };
 
   return (

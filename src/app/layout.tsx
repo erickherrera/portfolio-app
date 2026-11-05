@@ -32,7 +32,7 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
-  themeColor: "#FFFFFF",
+  themeColor: "#F2F6FA",
 };
 
 export default function RootLayout({
@@ -49,14 +49,15 @@ export default function RootLayout({
             (function() {
               try {
                 var stored = window.localStorage.getItem('ehc-portfolio-theme');
-                var theme = (stored === 'light' || stored === 'dark' || stored === 'cyber')
+                if (stored === 'cyber') stored = 'dark'; // migrate the retired cyberpunk theme
+                var theme = (stored === 'light' || stored === 'dark')
                   ? stored
                   : (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
                 document.documentElement.setAttribute('data-theme', theme);
-                if (theme === 'dark' || theme === 'cyber') {
+                if (theme === 'dark') {
                   document.documentElement.classList.add('dark');
                 }
-                document.documentElement.style.colorScheme = (theme === 'dark' || theme === 'cyber') ? 'dark' : 'light';
+                document.documentElement.style.colorScheme = theme;
               } catch (e) {}
             })();
           `

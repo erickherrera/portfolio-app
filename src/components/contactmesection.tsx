@@ -4,7 +4,6 @@
 import React, { useState } from 'react';
 import { MdEmail, MdPerson, MdBusiness, MdMessage, MdSend } from 'react-icons/md';
 import SectionHeading from './SectionHeading';
-import { useTheme } from '../app/ThemeContext';
 import { ThemeColors } from '../types/theme';
 
 interface ContactMeProps {
@@ -35,8 +34,6 @@ const ContactMe: React.FC<ContactMeProps> = ({
     company: '',
     message: ''
   });
-
-  const { isCyber } = useTheme();
 
   const [errors, setErrors] = useState<Partial<ContactFormData>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -147,13 +144,11 @@ const ContactMe: React.FC<ContactMeProps> = ({
 
       {/* Contact Form */}
       <div 
-        className={`rounded-2xl p-8 md:p-10 shadow-lg transition-all duration-300 ${
-          isCyber ? "clip-corner" : ""
-        }`}
+        className="rounded-2xl p-8 md:p-10 shadow-lg transition-all duration-300 clip-corner"
         style={{
           backgroundColor: colors.surface,
           border: `2px solid ${colors.border}`,
-          boxShadow: isCyber ? `0 0 40px -18px ${colors.glow}` : undefined
+          boxShadow: `0 0 40px -18px ${colors.glow}`
         }}
       >
         <form onSubmit={handleSubmit} className="space-y-6">

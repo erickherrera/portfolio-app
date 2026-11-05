@@ -3,12 +3,11 @@
 import { useTheme, THEMES } from './ThemeContext';
 import { useEffect, useState } from 'react';
 
-const THEME_ORDER = [THEMES.LIGHT, THEMES.DARK, THEMES.CYBER, THEMES.SYSTEM];
+const THEME_ORDER = [THEMES.LIGHT, THEMES.DARK, THEMES.SYSTEM];
 
 const THEME_LABELS = {
   [THEMES.LIGHT]: 'Light',
   [THEMES.DARK]: 'Dark',
-  [THEMES.CYBER]: 'Cyber',
   [THEMES.SYSTEM]: 'System',
 };
 
@@ -82,22 +81,6 @@ export default function ThemeToggle() {
         aria-hidden="true"
       >
         <path strokeLinecap="round" strokeLinejoin="round" d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z" />
-      </svg>
-
-      {/* Cyber mode icon (circuit) */}
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 24 24"
-        fill="none"
-        strokeWidth={2}
-        stroke="currentColor"
-        className={`w-5 h-5 absolute inset-0 m-auto transition-all duration-200 ${
-          isActive(THEMES.CYBER) ? 'opacity-100 scale-100' : 'opacity-0 scale-75'
-        }`}
-        style={{ color: colors.primary }}
-        aria-hidden="true"
-      >
-        <path strokeLinecap="round" strokeLinejoin="round" d="M13 2L4.5 13.5H11l-1 8.5 8.5-11.5H12l1-8.5z" />
       </svg>
 
       {/* System preference icon (monitor) */}

@@ -3,9 +3,6 @@
 /* Class-based dark mode (the app toggles `.dark` on <html>) */
 @custom-variant dark (&:where(.dark, .dark *));
 
-/* Theme-aware variant so components can style the cyberpunk theme only */
-@custom-variant cyber (&:where([data-theme="cyber"], [data-theme="cyber"] *));
-
 @theme {
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
   --font-mono: var(--font-jetbrains-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
@@ -25,78 +22,54 @@
 
 /* ---------------------------------------------------------------------------
    Theme palettes - mirrors of COLORS in ThemeContext.js.
-   Every text pair meets WCAG 2.1 AA (>= 4.5:1 body, >= 3:1 large/UI).
+   Both themes are cyberpunk-styled: light is "daylight neon", dark is the
+   classic neon-on-black look. Every text pair meets WCAG 2.1 AA
+   (>= 4.5:1 body, >= 3:1 large/UI).
 --------------------------------------------------------------------------- */
 :root,
 [data-theme="light"] {
-  --c-primary: #4F46E5;
-  --c-secondary: #1F2937;
-  --c-accent: #BE185D;
-  --c-background: #FFFFFF;
-  --c-hero: #F8FAFC;
-  --c-foreground: #111827;
-  --c-muted: #4B5563;
+  --c-primary: #0A6C8C;
+  --c-secondary: #0F1B2D;
+  --c-accent: #C0117C;
+  --c-background: #F2F6FA;
+  --c-hero: #E9F1F6;
+  --c-foreground: #0A1826;
+  --c-muted: #41617C;
   --c-card: #FFFFFF;
-  --c-surface: #F1F5F9;
-  --c-border: #E2E8F0;
-  --c-border-strong: #64748B;
+  --c-surface: #E6EEF4;
+  --c-border: #C3D5E2;
+  --c-border-strong: #537190;
   --c-on-primary: #FFFFFF;
   --c-on-accent: #FFFFFF;
-  --c-on-secondary: #FFFFFF;
-  --c-focus: #4F46E5;
-  --c-success: #15803D;
-  --c-warning: #B45309;
-  --c-danger: #DC2626;
+  --c-on-secondary: #E6F7FF;
+  --c-focus: #0A6C8C;
+  --c-success: #0F7A38;
+  --c-warning: #92400E;
+  --c-danger: #B91C1C;
   --c-info: #0E7490;
-  --c-glow: rgba(79, 70, 229, 0.28);
-  --c-grid-line: rgba(79, 70, 229, 0.08);
-  --c-overlay: rgba(15, 23, 42, 0.55);
+  --c-glow: rgba(10, 108, 140, 0.30);
+  --c-grid-line: rgba(10, 108, 140, 0.16);
+  --c-overlay: rgba(10, 24, 38, 0.55);
   --c-neon-cyan: #0891B2;
-  --c-neon-magenta: #DB2777;
+  --c-neon-magenta: #C026D3;
   --c-neon-violet: #7C3AED;
   --c-neon-lime: #4D7C0F;
-  --holo-gradient: linear-gradient(115deg, #4F46E5 0%, #DB2777 28%, #0891B2 58%, #7C3AED 82%, #4F46E5 100%);
+  --holo-gradient: linear-gradient(115deg, #0A6C8C 0%, #C0117C 28%, #0891B2 58%, #7C3AED 82%, #0A6C8C 100%);
   --holo-blend: normal;
-  --holo-tint: #4F46E5;
+  --holo-tint: #0A6C8C;
   --holo-sheen-blend: normal;
-  --holo-sheen-color: rgba(79, 70, 229, 0.18);
+  --holo-sheen-color: rgba(10, 108, 140, 0.18);
+  /* Backdrop chrome tuning: on light surfaces the neon layers render with
+     normal blending and softer alphas so they tint instead of washing out. */
+  --backdrop-blend: normal;
+  --scanline-color: rgba(12, 30, 48, 0.055);
+  --vignette-gradient: radial-gradient(ellipse 130% 100% at 50% 45%, transparent 60%, rgba(23, 46, 66, 0.20) 100%);
+  --orb-cyan: rgba(8, 145, 178, 0.38);
+  --orb-magenta: rgba(192, 17, 124, 0.30);
+  --orb-violet: rgba(124, 58, 237, 0.28);
 }
 
 [data-theme="dark"] {
-  --c-primary: #22D3EE;
-  --c-secondary: #1E293B;
-  --c-accent: #F472B6;
-  --c-background: #0B0F17;
-  --c-hero: #111827;
-  --c-foreground: #F1F5F9;
-  --c-muted: #A8B3C4;
-  --c-card: #151C2B;
-  --c-surface: #1B2334;
-  --c-border: #28324A;
-  --c-border-strong: #64748B;
-  --c-on-primary: #04212B;
-  --c-on-accent: #3B0A25;
-  --c-on-secondary: #F1F5F9;
-  --c-focus: #22D3EE;
-  --c-success: #4ADE80;
-  --c-warning: #FBBF24;
-  --c-danger: #F87171;
-  --c-info: #38BDF8;
-  --c-glow: rgba(34, 211, 238, 0.35);
-  --c-grid-line: rgba(34, 211, 238, 0.07);
-  --c-overlay: rgba(2, 6, 16, 0.75);
-  --c-neon-cyan: #22D3EE;
-  --c-neon-magenta: #F472B6;
-  --c-neon-violet: #A78BFA;
-  --c-neon-lime: #A3E635;
-  --holo-gradient: linear-gradient(115deg, #22D3EE 0%, #F472B6 28%, #A78BFA 58%, #A3E635 82%, #22D3EE 100%);
-  --holo-blend: color-dodge;
-  --holo-sheen-blend: screen;
-  --holo-sheen-color: rgba(255, 255, 255, 0.55);
-  --holo-tint: #22D3EE;
-}
-
-[data-theme="cyber"] {
   --c-primary: #00E5FF;
   --c-secondary: #141B2E;
   --c-accent: #FF2E9A;
@@ -128,6 +101,13 @@
   --holo-sheen-blend: screen;
   --holo-sheen-color: rgba(255, 255, 255, 0.6);
   --holo-tint: #00E5FF;
+  /* Neon layers read best over black when blended with the screen. */
+  --backdrop-blend: screen;
+  --scanline-color: rgba(0, 229, 255, 0.035);
+  --vignette-gradient: radial-gradient(ellipse 130% 100% at 50% 45%, transparent 55%, rgba(2, 4, 10, 0.55) 100%);
+  --orb-cyan: rgba(0, 229, 255, 0.55);
+  --orb-magenta: rgba(255, 46, 154, 0.45);
+  --orb-violet: rgba(177, 76, 255, 0.35);
 }
 
 /* ---------------------------------------------------------------------------
@@ -151,6 +131,7 @@ body {
   color: var(--c-foreground);
   background-color: var(--c-background);
   font-family: var(--font-inter), ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  font-feature-settings: "ss01" on, "cv01" on;
   font-size: 1rem;
   line-height: 1.65;
   letter-spacing: 0;
@@ -192,19 +173,15 @@ p {
 }
 
 /* ---------------------------------------------------------------------------
-   Cyberpunk chrome
+   Cyberpunk chrome (applies to both themes)
 --------------------------------------------------------------------------- */
-[data-theme="cyber"] body {
-  font-feature-settings: "ss01" on, "cv01" on;
-}
-
-[data-theme="cyber"] .cyber-display {
+.cyber-display {
   font-family: var(--font-orbitron), var(--font-inter), sans-serif;
   text-transform: uppercase;
   letter-spacing: 0.02em;
 }
 
-[data-theme="cyber"] .cyber-mono {
+.cyber-mono {
   font-family: var(--font-jetbrains-mono), ui-monospace, monospace;
 }
 
@@ -618,20 +595,15 @@ p {
 }
 
 /* ---------------------------------------------------------------------------
-   Cyberpunk backdrop layers
+   Cyberpunk backdrop layers (rendered in every theme; the palette above
+   tunes blending, scanlines, vignette and orb colors per theme)
 --------------------------------------------------------------------------- */
 .cyber-backdrop {
   position: fixed;
   inset: 0;
   z-index: 30;
   pointer-events: none;
-  opacity: 0;
-  mix-blend-mode: screen;
-  transition: opacity 400ms var(--ease-standard);
-}
-
-[data-theme="cyber"] .cyber-backdrop {
-  opacity: 1;
+  mix-blend-mode: var(--backdrop-blend);
 }
 
 .cyber-grid {
@@ -660,25 +632,19 @@ p {
     to bottom,
     rgba(0, 0, 0, 0) 0px,
     rgba(0, 0, 0, 0) 2px,
-    rgba(0, 229, 255, 0.035) 3px,
+    var(--scanline-color) 3px,
     rgba(0, 0, 0, 0) 4px
   );
 }
 
-/* Subtle edge darkening drawn over the content (multiply blend) */
+/* Subtle edge treatment drawn over the content (multiply blend) */
 .cyber-vignette {
   position: fixed;
   inset: 0;
   z-index: 30;
   pointer-events: none;
   mix-blend-mode: multiply;
-  opacity: 0;
-  transition: opacity 400ms var(--ease-standard);
-  background: radial-gradient(ellipse 130% 100% at 50% 45%, transparent 55%, rgba(2, 4, 10, 0.55) 100%);
-}
-
-[data-theme="cyber"] .cyber-vignette {
-  opacity: 1;
+  background: var(--vignette-gradient);
 }
 
 /* ---------------------------------------------------------------------------

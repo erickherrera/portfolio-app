@@ -70,7 +70,7 @@ const TechStackSection: React.FC<TechStackSectionProps> = ({
   showFeatures = true,
   className = "",
 }) => {
-  const { isCyber, tokens } = useTheme();
+  const { tokens } = useTheme();
   const reduceMotion = useReducedMotion();
 
   return (
@@ -143,7 +143,7 @@ const TechStackSection: React.FC<TechStackSectionProps> = ({
                 backgroundColor: `${colors.card}E6`,
                 border: `1px solid ${colors.border}`,
                 color: colors.foreground,
-                boxShadow: isCyber ? `0 0 18px -8px ${colors.glow}` : undefined,
+                boxShadow: `0 0 18px -8px ${colors.glow}`,
               }}
             >
               {tech.name}

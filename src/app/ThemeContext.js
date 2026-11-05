@@ -13,6 +13,10 @@ import {
 /**
  * Design system for the portfolio.
  *
+ * Both themes share the same cyberpunk aesthetic (neon cyan/magenta accents,
+ * Orbitron display type, holographic chrome) - "light" is a daylight-neon
+ * take and "dark" is the classic neon-on-black look.
+ *
  * Rules applied across every theme:
  * - WCAG 2.1 AA contrast for text (>= 4.5:1) and UI components (>= 3:1).
  * - Semantic tokens so components never guess a theme by comparing hex values.
@@ -26,7 +30,6 @@ import {
 export const THEMES = {
   LIGHT: 'light',
   DARK: 'dark',
-  CYBER: 'cyber',
   SYSTEM: 'system',
 };
 
@@ -192,58 +195,32 @@ export const TOKENS = {
  */
 export const COLORS = {
   [THEMES.LIGHT]: {
-    primary: '#4F46E5',
-    secondary: '#1F2937',
-    accent: '#BE185D',
-    background: '#FFFFFF',
-    hero: '#F8FAFC',
-    foreground: '#111827',
-    muted: '#4B5563',
+    primary: '#0A6C8C',
+    secondary: '#0F1B2D',
+    accent: '#C0117C',
+    background: '#F2F6FA',
+    hero: '#E9F1F6',
+    foreground: '#0A1826',
+    muted: '#41617C',
     card: '#FFFFFF',
-    surface: '#F1F5F9',
-    border: '#E2E8F0',
-    borderStrong: '#64748B',
+    surface: '#E6EEF4',
+    border: '#C3D5E2',
+    borderStrong: '#537190',
     onPrimary: '#FFFFFF',
     onAccent: '#FFFFFF',
-    onSecondary: '#FFFFFF',
-    focus: '#4F46E5',
-    success: '#15803D',
-    warning: '#B45309',
-    danger: '#DC2626',
+    onSecondary: '#E6F7FF',
+    focus: '#0A6C8C',
+    success: '#0F7A38',
+    warning: '#92400E',
+    danger: '#B91C1C',
     info: '#0E7490',
-    glow: 'rgba(79, 70, 229, 0.28)',
-    gridLine: 'rgba(79, 70, 229, 0.08)',
-    overlay: 'rgba(15, 23, 42, 0.55)',
-    neon: { cyan: '#0891B2', magenta: '#DB2777', violet: '#7C3AED', lime: '#4D7C0F' },
-    holo: ['#4F46E5', '#DB2777', '#0891B2', '#7C3AED'],
+    glow: 'rgba(10, 108, 140, 0.30)',
+    gridLine: 'rgba(10, 108, 140, 0.16)',
+    overlay: 'rgba(10, 24, 38, 0.55)',
+    neon: { cyan: '#0891B2', magenta: '#C026D3', violet: '#7C3AED', lime: '#4D7C0F' },
+    holo: ['#0A6C8C', '#C0117C', '#0891B2', '#7C3AED'],
   },
   [THEMES.DARK]: {
-    primary: '#22D3EE',
-    secondary: '#1E293B',
-    accent: '#F472B6',
-    background: '#0B0F17',
-    hero: '#111827',
-    foreground: '#F1F5F9',
-    muted: '#A8B3C4',
-    card: '#151C2B',
-    surface: '#1B2334',
-    border: '#28324A',
-    borderStrong: '#64748B',
-    onPrimary: '#04212B',
-    onAccent: '#3B0A25',
-    onSecondary: '#F1F5F9',
-    focus: '#22D3EE',
-    success: '#4ADE80',
-    warning: '#FBBF24',
-    danger: '#F87171',
-    info: '#38BDF8',
-    glow: 'rgba(34, 211, 238, 0.35)',
-    gridLine: 'rgba(34, 211, 238, 0.07)',
-    overlay: 'rgba(2, 6, 16, 0.75)',
-    neon: { cyan: '#22D3EE', magenta: '#F472B6', violet: '#A78BFA', lime: '#A3E635' },
-    holo: ['#22D3EE', '#F472B6', '#A78BFA', '#A3E635'],
-  },
-  [THEMES.CYBER]: {
     primary: '#00E5FF',
     secondary: '#141B2E',
     accent: '#FF2E9A',
@@ -271,8 +248,6 @@ export const COLORS = {
   },
 };
 
-const DARK_BASED_THEMES = new Set([THEMES.DARK, THEMES.CYBER]);
-
 const ThemeContext = createContext({
   theme: THEMES.SYSTEM,
   resolvedTheme: THEMES.LIGHT,
@@ -280,7 +255,6 @@ const ThemeContext = createContext({
   colors: COLORS[THEMES.LIGHT],
   typography: TYPOGRAPHY,
   tokens: TOKENS,
-  isCyber: false,
   isDark: false,
 });
 
@@ -291,7 +265,10 @@ function isValidTheme(value) {
 function readStoredTheme() {
   if (typeof window === 'undefined') return THEMES.SYSTEM;
   try {
-    const stored = window.localStorage.getItem(THEME_STORAGE_KEY);
+    let stored = window.localStorage.getItem(THEME_STORAGE_KEY);
+    // The standalone cyber theme was folded into the cyberpunk-styled dark
+    // theme - migrate visitors who still have it persisted.
+    if (stored === 'cyber') stored = THEMES.DARK;
     return isValidTheme(stored) ? stored : THEMES.SYSTEM;
   } catch {
     return THEMES.SYSTEM;
@@ -335,8 +312,7 @@ export function ThemeProvider({ children }) {
 
   const colors = useMemo(() => COLORS[resolvedTheme] ?? COLORS[THEMES.LIGHT], [resolvedTheme]);
 
-  const isCyber = resolvedTheme === THEMES.CYBER;
-  const isDark = DARK_BASED_THEMES.has(resolvedTheme);
+  const isDark = resolvedTheme === THEMES.DARK;
 
   // Apply the theme to the document: data-theme drives the CSS variables,
   // .dark keeps Tailwind's dark variants in sync.
@@ -373,10 +349,9 @@ export function ThemeProvider({ children }) {
       colors,
       typography: TYPOGRAPHY,
       tokens: TOKENS,
-      isCyber,
       isDark,
     }),
-    [theme, resolvedTheme, setTheme, colors, isCyber, isDark]
+    [theme, resolvedTheme, setTheme, colors, isDark]
   );
 
   return <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>;

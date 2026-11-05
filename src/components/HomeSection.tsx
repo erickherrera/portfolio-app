@@ -3,7 +3,7 @@
 import { useTheme } from "../app/ThemeContext";
 
 export default function HomeSection() {
-  const { colors, isCyber } = useTheme();
+  const { colors } = useTheme();
 
   const primaryCta = {
     backgroundColor: colors.primary,
@@ -14,7 +14,7 @@ export default function HomeSection() {
   const secondaryCta = {
     backgroundColor: colors.secondary,
     color: colors.onSecondary,
-    boxShadow: isCyber ? `inset 0 0 0 1px ${colors.borderStrong}` : undefined,
+    boxShadow: `inset 0 0 0 1px ${colors.borderStrong}`,
   };
 
   return (
@@ -26,12 +26,10 @@ export default function HomeSection() {
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
         <div className="flex flex-col items-center text-center w-full">
           <h1
-            className={`mb-5 text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight break-words ${
-              isCyber ? "cyber-display" : ""
-            }`}
+            className="cyber-display mb-5 text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight break-words"
             style={{
               color: colors.foreground,
-              textShadow: isCyber ? `0 0 28px ${colors.glow}` : undefined,
+              textShadow: `0 0 28px ${colors.glow}`,
             }}
           >
             Welcome to my portfolio.
@@ -49,9 +47,7 @@ export default function HomeSection() {
               href="https://github.com/erickherrera"
               target="_blank"
               rel="noopener noreferrer"
-              className={`px-5 py-3 font-semibold rounded-lg transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 text-center w-full sm:w-auto ${
-                isCyber ? "clip-corner-sm" : ""
-              }`}
+              className="px-5 py-3 font-semibold rounded-lg transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 text-center w-full sm:w-auto clip-corner-sm"
               style={primaryCta}
               onMouseEnter={(e) => {
                 e.currentTarget.style.transform = "translateY(-2px)";
@@ -67,9 +63,7 @@ export default function HomeSection() {
               href="http://www.linkedin.com/in/erick-herrera-cabrera-b2268b1b4"
               target="_blank"
               rel="noopener noreferrer"
-              className={`px-5 py-3 font-semibold rounded-lg transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 text-center w-full sm:w-auto ${
-                isCyber ? "clip-corner-sm" : ""
-              }`}
+              className="px-5 py-3 font-semibold rounded-lg transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 text-center w-full sm:w-auto clip-corner-sm"
               style={secondaryCta}
               onMouseEnter={(e) => {
                 e.currentTarget.style.transform = "translateY(-2px)";
@@ -88,9 +82,7 @@ export default function HomeSection() {
                   element.scrollIntoView({ behavior: "smooth" });
                 }
               }}
-              className={`px-5 py-3 font-semibold rounded-lg transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 text-center w-full sm:w-auto ${
-                isCyber ? "clip-corner-sm" : ""
-              }`}
+              className="px-5 py-3 font-semibold rounded-lg transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 text-center w-full sm:w-auto clip-corner-sm"
               style={{
                 backgroundColor: "transparent",
                 color: colors.foreground,
