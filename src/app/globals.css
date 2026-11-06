@@ -182,7 +182,27 @@ p {
 }
 
 .cyber-mono {
-  font-family: var(--font-jetbrains-mono), ui-monospace, monospace;
+  font-family: var(--font-jetbrains-mono), ui-monospace, SFMono-Regular, monospace;
+}
+
+.typewriter-caret {
+  display: inline-block;
+  width: 0.09em;
+  height: 0.9em;
+  margin-left: 0.14em;
+  vertical-align: -0.08em;
+  animation: typewriter-caret-blink 900ms steps(1, end) infinite;
+}
+
+@keyframes typewriter-caret-blink {
+  0%,
+  48% {
+    opacity: 1;
+  }
+  49%,
+  100% {
+    opacity: 0.15;
+  }
 }
 
 /* Angled "cut" corner used by cyber panels and buttons */
@@ -433,6 +453,7 @@ p {
 .holo-logo {
   position: relative;
   color: var(--holo-tint);
+  transition: color 200ms var(--ease-standard), filter 200ms var(--ease-standard);
   filter:
     drop-shadow(0 0 5px color-mix(in srgb, var(--holo-tint) 80%, transparent))
     drop-shadow(0 0 18px color-mix(in srgb, var(--holo-tint) 45%, transparent));
@@ -470,9 +491,10 @@ p {
 
 .holo-projector:hover .holo-logo,
 .holo-projector:focus-within .holo-logo {
+  color: var(--c-accent);
   filter:
-    drop-shadow(0 0 6px color-mix(in srgb, var(--holo-tint) 95%, transparent))
-    drop-shadow(0 0 26px color-mix(in srgb, var(--holo-tint) 60%, transparent));
+    drop-shadow(0 0 6px color-mix(in srgb, var(--c-accent) 95%, transparent))
+    drop-shadow(0 0 26px color-mix(in srgb, var(--c-accent) 60%, transparent));
 }
 
 @keyframes holo-spin-y {
