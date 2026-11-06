@@ -2,7 +2,6 @@
 
 import { JSX, useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import Image from "next/image";
 import { useTheme } from "../app/ThemeContext";
 
 // Define types for our nav links
@@ -131,36 +130,10 @@ export default function NavBar(): JSX.Element {
         boxShadow: `0 1px 0 0 ${colors.border}, 0 10px 30px -20px ${colors.glow}`
       }}
     >
-      {/* Logo and Name - Left side */}
-      <div className="flex items-center space-x-3">
-        <div className="relative w-12 h-12">
-          <Image
-            src="/LOGO3.webp"
-            alt="Logo"
-            fill
-            className="object-contain"
-            priority
-          />
-          {/* Gradient overlay to match theme */}
-          <div 
-            className="absolute inset-0 rounded mix-blend-overlay"
-            style={{
-              background: `linear-gradient(135deg, ${colors.background}30, ${colors.primary}20, ${colors.accent}15)`
-            }}
-          />
-          {/* Neon glow behind the logo */}
-          <div
-            className="absolute -inset-1 rounded-xl"
-            style={{
-              background: `linear-gradient(135deg, ${colors.primary}55, transparent 45%, ${colors.accent}55)`,
-              filter: "blur(10px)",
-              zIndex: -1
-            }}
-          />
-        </div>
-        
+      {/* Name - Left side */}
+      <div className="flex items-center">
         {/* Name and Title */}
-        <div className="hidden sm:block">
+        <div>
           <div className="flex flex-col items-start text-left">
             <div
               className="font-bold text-base leading-tight whitespace-nowrap"
