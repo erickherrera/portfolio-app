@@ -350,8 +350,8 @@ export default function Home() {
         />
       )}
 
-      {/* Theme Toggle - Positioned fixed on screen */}
-      <div className="fixed bottom-5 right-5 z-50">
+      {/* Theme Toggle - Positioned fixed just above the footer */}
+      <div className="fixed bottom-[3.25rem] right-5 z-50">
         <ThemeToggle />
       </div>
 

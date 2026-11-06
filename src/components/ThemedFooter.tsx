@@ -7,7 +7,7 @@ export default function ThemedFooter() {
 
   return (
     <footer
-      className="fixed bottom-0 left-0 right-0 py-2 z-40 transition-colors duration-200 backdrop-blur-md"
+      className="fixed bottom-0 left-0 right-0 h-11 flex items-center justify-center z-40 transition-colors duration-200 backdrop-blur-md"
       style={{
         backgroundColor: `${colors.background}D9`,
         borderTop: `1px solid ${colors.border}`,

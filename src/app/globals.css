@@ -214,6 +214,138 @@ p {
   clip-path: polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px);
 }
 
+/* ---------------------------------------------------------------------------
+   Cyber CTA buttons: secondary panel at rest, charged accent plate on
+   hover/press. Scanline texture + a light sweep sell the holographic feel.
+--------------------------------------------------------------------------- */
+.hero-cta {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background-color: var(--c-secondary);
+  color: var(--c-on-secondary);
+  box-shadow:
+    inset 0 0 0 1px var(--c-border-strong),
+    inset 0 0 22px color-mix(in srgb, var(--c-primary) 10%, transparent);
+  text-shadow:
+    0.04em 0 color-mix(in srgb, var(--c-primary) 55%, transparent),
+    -0.04em 0 color-mix(in srgb, var(--c-accent) 45%, transparent);
+  transition:
+    background-color 180ms var(--ease-standard),
+    color 180ms var(--ease-standard),
+    box-shadow 220ms var(--ease-standard),
+    letter-spacing 220ms var(--ease-standard),
+    text-shadow 180ms var(--ease-standard),
+    transform 160ms var(--ease-standard);
+}
+
+/* Static scanline texture keeps the plate feeling like a screen */
+.hero-cta::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent 0 3px,
+    color-mix(in srgb, currentColor 14%, transparent) 3px 4px
+  );
+  opacity: 0.35;
+  pointer-events: none;
+  transition: opacity 200ms var(--ease-standard);
+}
+
+/* Light bar that sweeps across the plate */
+.hero-cta::after {
+  content: "";
+  position: absolute;
+  inset: -60% -20%;
+  background: linear-gradient(
+    100deg,
+    transparent 40%,
+    color-mix(in srgb, #fff 55%, transparent) 50%,
+    transparent 60%
+  );
+  transform: translateX(-140%) skewX(-18deg);
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    transform 560ms var(--ease-entrance),
+    opacity 160ms linear;
+}
+
+.hero-cta:hover,
+.hero-cta:focus-visible {
+  background-color: var(--c-accent);
+  color: var(--c-on-accent);
+  letter-spacing: 0.08em;
+  transform: translateY(-2px);
+  box-shadow:
+    inset 0 0 0 1px color-mix(in srgb, var(--c-on-accent) 55%, transparent),
+    inset 0 0 26px color-mix(in srgb, var(--c-on-accent) 18%, transparent),
+    inset 0 -14px 26px -18px color-mix(in srgb, var(--c-on-accent) 85%, transparent);
+  text-shadow:
+    0.045em 0 color-mix(in srgb, var(--c-neon-cyan) 90%, transparent),
+    -0.045em 0 color-mix(in srgb, var(--c-neon-magenta) 90%, transparent),
+    0 0 16px color-mix(in srgb, var(--c-on-accent) 65%, transparent);
+}
+
+.hero-cta:hover::before,
+.hero-cta:focus-visible::before {
+  opacity: 0.6;
+}
+
+.hero-cta:hover::after,
+.hero-cta:focus-visible::after {
+  opacity: 1;
+  transform: translateX(140%) skewX(-18deg);
+}
+
+/* Held press / long press: the plate charges and pulses */
+.hero-cta:active {
+  background-color: color-mix(in srgb, var(--c-accent) 78%, #000);
+  color: var(--c-on-accent);
+  transform: translateY(0) scale(0.97);
+  animation: hero-cta-charge 900ms ease-in-out infinite;
+}
+
+.hero-cta:active::after {
+  opacity: 1;
+  transform: translateX(140%) skewX(-18deg);
+}
+
+@keyframes hero-cta-charge {
+  0%,
+  100% {
+    box-shadow:
+      inset 0 0 0 2px color-mix(in srgb, var(--c-on-accent) 70%, transparent),
+      inset 0 0 16px color-mix(in srgb, var(--c-on-accent) 16%, transparent);
+  }
+  50% {
+    box-shadow:
+      inset 0 0 0 2px var(--c-on-accent),
+      inset 0 0 34px color-mix(in srgb, var(--c-on-accent) 40%, transparent);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-cta,
+  .hero-cta::before,
+  .hero-cta::after {
+    transition: none;
+  }
+
+  .hero-cta:hover,
+  .hero-cta:focus-visible,
+  .hero-cta:active {
+    transform: none;
+    animation: none;
+  }
+
+  .hero-cta::after {
+    display: none;
+  }
+}
+
 .neon-text {
   text-shadow:
     0 0 8px var(--c-glow),
@@ -255,16 +387,6 @@ p {
   animation: holo-stripes 6s linear infinite;
 }
 
-.holo-card:hover .holo-surface,
-.holo-card:focus-within .holo-surface {
-  opacity: 0.42;
-}
-
-.holo-card:hover .holo-surface::after,
-.holo-card:focus-within .holo-surface::after {
-  animation-duration: 2.4s;
-}
-
 /* Panel with an orbiting prismatic border */
 .holo-panel {
   position: relative;
@@ -296,14 +418,7 @@ p {
   mask-composite: exclude;
   animation: holo-orbit 8s linear infinite;
   opacity: 0.45;
-  transition: opacity 320ms var(--ease-standard);
   pointer-events: none;
-}
-
-.holo-panel:hover::before,
-.holo-panel:focus-within::before {
-  opacity: 0.95;
-  animation-duration: 3.5s;
 }
 
 /* Specular sheen sweeping across the element */
@@ -317,14 +432,8 @@ p {
     transparent 58%
   );
   transform: translateX(-120%);
-  transition: transform 900ms var(--ease-entrance);
   pointer-events: none;
   mix-blend-mode: var(--holo-sheen-blend);
-}
-
-.holo-card:hover .holo-sheen,
-.holo-card:focus-within .holo-sheen {
-  transform: translateX(120%);
 }
 
 /* ---------------------------------------------------------------------------
@@ -382,7 +491,6 @@ p {
   box-shadow:
     0 0 16px -2px var(--c-glow),
     inset 0 0 10px color-mix(in srgb, var(--holo-tint) 35%, transparent);
-  transition: box-shadow 320ms var(--ease-standard);
 }
 
 .holo-platform-body {
@@ -416,7 +524,6 @@ p {
   mix-blend-mode: screen;
   opacity: 0.8;
   animation: holo-beam-flicker 3.4s ease-in-out infinite;
-  transition: opacity 320ms var(--ease-standard);
 }
 
 /* Energy rings rising from the emitter toward the hologram */
@@ -452,11 +559,10 @@ p {
 
 .holo-logo {
   position: relative;
-  color: var(--holo-tint);
-  transition: color 200ms var(--ease-standard), filter 200ms var(--ease-standard);
+  color: var(--c-accent);
   filter:
-    drop-shadow(0 0 5px color-mix(in srgb, var(--holo-tint) 80%, transparent))
-    drop-shadow(0 0 18px color-mix(in srgb, var(--holo-tint) 45%, transparent));
+    drop-shadow(0 0 6px color-mix(in srgb, var(--c-accent) 95%, transparent))
+    drop-shadow(0 0 26px color-mix(in srgb, var(--c-accent) 60%, transparent));
   mask-image: repeating-linear-gradient(
     to bottom,
     #000 0 2px,
@@ -470,31 +576,6 @@ p {
   animation:
     holo-flicker 6s linear infinite,
     holo-scan 1.6s linear infinite;
-}
-
-.holo-projector:hover .holo-spin,
-.holo-projector:focus-within .holo-spin {
-  animation-duration: 2.6s;
-}
-
-.holo-projector:hover .holo-beam,
-.holo-projector:focus-within .holo-beam {
-  opacity: 1;
-}
-
-.holo-projector:hover .holo-platform-top,
-.holo-projector:focus-within .holo-platform-top {
-  box-shadow:
-    0 0 26px 0 var(--c-glow),
-    inset 0 0 14px color-mix(in srgb, var(--holo-tint) 50%, transparent);
-}
-
-.holo-projector:hover .holo-logo,
-.holo-projector:focus-within .holo-logo {
-  color: var(--c-accent);
-  filter:
-    drop-shadow(0 0 6px color-mix(in srgb, var(--c-accent) 95%, transparent))
-    drop-shadow(0 0 26px color-mix(in srgb, var(--c-accent) 60%, transparent));
 }
 
 @keyframes holo-spin-y {

@@ -8,7 +8,7 @@ import type { ThemeColors } from "../types/theme";
 const WELCOME_PHRASES = [
   { language: "English", code: "EN", locale: "en", text: "Welcome to my portfolio" },
   { language: "Mandarin", code: "中文", locale: "zh-CN", text: "欢迎来到我的作品集" },
-  { language: "Hindi", code: "हिं", locale: "hi", text: "मेरे पोर्टफोलियो में आपका स्वागत है" },
+  { language: "Portuguese", code: "PT", locale: "pt", text: "Bem-vindo ao meu portfólio" },
   { language: "Spanish", code: "ES", locale: "es", text: "Bienvenido a mi portafolio" },
   { language: "French", code: "FR", locale: "fr", text: "Bienvenue dans mon portfolio" },
 ] as const;
@@ -122,17 +122,8 @@ function TypewriterWelcome({ colors }: { colors: ThemeColors }) {
 export default function HomeSection() {
   const { colors } = useTheme();
 
-  const primaryCta = {
-    backgroundColor: colors.primary,
-    color: colors.onPrimary,
-    boxShadow: `0 10px 24px -12px ${colors.glow}`,
-  };
-
-  const secondaryCta = {
-    backgroundColor: colors.secondary,
-    color: colors.onSecondary,
-    boxShadow: `inset 0 0 0 1px ${colors.borderStrong}`,
-  };
+  const ctaClass =
+    "hero-cta cyber-mono px-5 py-3 text-sm font-semibold uppercase tracking-[0.06em] rounded-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 text-center w-full sm:w-auto clip-corner-sm";
 
   return (
     <section
@@ -144,26 +135,12 @@ export default function HomeSection() {
         <div className="flex flex-col items-center text-center w-full">
           <TypewriterWelcome colors={colors} />
 
-          <p
-            className="mb-10 text-base sm:text-lg md:text-xl max-w-2xl break-words"
-            style={{ color: colors.muted }}
-          >
-            Learn more about my software engineering path.
-          </p>
-
           <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 mt-2 w-full max-w-md justify-center">
             <a
               href="https://github.com/erickherrera"
               target="_blank"
               rel="noopener noreferrer"
-              className="px-5 py-3 font-semibold rounded-lg transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 text-center w-full sm:w-auto clip-corner-sm"
-              style={primaryCta}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.transform = "translateY(-2px)";
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.transform = "translateY(0)";
-              }}
+              className={ctaClass}
               aria-label="GitHub Profile"
             >
               GitHub
@@ -172,14 +149,7 @@ export default function HomeSection() {
               href="http://www.linkedin.com/in/erick-herrera-cabrera-b2268b1b4"
               target="_blank"
               rel="noopener noreferrer"
-              className="px-5 py-3 font-semibold rounded-lg transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 text-center w-full sm:w-auto clip-corner-sm"
-              style={secondaryCta}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.transform = "translateY(-2px)";
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.transform = "translateY(0)";
-              }}
+              className={ctaClass}
               aria-label="LinkedIn Profile"
             >
               LinkedIn
@@ -191,22 +161,7 @@ export default function HomeSection() {
                   element.scrollIntoView({ behavior: "smooth" });
                 }
               }}
-              className="px-5 py-3 font-semibold rounded-lg transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 text-center w-full sm:w-auto clip-corner-sm"
-              style={{
-                backgroundColor: "transparent",
-                color: colors.foreground,
-                border: `1px solid ${colors.borderStrong}`,
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.borderColor = colors.primary;
-                e.currentTarget.style.color = colors.primary;
-                e.currentTarget.style.transform = "translateY(-2px)";
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.borderColor = colors.borderStrong;
-                e.currentTarget.style.color = colors.foreground;
-                e.currentTarget.style.transform = "translateY(0)";
-              }}
+              className={ctaClass}
               aria-label="Contact Me"
             >
               Contact Me

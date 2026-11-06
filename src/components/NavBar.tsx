@@ -161,24 +161,26 @@ export default function NavBar(): JSX.Element {
         
         {/* Name and Title */}
         <div className="hidden sm:block">
-          <div 
-            className="font-bold text-lg leading-tight"
-            style={{ color: colors.foreground }}
-          >
-            Erick Herrera
-          </div>
-          <div 
-            className="text-sm font-medium"
-            style={{ color: colors.accent }}
-          >
-            Software Engineer
+          <div className="flex flex-col items-start text-left">
+            <div
+              className="font-bold text-base leading-tight whitespace-nowrap"
+              style={{ color: colors.foreground }}
+            >
+              Erick Herrera
+            </div>
+            <div
+              className="text-xs font-medium whitespace-nowrap"
+              style={{ color: colors.accent }}
+            >
+              Software Builder
+            </div>
           </div>
         </div>
       </div>
 
       {/* Desktop Navigation Links and Resume Button */}
       <div className="hidden md:flex items-center h-full">
-        <div className="flex space-x-8 items-center mr-8 h-full">
+        <div className="flex space-x-4 xl:space-x-8 items-center mr-6 xl:mr-10 h-full text-[15px] xl:text-base">
           {navLinks.map((link) => (
             <a
               key={link.path}
@@ -208,7 +210,7 @@ export default function NavBar(): JSX.Element {
         <a href="/resume.pdf"
           download="Erick_Herrera_Resume.pdf"
           onClick={handleResumeDownload}
-          className="flex items-center gap-2 px-6 h-full transition-all duration-200 hover:shadow-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-inset clip-corner-sm"
+          className="flex items-center gap-1.5 px-3 xl:px-4 h-full transition-all duration-200 hover:shadow-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-inset clip-corner-sm"
           style={{
             backgroundColor: colors.accent,
             color: colors.onAccent,
@@ -224,7 +226,7 @@ export default function NavBar(): JSX.Element {
           }}
         >
           <svg
-            className="w-6 h-6"
+            className="w-5 h-5"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -237,7 +239,7 @@ export default function NavBar(): JSX.Element {
               d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
             />
           </svg>
-          <span className="text-md font-bold">Resume</span>
+          <span className="text-sm xl:text-base font-bold">Resume</span>
         </a>
       </div>
 

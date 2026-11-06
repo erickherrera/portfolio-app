@@ -82,7 +82,7 @@ const TechStackSection: React.FC<TechStackSectionProps> = ({
         {techStack.map((tech, index) => (
           <motion.div
             key={tech.name}
-            className="holo-projector group flex flex-col items-center text-center"
+            className="holo-projector flex flex-col items-center text-center"
             initial={reduceMotion ? false : { opacity: 0, y: 24 }}
             whileInView={reduceMotion ? undefined : { opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.4 }}
@@ -138,7 +138,7 @@ const TechStackSection: React.FC<TechStackSectionProps> = ({
 
             {/* Label */}
             <div
-              className="mt-2 px-3 py-1.5 rounded-full text-xs sm:text-sm font-semibold backdrop-blur-sm transition-all duration-200"
+              className="mt-2 px-3 py-1.5 rounded-full text-xs sm:text-sm font-semibold backdrop-blur-sm"
               style={{
                 backgroundColor: `${colors.card}E6`,
                 border: `1px solid ${colors.border}`,
@@ -158,7 +158,7 @@ const TechStackSection: React.FC<TechStackSectionProps> = ({
           {featureCards.map((feature, index) => (
             <motion.article
               key={feature.title}
-              className="holo-panel holo-card group relative p-6 rounded-xl text-center"
+              className="holo-panel relative p-6 rounded-xl text-center"
               initial={reduceMotion ? false : { opacity: 0, y: 24 }}
               whileInView={reduceMotion ? undefined : { opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.3 }}
@@ -167,18 +167,11 @@ const TechStackSection: React.FC<TechStackSectionProps> = ({
                 delay: reduceMotion ? 0 : index * 0.08,
                 ease: [0.16, 1, 0.3, 1],
               }}
-              whileHover={reduceMotion ? undefined : { y: -4 }}
               style={{
                 backgroundColor: colors.card,
                 boxShadow: tokens.shadow.md,
               }}
             >
-              <div
-                className="holo-surface absolute inset-0 rounded-xl"
-                aria-hidden="true"
-              />
-              <div className="holo-sheen rounded-xl" aria-hidden="true" />
-
               <div
                 className="relative z-10 text-3xl mb-3 inline-flex items-center justify-center w-12 h-12 rounded-lg"
                 style={{
